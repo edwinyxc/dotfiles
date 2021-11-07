@@ -2,14 +2,11 @@
 
 let 
 	commonPkgs = with pkgs; [
-		# arandr
 		exa
 		tldr
 		tree
 		alacritty
-		dconf
 		neofetch
-		thunderbird
 		gnome.adwaita-icon-theme
 	];
 
@@ -18,8 +15,6 @@ let
 	];
 
 	miscPkgs = with pkgs; [
-		chromium
-		unigine-valley 
 	];
 in
 {
@@ -48,6 +43,7 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
+  targets.genericLinux.enable = true;
 
   # disallow HM to create its own keyboard map aka stxkbmap
   home.keyboard = null;

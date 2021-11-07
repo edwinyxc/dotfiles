@@ -32,6 +32,7 @@
 			];
 			config = ./xmonad.hs;
 		};
+
 	};
 
 	gtk.enable = true;
