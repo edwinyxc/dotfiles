@@ -1,0 +1,42 @@
+#! /usr/bin/env bash
+
+set +x
+
+prep_home() {
+	echo "Creating...."
+
+	# home manager files
+
+	mkdir -p $HOME/.config/nixpkgs/home
+	cp ./home.nix $HOME/.config/nixpkgs/
+	cp -r ./home/* $HOME/.config/nixpkgs/home/
+
+}
+
+
+bsystem() {
+	sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+	sudo cp configuration.nix /etc/nixos/
+	sudo cp wm-*.nix /etc/nixos/
+	sudo nixos-rebuild switch --upgrade
+}
+
+bhome() {
+	prep_home
+
+	home-manager switch
+}
+
+all() {
+	bsystem && bhome
+}
+
+case $1 in 
+	"home")
+		bhome;;
+	"system")
+		bsystem;;
+	*)
+		all;;
+esac
+		
