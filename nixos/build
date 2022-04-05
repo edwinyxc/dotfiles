@@ -6,6 +6,9 @@ prep_home() {
 	echo "Creating...."
 
 	# home manager files
+ 	#nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
+	#nix-channel --update
+	#nix-shell '<home-manager>' -A install
 
 	mkdir -p $HOME/.config/nixpkgs/home
 	cp ./home.nix $HOME/.config/nixpkgs/
@@ -23,7 +26,6 @@ bsystem() {
 
 bhome() {
 	prep_home
-
 	home-manager switch
 }
 

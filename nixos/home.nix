@@ -34,12 +34,13 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "21.11";
 
   home.sessionVariables = {
 	  DISPLAY = ":0";
 	  EDITOR = "nvim";
 	  #MOZ_ENABLE_WAYLAND = 1;
+	  XKB_DEFAULT_OPTIONS = ctrl:nocaps;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -51,7 +52,7 @@ in
   xdg.enable = true;
   
   imports = [
-	./home/xmonad.nix
+	#./home/xmonad.nix
 	./home/neovim.nix
 	#./home/rofi.nix
   ];

@@ -20,10 +20,13 @@ in
 	imports =
 		[ # Include the results of the hardware scan.
 		./hardware-configuration.nix
-		./wm-xmonad.nix
+		#./wm-xmonad.nix
 		#./wm-gnome.nix
 		#./wm-kde.nix
+		./wm-sway.nix
 		];
+
+
 
 # Use the systemd-boot EFI boot loader.
 	boot.loader.systemd-boot.enable = true;
@@ -32,6 +35,7 @@ in
 	boot.kernelParams = ["mem_sleep_default=deep" "acpi_osi=\"Windows 2020\""];
 
 	nixpkgs.config.allowUnfree = true;
+
 # Systemd config
 #
 
@@ -109,16 +113,12 @@ systemd.extraConfig = ''
 # $ nix search wget
 	environment.systemPackages = with pkgs; [
 		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-		wget
+ 		alacritty
+		wget curl
 		firefox
 		gitAndTools.gitFull
 		iptables nmap tcpdump
-		gcc
-		binutils
-		zlib
-		bc
 		unzip
-		feh
 	];
 
 	# Some programs need SUID wrappers, can be configured further or are
@@ -140,7 +140,6 @@ systemd.extraConfig = ''
 
 		# Enable the sshd
 		sshd.enable = true;
-		
 
 	};
 
@@ -177,8 +176,9 @@ systemd.extraConfig = ''
 		extraOptions = ''
 			keep-outputs = true
 			keep-derivations = true
-			'';
-
+			# Make ready for flake
+	  		experimental-features = nix-command flakes
+		'';
 			trustedUsers = [ "root" "ed"];
 	};
 
@@ -205,7 +205,8 @@ systemd.extraConfig = ''
 	# tlp
 	#
 	services.tlp = {
-		enable = true;
+		#enable = true;
+		enable = false;
 		settings = {
 			CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 			PCIE_ASPM_ON_BAT = "powersupersave";
@@ -224,7 +225,7 @@ systemd.extraConfig = ''
 # this value at the release version of the first install of this system.
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "21.05"; # Did you read the comment?
+	system.stateVersion = "21.11"; # Did you read the comment?
 
 }
 
