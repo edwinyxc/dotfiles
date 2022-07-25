@@ -21,7 +21,7 @@
         tree
         unzip zip
         #xclip
-
+        gitui
 
     ];
    
