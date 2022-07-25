@@ -1,89 +1,112 @@
 { config, pkgs, ... }:
-
-let 
-	commonPkgs = with pkgs; [
-		exa
-		tldr
-		tree
-		alacritty
-		neofetch
-		gnome.adwaita-icon-theme
-	];
-
-	textPkgs = with pkgs; [
-		tmux
-	];
-
-	miscPkgs = with pkgs; [
-	];
-in
 {
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    home.username = "ed";
+    home.homeDirectory = "/home/ed";
+    programs.home-manager.enable = true;
 
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "ed";
-  home.homeDirectory = "/home/ed";
+    home.packages = with pkgs; [
+        bat
+        gnumake
+        meson ninja
+        rustup 
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "21.11";
+        #python
+        
+        #cli
+        exa fd file fzf man-pages 
+        zenith
+        neofetch
 
-  home.sessionVariables = {
-	  DISPLAY = ":0";
-	  EDITOR = "nvim";
-	  #MOZ_ENABLE_WAYLAND = 1;
-	  XKB_DEFAULT_OPTIONS = ctrl:nocaps;
-  };
+        ripgrep
+        tree
+        unzip zip
+        #xclip
 
-  nixpkgs.config.allowUnfree = true;
-  targets.genericLinux.enable = true;
 
-  # disallow HM to create its own keyboard map aka stxkbmap
-  home.keyboard = null;
+    ];
+   
+    programs.git = {
+        enable = true;
 
-  xdg.enable = true;
-  
-  imports = [
-	#./home/xmonad.nix
-	./home/neovim.nix
-	#./home/rofi.nix
-  ];
+        package = pkgs.gitAndTools.gitFull;
+        userName = "edwinyxc";
+        userEmail = "edwinyxc@outlook.com";
+        extraConfig = {
+            core.editor = "vim";
+            credential.helper = "cache";
+        };
+    };
 
-  home.packages = with pkgs; commonPkgs ++ textPkgs ++ miscPkgs;
+    programs.fzf = {
+        enable = true;
+        enableZshIntegration = true;
+    };
+    
+    programs.dircolors = {
+        enable = true;
+        enableZshIntegration = true;
+    };
 
-  # firefox-wayland workaround
+    programs.zsh = {
+        enable = true;
+        autocd = true;
+        dotDir = ".config/zsh";
 
- # programs.firefox = {
- #         enable = true;
- #         package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
- #       	  forceWayland = true;
- #       	  extraPolicies = {
- #       		  ExtensionSettings = {};
- #       	  };
- #         };
- # };
+        enableAutosuggestions = true;
+        enableCompletion = true;
+        enableSyntaxHighlighting = true;
 
-  home.file =  {
-    ".config/alacritty/alacritty.yaml".text = ''
-      env:
-        TERM: xterm-256color
-    '';
-  };
+        sessionVariables = {
+        };
 
-  # restart services on change
-  systemd.user.startServices = "sd-switch";
-  
-  # notifications about home-manager news
-  news.display = "silent";
+        history = {
+            expireDuplicatesFirst = true;
+            ignoreSpace = false;
+            save = 500000;
+            share = true;
+        };
 
-  programs = {};
+        shellAliases = {
+            sl = "exa";
+            ls = "exa";
+            l  = "exa -l";
+            la = "exa -la";
+            ip = "ip --color=auto";
+            cat = "bat";
+            tree = "ls --tree";
+        };
 
+        initExtraFirst =  ''
+            ${builtins.readFile ./home/p10k-zsh-init.zsh}
+        '';
+
+        initExtra = ''
+            ${builtins.readFile ./home/p10k-zsh-init.zsh}
+            # default to emacs keybindings like bash.
+            bindkey -e 
+        '';
+
+        zplug = {
+            enable = true;
+            plugins = [
+                { name = "zsh-users/zsh-autosuggestions"; }
+                { name = "chisui/zsh-nix-shell"; }
+                { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+                { name = "unixorn/fzf-zsh-plugin"; }
+            ];
+        };
+    };
+
+    programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+    };
+
+    # Raw config files 
+    # Alacritty
+    
+    xdg.configFile."alacritty/alacritty.yml".source = ./home/config/alacritty.yml;
+
+    home.stateVersion = "22.05";
 }

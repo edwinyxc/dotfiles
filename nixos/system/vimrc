@@ -1,0 +1,94 @@
+set nocompatible
+filetype plugin indent on
+syntax on
+
+set mouse=a
+set mousehide
+set sidescroll=10
+
+set ambiwidth=double
+
+set termguicolors
+set cursorline
+set novisualbell
+set showcmd
+
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+
+set modeline
+set modelines=1
+
+set title
+set titleold="Terminal"
+set titlestring=%F
+
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+
+
+"" Disable the blinking cursor.
+set gcr=a:blinkon0
+set scrolloff=3
+
+"" Status bar
+set laststatus=2
+
+colorscheme default
+
+"" Fix backspace indent
+set backspace=indent,eol,start
+
+set number
+set relativenumber
+
+set smartindent
+set autoindent
+
+set smarttab
+"" Tabs. May be overridden by autocmd rules
+set tabstop=4
+set softtabstop=0
+set shiftwidth=4
+set expandtab
+
+set splitright
+set splitbelow
+
+
+"" Map leader to ,
+let mapleader=','
+
+"" Enable hidden buffers
+set hidden
+
+set nobackup
+set nowritebackup
+set autoread
+set noswapfile
+
+"" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+set fileformats=unix,dos,mac
+
+"*****************************************************************************
+"" Abbreviations
+"*****************************************************************************
+"" no one is really happy until you have this shortcuts
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall

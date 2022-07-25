@@ -6,9 +6,10 @@ prep_home() {
 	echo "Creating...."
 
 	# home manager files
- 	#nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
-	#nix-channel --update
-	#nix-shell '<home-manager>' -A install
+ 	nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+	nix-channel --update
+	nix-shell '<home-manager>' -A install
+
 
 	mkdir -p $HOME/.config/nixpkgs/home
 	cp ./home.nix $HOME/.config/nixpkgs/
@@ -18,10 +19,11 @@ prep_home() {
 
 
 bsystem() {
-	sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+	#sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+    sudo mkdir -p /etc/nixos/system
 	sudo cp configuration.nix /etc/nixos/
-	sudo cp wm-*.nix /etc/nixos/
-	sudo nixos-rebuild switch --upgrade
+    sudo cp -r ./system/. /etc/nixos/system
+	sudo nixos-rebuild switch 
 }
 
 bhome() {

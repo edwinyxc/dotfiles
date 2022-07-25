@@ -1,231 +1,195 @@
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+
 { config, pkgs, ... }:
 
-let 
-customFonts = pkgs.nerdfonts.override {
-	fonts = [
-		"FiraCode"
-		"DroidSansMono"
-		"Cousine"
-		"Terminus"
-		"JetBrainsMono"
-	];
-
-};
-	#myfonts =I 
-in
 {
-	imports =
-		[ # Include the results of the hardware scan.
-		./hardware-configuration.nix
-		#./wm-xmonad.nix
-		#./wm-gnome.nix
-		#./wm-kde.nix
-		./wm-sway.nix
-		];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      
+
+      # framework laptop
+      ./system/framework.nix
+      ./system/fonts.nix
+      # Vim / Neovim
+      ./system/vim.nix
+      # Tmux
+      ./system/tmux.nix
+      
+      # Sway wm WIP ...
+      #./system/wm-sway.nix
+
+      # Gnome
+      ./system/wm-gnome.nix
+    ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  networking.hostName = "farmFW"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "Australia/Sydney";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_AU.utf8";
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+  environment.variables = {
+    EDITOR = "vim";
+    MOZ_ENABLE_WAYLAND = "1";
+    MOZ_USE_XINPUT2 = "1";
+    NIXPKGS_ALLOW_UNFREE = "1";
+  };
 
 
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "au";
+    xkbVariant = "";
+  };
+  
+  # flatpak is the future?
+  services.flatpak.enable = true;
 
-# Use the systemd-boot EFI boot loader.
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
-	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.kernelParams = ["mem_sleep_default=deep" "acpi_osi=\"Windows 2020\""];
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
 
-	nixpkgs.config.allowUnfree = true;
+  # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
 
-# Systemd config
-#
+  #pipewire
+  #pipewire-pulse
+  #pipewire-media-session
 
-systemd.extraConfig = ''
-  DefaultTimeoutStopSec=20s
-  RebootWatchdogSec=0
-'';
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
 
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
 
-	networking.hostName = "farm-nixos"; # Define your hostname.
-# networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-# The global useDHCP flag is deprecated, therefore explicitly set to false here.
-# Per-interface useDHCP will be mandatory in the future, so this generated config
-# replicates the default behaviour.
-	networking.useDHCP = false;
-	networking.interfaces.wlp170s0.useDHCP = true;
-# NetworkManager
-	networking.networkmanager.enable = true;
-
-# Configure network proxy if necessary
-# networking.proxy.default = "http://user:password@proxy:port/";
-# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-# Select internationalisation properties.
-	i18n.defaultLocale = "en_US.UTF-8";
-# Set your time zone.
-	time.timeZone = "Australia/Sydney";
-	console = {
-		#font = "Lat2-Terminus16";
-		font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-		#keyMap = "us";
-	};
-	console.useXkbConfig = true;
-	services.xserver.xkbOptions = "ctrl:nocaps";
-
-	#services.xserver.dpi =180;
-
-# Enable the X11 windowing system.
-	#services.xserver.enable = true;
-
-# Enable the GNOME Desktop Environment.
-	#services.xserver.displayManager.gdm.enable = true;
-	#services.xserver.desktopManager.gnome.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
 
 
-# Configure keymap in X11
-# services.xserver.layout = "us";
-# services.xserver.xkbOptions = "eurosign:e";
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.ed = {
+    isNormalUser = true;
+    description = "Edwin";
+    shell = pkgs.zsh;
+    extraGroups = [ "networkmanager" "wheel" "video"];
+    packages = with pkgs; [
+      firefox-wayland
+      google-chrome
+      # microsoft-edge
+    #  thunderbird
+    ];
+  };
 
-	# Enable CUPS to print documents.
-	services.printing.enable = true;
+  console.useXkbConfig = true;
+   
+  # console fonts TODO
 
-	# fingerprint support
-	services.fprintd.enable = true;
+  services.xserver.xkbOptions = "ctrl:nocaps";
 
-# Enable sound.
- sound.enable = true;
- hardware.pulseaudio.enable = true;
- hardware.video.hidpi.enable = true;
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-# 
-
-# Enable touchpad support (enabled default in most desktopManager).
-	#services.xserver.libinput.enable = true; # enabled elsewhere
-
-
-# Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.ed= {
-		isNormalUser = true;
-		extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-	};
-
-# List packages installed in system profile. To search, run:
-# $ nix search wget
-	environment.systemPackages = with pkgs; [
-		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
- 		alacritty
-		wget curl
-		firefox
-		gitAndTools.gitFull
-		iptables nmap tcpdump
-		unzip
-	];
-
-	# Some programs need SUID wrappers, can be configured further or are
-	# started in user sessions.
-	#programs.mtr.enable = true;
-	programs.gnupg.agent = {
-		enable = true;
-		enableSSHSupport = true;
-	};
-
-# List services that you want to enable:
-
-	services = {
-		# Enable the OpenSSH daemon.
-		openssh = {
-			enable = true;
-			#allowsSFTP = true;
-		};
-
-		# Enable the sshd
-		sshd.enable = true;
-
-	};
-
-	fonts.fonts = with pkgs; [
-		customFonts
-		font-awesome-ttf
-		corefonts
-		inconsolata
-		wqy_microhei
-		wqy_zenhei
-	];
-
-# Open ports in the firewall.
-# networking.firewall.allowedTCPPorts = [ ... ];
-# networking.firewall.allowedUDPPorts = [ ... ];
-# Or disable the firewall altogether.
-# networking.firewall.enable = false;
-#
-
-	#nixpkgs.config.allowUnfree = true;
-
-	nix = {
-		# Automate `nix-store --optimize`
-		autoOptimiseStore = true;
-
-		# Automate garbage collection
-		gc = {
-			automatic = true;
-			dates     = "weekly";
-			options   = "--delete-older-than 7d";
-		};
-
-# avoid unwanted garbage collection when using nix-direnv
-		extraOptions = ''
-			keep-outputs = true
-			keep-derivations = true
-			# Make ready for flake
-	  		experimental-features = nix-command flakes
-		'';
-			trustedUsers = [ "root" "ed"];
-	};
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+      zsh
+      neovim
+      tmux
+      powertop
+      parted
+      git
+      wget curl
+      unzip
+  ];
 
 
-	# hardware acceleration video playback
-	nixpkgs.config.packageOverrides = pkgs: {
-		vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-	};
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+   programs.gnupg.agent = {
+     enable = true;
+     enableSSHSupport = true;
+  };
 
-	hardware.opengl = {
-		enable = true;
-		extraPackages = with pkgs; [
-			intel-media-driver # LIBVA_DRIVER_NAME=iHD
-			vaapiIntel
-			vaapiVdpau
-			libvdpau-va-gl
-		];
-	};
+  programs.light.enable = true;
 
-	# power auto-cpufreq
-	# services.auto-cpufreq.enable = true; 
-	
+  # List services that you want to enable:
 
-	# tlp
-	#
-	services.tlp = {
-		#enable = true;
-		enable = false;
-		settings = {
-			CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-			PCIE_ASPM_ON_BAT = "powersupersave";
-			CPU_SCALING_GOVERNOR_ON_ACT = "performance";
-		};
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-	};
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-	# powertop: run powertop --auto-tune on startup
-	
-	powerManagement.powertop.enable = true;
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "22.05"; # Did you read the comment?
+    
+  nix = {
+    autoOptimiseStore = true;
+    gc = {
+        automatic = true;
+        dates     = "weekly";
+        options   = "--delete-older-than 7d";
+    };
 
-# This value determines the NixOS release from which the default
-# settings for stateful data, like file locations and database versions
-# on your system were taken. It‘s perfectly fine and recommended to leave
-# this value at the release version of the first install of this system.
-# Before changing this value read the documentation for this option
-# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-	system.stateVersion = "21.11"; # Did you read the comment?
+    extraOptions = ''
+        keep-outputs = true
+        keep-derivations = true
+        experimental-features = nix-command flakes
+    '';
 
+    trustedUsers = [ "root" "ed" ];
+  };
+
+  environment.shellInit = ''
+  export ZDOTDIR=$HOME/.config/zsh
+  '';
+
+  programs.zsh = {
+      enable = true;
+      shellAliases = { vim = "nvim"; };
+      enableCompletion = true;
+      autosuggestions.enable = true;
+  };
+
+  environment.pathsToLink = [ "/share/zsh" ];
+    
 }
-
