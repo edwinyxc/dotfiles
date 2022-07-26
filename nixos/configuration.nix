@@ -1,4 +1,3 @@
-
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -24,6 +23,9 @@
 
       # Gnome
       ./system/wm-gnome.nix
+
+      # Docker
+      ./system/docker.nix
     ];
 
   # Bootloader.
@@ -103,9 +105,12 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "video"];
     packages = with pkgs; [
+      #broswers
       firefox-wayland
       google-chrome
-      # microsoft-edge
+      #brave
+      #microsoft-edge-dev
+
     #  thunderbird
     ];
   };

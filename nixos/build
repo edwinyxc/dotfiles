@@ -3,44 +3,48 @@
 set +x
 
 prep_home() {
-	echo "Creating...."
+    
+    if ! command -v home-manager &> /dev/null
+    then
+	    echo "HomeManager not found, creating ..."
+        # home manager files
+        nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+        nix-channel --update
+        nix-shell '<home-manager>' -A install
+    fi
 
-	# home manager files
- 	nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
-	nix-channel --update
-	nix-shell '<home-manager>' -A install
-
-
+	echo "Copying files ..."
 	mkdir -p $HOME/.config/nixpkgs/home
 	cp ./home.nix $HOME/.config/nixpkgs/
 	cp -r ./home/* $HOME/.config/nixpkgs/home/
-
+    cp ./system/vimrc /home/ed/.config/nixpkgs/home/
 }
 
-
 bsystem() {
+    echo "buiding system, arguments: $@"
 	#sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
     sudo mkdir -p /etc/nixos/system
 	sudo cp configuration.nix /etc/nixos/
     sudo cp -r ./system/. /etc/nixos/system
-	sudo nixos-rebuild switch 
+	sudo nixos-rebuild switch $@
 }
 
 bhome() {
 	prep_home
-	home-manager switch
+    echo "buiding home, arguments: $@"
+	home-manager switch $@
 }
 
 all() {
-	bsystem && bhome
+    echo "buiding system and home, arguments: $@"
+	bsystem $@ && bhome $@
 }
 
 case $1 in 
 	"home")
-		bhome;;
+		bhome ${@:2};;
 	"system")
-		bsystem;;
+		bsystem ${@:2};;
 	*)
-		all;;
+        all ${@:2};;
 esac
-		

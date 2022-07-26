@@ -7,11 +7,11 @@
           corefonts # Microsoft free fonts
           font-awesome
           powerline-fonts
-          source-han-sans-simplified-chinese
-          source-han-sans-traditional-chinese
+
+          noto-fonts
+          noto-fonts-cjk-serif
+          noto-fonts-cjk-sans
           ubuntu_font_family
-          wqy_microhei
-          wqy_zenhei
         ];
     };
 }

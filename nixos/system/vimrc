@@ -1,3 +1,12 @@
+" You might have to force true color when using regular vim inside tmux as the
+" colorscheme can appear to be grayscale with "termguicolors" option enabled.
+" vim-only 
+"if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+"  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"endif
+set termguicolors
+
 set nocompatible
 filetype plugin indent on
 syntax on
@@ -8,7 +17,6 @@ set sidescroll=10
 
 set ambiwidth=double
 
-set termguicolors
 set cursorline
 set novisualbell
 set showcmd
@@ -42,10 +50,10 @@ set backspace=indent,eol,start
 set number
 set relativenumber
 
-set smartindent
+"set smartindent
 set autoindent
 
-set smarttab
+"set smarttab
 "" Tabs. May be overridden by autocmd rules
 set tabstop=4
 set softtabstop=0
@@ -73,6 +81,8 @@ set incsearch
 set ignorecase
 set smartcase
 
+set clipboard+=unnamedplus
+
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
@@ -92,3 +102,7 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
+
+" save as sudo
+cmap w!! w !sudo tee %
+
