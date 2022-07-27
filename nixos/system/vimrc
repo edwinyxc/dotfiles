@@ -12,7 +12,7 @@ filetype plugin indent on
 syntax on
 
 set mouse=a
-set mousehide
+"set mousehide
 set sidescroll=10
 
 set ambiwidth=double
@@ -64,8 +64,8 @@ set splitright
 set splitbelow
 
 
-"" Map leader to ,
-let mapleader=','
+"" Map leader to '',
+let mapleader= " "
 
 "" Enable hidden buffers
 set hidden

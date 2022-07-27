@@ -24,8 +24,11 @@
       # Gnome
       ./system/wm-gnome.nix
 
-      # Docker
+      # Docker & Virtualisation
       ./system/docker.nix
+
+      # Android -ADB
+      ./system/android.nix
     ];
 
   # Bootloader.

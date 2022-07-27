@@ -19,14 +19,17 @@
         zenith
         neofetch
         tealdeer
-        gitui
+        gitui gitg
 
         #remote access
         remmina
 
         #xclip
+        yarn nodejs nodePackages.npm
 
-        yarn nodejs
+        #android
+        android-studio
+
     ];
    
     programs.git = {

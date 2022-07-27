@@ -3,6 +3,13 @@
 		  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
 		  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+"better wildmenu
+set path+=**
+set wildmenu
+set wildmode=longest:list,full
+
 "" TAB and CTRL-I are internally identical, uncomment this if you prefer TAB
 "" and never gonna use CTRL + I/O
 "nnoremap <Tab> gt
@@ -24,7 +31,7 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " noremap <leader>w :bn<CR>
 noremap <A-Left> :bp<CR>
 noremap <A-Right> :bp<CR>
-noremap <Space><Space> :b#<CR>
+noremap <Leader><Space> :b#<CR>
 
 " brain dead
 "noremap <C-S-[> :bp<CR>
