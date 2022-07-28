@@ -4,11 +4,21 @@
 		  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set lazyredraw
 
 "better wildmenu
 set path+=**
 set wildmenu
 set wildmode=longest:list,full
+
+
+"" auto save
+set autowrite
+set autowriteall
+
+"" auto reload vimrc
+set exrc
+set secure
 
 "" TAB and CTRL-I are internally identical, uncomment this if you prefer TAB
 "" and never gonna use CTRL + I/O
@@ -31,7 +41,7 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 " noremap <leader>w :bn<CR>
 noremap <A-Left> :bp<CR>
 noremap <A-Right> :bp<CR>
-noremap <Leader><Space> :b#<CR>
+noremap <Space><Space> :b#<CR>
 
 " brain dead
 "noremap <C-S-[> :bp<CR>
@@ -41,7 +51,7 @@ noremap <Leader><Space> :b#<CR>
 noremap <leader>c :bd<CR>
 
 "" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
+nnoremap <silent> <leader>, :noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -71,4 +81,4 @@ set shortmess+=c
 set signcolumn=yes
 
 " TODO-- use nix vars to generate personal preferences
-colorscheme molokai
+colorscheme zenburn

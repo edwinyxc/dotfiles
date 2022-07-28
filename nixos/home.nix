@@ -28,10 +28,18 @@
         yarn nodejs nodePackages.npm
 
         #android
-        android-studio
+        #android-studio
+
 
     ];
    
+    #java
+    programs.java = {
+        enable = true;
+        # for better support for Intelij
+        package = pkgs.jetbrains.jdk;
+    };
+
     programs.git = {
         enable = true;
 

@@ -27,7 +27,7 @@
       # Docker & Virtualisation
       ./system/docker.nix
 
-      # Android -ADB
+      # Android -ADB & JAVA
       ./system/android.nix
     ];
 

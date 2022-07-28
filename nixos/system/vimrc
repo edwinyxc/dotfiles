@@ -8,14 +8,14 @@
 set termguicolors
 
 set nocompatible
-filetype plugin indent on
+" filetype plugin indent on
 syntax on
 
 set mouse=a
 "set mousehide
 set sidescroll=10
 
-set ambiwidth=double
+"set ambiwidth=double
 
 set cursorline
 set novisualbell
@@ -24,9 +24,6 @@ set showcmd
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-
-set modeline
-set modelines=1
 
 set title
 set titleold="Terminal"
@@ -104,5 +101,11 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 
 " save as sudo
-cmap w!! w !sudo tee %
+cmap w!! w !sudo tee > /dev/null %
 
+"save undo / redo across sessions
+set undofile
+set undodir=~/.vim/undo
+
+" treat underscore (_) as a word 
+"set iskeyword+=_
