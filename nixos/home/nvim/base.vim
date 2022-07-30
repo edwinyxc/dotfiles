@@ -11,10 +11,9 @@ set path+=**
 set wildmenu
 set wildmode=longest:list,full
 
-
 "" auto save
-set autowrite
-set autowriteall
+"set autowrite
+"set autowriteall
 
 "" auto reload vimrc
 set exrc

@@ -1,4 +1,8 @@
 { config, pkgs, ... }:
+let 
+    #expose_bin_path = pkg : "${pkg.outPath}/bin";
+    #exposePathsGlobally = ;
+in
 {
     home.username = "ed";
     home.homeDirectory = "/home/ed";
@@ -8,7 +12,6 @@
         bat
         gnumake clang 
         meson ninja
-        rustup 
 
         #python
         
@@ -25,12 +28,14 @@
         remmina
 
         #xclip
-        yarn nodejs nodePackages.npm
-
+        nodePackages.npm
+        yarn 
         #android
         #android-studio
 
-
+        # some devs deps that have to installed globally 
+        rustup 
+        # nodePackages.gulp
     ];
    
     #java
@@ -57,9 +62,21 @@
         ./home/neovim.nix
     ];
 
+
     # Raw config files 
     # Alacritty
     xdg.configFile."alacritty/alacritty.yml".source = ./home/config/alacritty.yml;
+
+    # Wayland's initrc
+    #xdg.configFile."environment.d/50-initrc.conf".text = ''
+    #    PATH=$HOME/.npm-global/bin:$PATH
+    #'';
+
+    home.file.".npmrc".text = ''
+        prefix=$HOME/.npm-global
+    '';
+
+    # home.file.".xprofile"
 
     home.stateVersion = "22.05";
 }

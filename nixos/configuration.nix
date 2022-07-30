@@ -29,6 +29,9 @@
 
       # Android -ADB & JAVA
       ./system/android.nix
+
+      # NPM 
+      # ./system/nodejs.nix
     ];
 
   # Bootloader.

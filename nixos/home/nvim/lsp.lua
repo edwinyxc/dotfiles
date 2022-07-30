@@ -1,3 +1,6 @@
+--debug log
+vim.lsp.set_log_level("debug")
+
 vim.o.completeopt = 'menu,menuone,noselect'
 local cmp = require('cmp')
 cmp.setup({
@@ -6,6 +9,10 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -109,3 +116,4 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+

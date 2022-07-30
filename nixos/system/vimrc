@@ -25,9 +25,9 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
-set title
-set titleold="Terminal"
-set titlestring=%F
+"set title
+"set titleold="Terminal"
+"set titlestring=%F
 
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 

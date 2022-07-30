@@ -61,6 +61,7 @@
             ${builtins.readFile ./p10k-zsh-init.zsh}
             # default to emacs keybindings like bash.
             bindkey -e 
+            export PATH=$HOME/.npm-global/bin:$PATH
         '';
 
         zplug = {

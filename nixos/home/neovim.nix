@@ -19,13 +19,31 @@ let
 
     Plug = repo : (PlugAndConfig repo "");
   
-  importFile = lib.strings.fileContents;
+    importFile = lib.strings.fileContents;
 
 in {
   nixpkgs.overlays = [
       (import (builtins.fetchTarball {
           url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
       }))
+  ];
+
+  home.packages = with pkgs; [
+      tree-sitter
+          jq curl
+          universal-ctags
+#nix 
+#lsp servers
+          rnix-lsp
+          nodejs 
+# python
+          nodePackages.pyright
+# js & ts 
+          #nodePackages.typescript-language-server
+#rust 
+          rust-analyzer
+# lua
+          sumneko-lua-language-server
   ];
 
   programs.neovim = {
@@ -238,9 +256,8 @@ EOF
         (PlugAndConfig "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim" ''
 lua << EOF
 require'toggle_lsp_diagnostics'.init()
-my = {
-    toggle = false
-}
+if (not my) then my = {} end
+my.toggke = false
 my.toggle_diagnostics = function() 
     local toggle_lsp_diagnostics = require'toggle_lsp_diagnostics'
     if my.toggle then 
@@ -309,26 +326,7 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
       # (plugin "junegunn/fzf")
       ];
 
-      extraPackages = with pkgs; [
-        tree-sitter
-        jq curl
-        nodejs
-        universal-ctags
-
-        #lsp servers
-            #nix 
-            rnix-lsp
-            # python
-            nodePackages.pyright
-            # js & ts
-            nodePackages.typescript nodePackages.typescript-language-server
-            #rust 
-            rust-analyzer
-
-            # lua
-            sumneko-lua-language-server
-      ];
-
+      # extraPackages = with pkgs; [
   };
 }
 
