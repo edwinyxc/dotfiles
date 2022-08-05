@@ -11,4 +11,7 @@
     ];
 
     users.users.ed.extraGroups = [ "docker" "libvirtd" "kvm" ];
+
+    virtualisation.virtualbox.host.enable = true;
+    users.extraGroups.vboxusers.members = [ "ed" ];
 }

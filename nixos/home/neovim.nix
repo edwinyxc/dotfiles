@@ -25,6 +25,7 @@ in {
   nixpkgs.overlays = [
       (import (builtins.fetchTarball {
           url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+          
       }))
   ];
 
@@ -39,7 +40,7 @@ in {
 # python
           nodePackages.pyright
 # js & ts 
-          #nodePackages.typescript-language-server
+#nodePackages.typescript-language-server
 #rust 
           rust-analyzer
 # lua

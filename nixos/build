@@ -17,7 +17,7 @@ prep_home() {
 	mkdir -p $HOME/.config/nixpkgs/home
 	cp ./home.nix $HOME/.config/nixpkgs/
 	cp -r ./home/* $HOME/.config/nixpkgs/home/
-    cp ./system/vimrc /home/ed/.config/nixpkgs/home/
+    cp ./system/vimrc $HOME/.config/nixpkgs/home/
 }
 
 bsystem() {

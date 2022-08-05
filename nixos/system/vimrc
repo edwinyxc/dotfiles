@@ -18,7 +18,8 @@ set sidescroll=10
 "set ambiwidth=double
 
 set cursorline
-set novisualbell
+set visualbell
+"set belloff=all
 set showcmd
 
 set encoding=utf-8

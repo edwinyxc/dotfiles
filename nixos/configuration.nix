@@ -111,13 +111,13 @@
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "video"];
     packages = with pkgs; [
-      #broswers
-      firefox-wayland
-      google-chrome
-      #brave
-      #microsoft-edge-dev
+        #broswers
+        firefox-wayland
+        google-chrome
+        #brave
+        #microsoft-edge-dev
 
-    #  thunderbird
+        #  thunderbird
     ];
   };
 

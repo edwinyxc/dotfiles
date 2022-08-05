@@ -67,6 +67,9 @@ in
     # Alacritty
     xdg.configFile."alacritty/alacritty.yml".source = ./home/config/alacritty.yml;
 
+    # Some softwares/extensions tend to read the ~/.vimrc
+    home.file.".vimrc".source = ./home/vimrc;
+
     # Wayland's initrc
     #xdg.configFile."environment.d/50-initrc.conf".text = ''
     #    PATH=$HOME/.npm-global/bin:$PATH
