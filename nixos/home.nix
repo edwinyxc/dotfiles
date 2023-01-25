@@ -9,6 +9,7 @@ in
     programs.home-manager.enable = true;
 
     home.packages = with pkgs; [
+        alacritty
         bat
         gnumake clang 
         meson ninja

@@ -26,6 +26,8 @@ bsystem() {
     sudo mkdir -p /etc/nixos/system
 	sudo cp configuration.nix /etc/nixos/
     sudo cp -r ./system/. /etc/nixos/system
+    #WSL patch
+    sudo mount -o remount,rw /tmp/.X11-unix
 	sudo nixos-rebuild switch $@
 }
 

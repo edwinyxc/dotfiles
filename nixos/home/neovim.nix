@@ -22,12 +22,6 @@ let
     importFile = lib.strings.fileContents;
 
 in {
-  nixpkgs.overlays = [
-      (import (builtins.fetchTarball {
-          url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-          
-      }))
-  ];
 
   home.packages = with pkgs; [
       tree-sitter
@@ -49,7 +43,7 @@ in {
 
   programs.neovim = {
       enable = true;
-      package = pkgs.neovim-nightly;
+#      package = pkgs.neovim-nightly;
       viAlias = true;
       vimAlias = true;
 
