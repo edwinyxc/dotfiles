@@ -22,7 +22,12 @@ let
     importFile = lib.strings.fileContents;
 
 in {
-
+  #nixpkgs.overlays = [
+  #    (import (builtins.fetchTarball {
+  #        url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+  #        
+  #    }))
+  #];
   home.packages = with pkgs; [
       tree-sitter
           jq curl
@@ -43,7 +48,8 @@ in {
 
   programs.neovim = {
       enable = true;
-#      package = pkgs.neovim-nightly;
+      #package = pkgs.neovim-nightly;
+      #package = inputs.neovim-nightly.packages.${pkgs.system}.neovim;
       viAlias = true;
       vimAlias = true;
 
@@ -84,7 +90,9 @@ EOF
         (Plug "kyazdani42/nvim-web-devicons")
 
         #Fuzzy finder
-        (Plug "nvim-telescope/telescope.nvim")
+        telescope-nvim
+        telescope-fzf-native-nvim
+        #(Plug "nvim-telescope/telescope.nvim")
         #(Plug "kelly-lin/telescope-ag")
 
 
@@ -245,7 +253,9 @@ EOF
         # (Plug "p00f/nvim-ts-rainbow") 
 
         # LSP
-        (Plug "neovim/nvim-lspconfig")
+        nvim-lspconfig
+        #(Plug "neovim/nvim-lspconfig")
+        
 
         # toggle diagnostics
         (PlugAndConfig "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim" ''
@@ -321,7 +331,11 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
       # (plugin "junegunn/fzf")
       ];
 
-      # extraPackages = with pkgs; [
+       extraPackages = with pkgs; [
+        ripgrep
+        manix
+        git
+       ];
   };
 }
 

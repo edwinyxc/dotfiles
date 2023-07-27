@@ -10,11 +10,15 @@ in
 
     home.packages = with pkgs; [
         alacritty
-        bat
+
+        #bat
         gnumake clang 
         meson ninja
 
         #python
+
+        #Image Viewer
+        geeqie
         
         #cli
         man-pages
@@ -26,7 +30,7 @@ in
         gitui gitg
 
         #remote access
-        remmina
+        #remmina
 
         #xclip
         nodePackages.npm
