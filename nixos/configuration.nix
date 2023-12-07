@@ -2,13 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{lib, config, pkgs, ... }:
 
+with lib;
 {
   imports =
     [ 
       # wsl import see - https://github.com/nix-community/NixOS-WSL
-      ./wsl.nix
+      # include NixOS-WSL modules
+      <nixos-wsl/modules>
       # Fonts
       ./system/fonts.nix
       # Vim / Neovim
@@ -16,6 +18,18 @@
       # Tmux
       ./system/tmux.nix
     ];
+
+	wsl = {
+    enable = true;
+    wslConf.automount.root = "/mnt";
+    defaultUser = "ed";
+    startMenuLaunchers = true;
+         
+    # Enable integration with Docker Desktop (needs to be installed)
+    # docker-desktop.enable = true;
+
+  };
+
 
   environment.variables = {
     EDITOR = "vim";
@@ -75,23 +89,24 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 
-  #system.stateVersion = "22.11"; # Did you read the comment? 
+  system.stateVersion = "23.05"; # Did you read the comment? 
     
   nix = {
-    autoOptimiseStore = true;
+    settings.auto-optimise-store = true;
     gc = {
         automatic = true;
         dates     = "weekly";
         options   = "--delete-older-than 7d";
     };
 
+ # Enable nix flakes, etc.
     extraOptions = ''
         keep-outputs = true
         keep-derivations = true
+
         experimental-features = nix-command flakes
     '';
-
-    trustedUsers = [ "root" "ed" ];
+    settings.trusted-users = [ "root" "ed" ];
   };
 
   environment.shellInit = ''

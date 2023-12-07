@@ -3,7 +3,7 @@
     fonts = {
         fontDir.enable = true;
         enableGhostscriptFonts = true;
-        fonts = with pkgs; [
+        packages = with pkgs; [
           corefonts # Microsoft free fonts i.e. New Courier
           font-awesome
           powerline-fonts

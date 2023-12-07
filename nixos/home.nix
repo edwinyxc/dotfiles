@@ -24,7 +24,7 @@ in
         man-pages
         tree
         unzip zip
-        zenith
+        #zenith
         neofetch
         tealdeer
         gitui gitg
@@ -39,7 +39,7 @@ in
         #android-studio
 
         # some devs deps that have to installed globally 
-        rustup 
+        # rustup 
         # nodePackages.gulp
     ];
    
@@ -86,5 +86,5 @@ in
 
     # home.file.".xprofile"
 
-    home.stateVersion = "22.05";
+    home.stateVersion = "23.11";
 }

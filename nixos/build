@@ -8,16 +8,21 @@ prep_home() {
     then
 	    echo "HomeManager not found, creating ..."
         # home manager files
-        nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+        nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
         nix-channel --update
         nix-shell '<home-manager>' -A install
     fi
 
+    echo "Cleaning..."
+    rm -r $HOME/.config/home-manager
+
 	echo "Copying files ..."
-	mkdir -p $HOME/.config/nixpkgs/home
-	cp ./home.nix $HOME/.config/nixpkgs/
-	cp -r ./home/* $HOME/.config/nixpkgs/home/
-    cp ./system/vimrc $HOME/.config/nixpkgs/home/
+	mkdir -p $HOME/.config/home-manager
+	mkdir -p $HOME/.config/home-manager/home
+
+	cp ./home.nix $HOME/.config/home-manager/
+	cp -r ./home/* $HOME/.config/home-manager/home/
+    cp ./system/vimrc $HOME/.config/home-manager/home/
 }
 
 bsystem() {
