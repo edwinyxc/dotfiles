@@ -41,7 +41,8 @@ bhome() {
 
 all() {
     echo "buiding system and home, arguments: $@"
-	bsystem $@ && bhome $@
+#	bsystem $@ && bhome $@
+    sudo nixos-rebuild switch --flake .\#FW-i11
 }
 
 case $1 in 

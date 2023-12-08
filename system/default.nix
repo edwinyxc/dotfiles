@@ -1,25 +1,14 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+{ config , pkgs , ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan. 
-      # Use full-qualified path here
-      ./hardware-configuration.nix
 
-      # framework laptop
-        #TODO using nixos-hardware instead
-      #./system/framework.nix
-
+  imports = [
       # Fonts
-      ./system/fonts.nix
+      ./fonts.nix
       # Vim / Neovim
-      ./system/vim.nix
+      ./vim.nix
       # Tmux
-      ./system/tmux.nix
+      ./tmux.nix
       
       # Sway wm WIP ...
       #./system/wm-sway.nix
@@ -35,51 +24,7 @@
 
       # NPM 
       # ./system/nodejs.nix
-    ];
-
-  environment.variables = {
-    EDITOR = "vim";
-    MOZ_ENABLE_WAYLAND = "1";
-    MOZ_USE_XINPUT2 = "1";
-    NIXPKGS_ALLOW_UNFREE = "1";
-  };
-  
-  # flatpak is the future?
-  #services.flatpak.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ed = {
-    isNormalUser = true;
-    description = "Edwin";
-
-    #shell = pkgs.zsh;
-
-    extraGroups = [ "networkmanager" "wheel" "video"];
-    packages = with pkgs; [
-        #broswers
-        #firefox-wayland
-        firefox
-        #brave
-        #microsoft-edge-dev
-        thunderbird
-    ];
-  };
-
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "FARM-NIX-FW"; # Define your hostname.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  ];
 
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
@@ -99,6 +44,25 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  environment.variables = {
+    EDITOR = "vim";
+    MOZ_ENABLE_WAYLAND = "1";
+    MOZ_USE_XINPUT2 = "1";
+  };
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.ed = {
+    isNormalUser = true;
+    description = "Edwin";
+
+    shell = pkgs.zsh;
+
+    extraGroups = [ "networkmanager" "wheel" "video"];
+    packages = with pkgs; [
+        zsh
+    ];
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -113,6 +77,12 @@
   };
 
   console.useXkbConfig = true;
+  #console = {
+  #  useXkbConfig = true;
+  #  earlySetup = true;
+  #  packages = with pkgs; [terminus_font];
+  #  font = "ter-u28n";
+  #};
 
   services.xserver.xkbOptions = "ctrl:nocaps";
 
@@ -139,7 +109,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      #zsh
+      zsh
       neovim
       tmux
       powertop
@@ -147,6 +117,15 @@
       git
       wget curl
       unzip
+
+      usbutils
+      pciutils
+
+      nettools
+
+      toybox
+        
+      wpa_supplicant
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -157,27 +136,9 @@
      enableSSHSupport = true;
   };
 
-  programs.light.enable = true;
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment? 
-    
   nix = {
     gc = {
         automatic = true;
