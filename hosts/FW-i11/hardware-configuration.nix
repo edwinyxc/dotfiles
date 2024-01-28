@@ -36,4 +36,23 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.opengl.enable = true;
+  services.fwupd.enable = true;
+
+  # Gnome 40 introduced a new way of managing power, without tlp.
+  # However, these 2 services clash when enabled simultaneously.
+  # https://github.com/NixOS/nixos-hardware/issues/260
+
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+      enable = true;
+      settings = {
+          PCIE_ASPM_ON_BAT = "powersupersave";
+          CPU_SCALING_GOVERNOR_ON_AC = "performance";
+          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+          START_CHARGE_THRESH_BAT1 = 90;
+          STOP_CHARGE_THRESH_BAT1 = 97;
+          RUNTIME_PM_ON_BAT = "auto";
+      };
+  };
 }

@@ -34,8 +34,9 @@ in
         #android-studio
 
         # some devs deps that have to installed globally 
-        rustup 
+        # rustup 
         # nodePackages.gulp
+
     ];
    
     #java

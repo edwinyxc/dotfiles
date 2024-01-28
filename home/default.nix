@@ -9,23 +9,28 @@ in
     programs.home-manager.enable = true;
 
     home.packages = with pkgs; [
-        bat
+        alacritty
+
+        #bat
         gnumake clang 
         meson ninja
 
         #python
+
+        #Image Viewer
+        geeqie
         
         #cli
         man-pages
         tree
         unzip zip
-        zenith
+        #zenith
         neofetch
         tealdeer
         gitui gitg
 
         #remote access
-        remmina
+        #remmina
 
         #xclip
         nodePackages.npm
@@ -34,7 +39,7 @@ in
         #android-studio
 
         # some devs deps that have to installed globally 
-        rustup 
+        # rustup 
         # nodePackages.gulp
     ];
    
@@ -58,17 +63,17 @@ in
     };
 
     imports = [
-        ./home/zsh.nix
-        ./home/neovim.nix
+        ./zsh.nix
+        ./neovim.nix
     ];
 
 
     # Raw config files 
     # Alacritty
-    xdg.configFile."alacritty/alacritty.yml".source = ./home/config/alacritty.yml;
+    xdg.configFile."alacritty/alacritty.yml".source = ./config/alacritty.yml;
 
-    # Some softwares/extensions tend to read the ~/.vimrc
-    home.file.".vimrc".source = ./home/vimrc;
+    # Some softwares/extensions tend to read the default ~/.vimrc
+    home.file.".vimrc".source = ./vimrc;
 
     # Wayland's initrc
     #xdg.configFile."environment.d/50-initrc.conf".text = ''
@@ -81,5 +86,5 @@ in
 
     # home.file.".xprofile"
 
-    home.stateVersion = "22.05";
+    home.stateVersion = "23.11";
 }

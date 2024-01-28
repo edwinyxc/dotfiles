@@ -42,8 +42,10 @@
                   {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
+
                     home-manager.extraSpecialArgs = inputs;
-                    home-manager.users.ed = import ./home ;
+
+                    home-manager.users.ed = import ./home;
                   }
               ];
           };

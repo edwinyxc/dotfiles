@@ -5,7 +5,7 @@
   imports = [
       # Fonts
       ./fonts.nix
-      # Vim / Neovim
+      # Vim 
       ./vim.nix
       # Tmux
       ./tmux.nix
@@ -15,6 +15,12 @@
 
       # Gnome
       #./system/wm-gnome.nix
+
+      # KDE
+     # ./kde.nix
+
+      # Firefox
+      ./firefox.nix
 
       # Docker & Virtualisation
       #./system/docker.nix
@@ -46,8 +52,8 @@
 
   environment.variables = {
     EDITOR = "vim";
-    MOZ_ENABLE_WAYLAND = "1";
-    MOZ_USE_XINPUT2 = "1";
+   # MOZ_ENABLE_WAYLAND = "1";
+   # MOZ_USE_XINPUT2 = "1";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -60,6 +66,17 @@
     extraGroups = [ "networkmanager" "wheel" "video"];
     packages = with pkgs; [
         zsh
+        thunderbird
+        libreoffice-qt
+    ];
+  };
+
+  # fcitx 5
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
     ];
   };
 
@@ -69,6 +86,9 @@
   # Enable the KDE Plasma Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasmawayland";
+  services.xserver.libinput.touchpad.disableWhileTyping = true;
+  services.xserver.libinput.touchpad.naturalScrolling  = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -131,10 +151,12 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-   programs.gnupg.agent = {
+  programs.gnupg.agent = {
      enable = true;
      enableSSHSupport = true;
   };
+
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

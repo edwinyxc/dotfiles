@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
     home.packages = with pkgs; [
-        exa
+        eza
         fd 
         file
         fzf
@@ -25,7 +25,7 @@
 
         enableAutosuggestions = true;
         enableCompletion = true;
-        enableSyntaxHighlighting = true;
+        syntaxHighlighting.enable = true;
 
         sessionVariables = {
         };
@@ -38,10 +38,10 @@
         };
 
         shellAliases = {
-            sl = "exa";
-            ls = "exa";
-            l  = "exa -l";
-            la = "exa -la";
+            sl = "eza";
+            ls = "eza";
+            l  = "eza -l";
+            la = "eza -la";
             tmux = "tmux -u";
 
             #Questionable ideas
