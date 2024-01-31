@@ -14,10 +14,10 @@
       #./system/wm-sway.nix
 
       # Gnome
-      #./system/wm-gnome.nix
+      #./wm-gnome.nix
 
       # KDE
-     # ./kde.nix
+      ./kde.nix
 
       # Firefox
       ./firefox.nix
@@ -30,6 +30,7 @@
 
       # NPM 
       # ./system/nodejs.nix
+      ./misc.nix
   ];
 
   # Set your time zone.
@@ -66,29 +67,9 @@
     extraGroups = [ "networkmanager" "wheel" "video"];
     packages = with pkgs; [
         zsh
-        thunderbird
-        libreoffice-qt
     ];
   };
 
-  # fcitx 5
-  i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-    ];
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
-  services.xserver.libinput.touchpad.disableWhileTyping = true;
-  services.xserver.libinput.touchpad.naturalScrolling  = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -131,6 +112,7 @@
   environment.systemPackages = with pkgs; [
       zsh
       neovim
+      neovide
       tmux
       powertop
       parted
@@ -144,13 +126,36 @@
       nettools
 
       toybox
-        
       wpa_supplicant
+      
+      # TODO remove
+      google-chrome
+
+      #thunderbird
+      #betterbird
+      libreoffice-qt
+      mission-center
+
+      #calibre #too complex yet
+      #foliate
+
+      onedrivegui
+      zotero
   ];
+
+    # Microsoft's alternatives 
+
+  # OneDrive
+  services.onedrive.enable = true;
+
+  #services.flatpak.enable = true;
+  #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #xdg.portal.config.common.default = "gtk";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
+
   programs.gnupg.agent = {
      enable = true;
      enableSSHSupport = true;
@@ -176,6 +181,7 @@
     settings = {
         auto-optimise-store = true;
         trusted-users = [ "root" "ed" ];
+        experimental-features = [ "nix-command" "flakes"];
     };
   };
 }

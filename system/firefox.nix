@@ -16,8 +16,8 @@ pref("general.smoothScroll.currentVelocityWeighting",             "1.0");//NSS [
 pref("general.smoothScroll.stopDecelerationWeighting",            "1.0");//NSS  ["0.4"]
 
 /// adjust multiply factor for mousewheel - or set to false if scrolling is way too fast  
-pref("mousewheel.system_scroll_override.horizontal.factor",         100);//NSS    [200]
-pref("mousewheel.system_scroll_override.vertical.factor",           100);//NSS    [200]
+pref("mousewheel.system_scroll_override.horizontal.factor",         70);//NSS    [200]
+pref("mousewheel.system_scroll_override.vertical.factor",           70);//NSS    [200]
 pref("mousewheel.system_scroll_override_on_root_content.enabled",  true);//NSS   [true]
 pref("mousewheel.system_scroll_override.enabled",                  true);//NSS   [true]
 
@@ -54,12 +54,14 @@ pref("mousewheel.min_line_scroll_amount",                             5);//NSS  
 pref("toolkit.scrollbox.horizontalScrollDistance",                    5);//NSS      [5]
 pref("toolkit.scrollbox.verticalScrollDistance",                      3);//NSS      [3]
 ///
+
+/// better ssd life --
+pref("browser.cache.disk.enable",                                 false);
+pref("browser.cache.memory.enable",                                true);
+
     '';
   };
 
-  environment.sessionVariables = {
-    foo = "bar";
-  };
 
   environment.sessionVariables = {
         MOZ_USE_XINPUT2 = "1";

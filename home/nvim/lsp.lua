@@ -103,11 +103,11 @@ local servers = {
     --"texlab", a
     "pyright",
     "rust_analyzer",
-    "sumneko_lua"
+    --"sumneko_lua"
 }
 
 local caps = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require('cmp_nvim_lsp').update_capabilities(caps)
+local capabilities = require('cmp_nvim_lsp').default_capabilities(caps)
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {

@@ -67,7 +67,7 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
 " Better display for messages
-set cmdheight=2
+set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default
 " 4000.
@@ -80,4 +80,9 @@ set shortmess+=c
 set signcolumn=yes
 
 " TODO-- use nix vars to generate personal preferences
-colorscheme zenburn
+" colorscheme zenburn
+colorscheme habamax
+
+if exists("g:neovide")
+   set guifont=Monospace:h11 " require hidpi
+endif

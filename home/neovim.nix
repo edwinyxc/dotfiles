@@ -1,50 +1,48 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let 
-    #installs a vim plugin from git with a given tag /branch
-    #TODO make some inline setup functinality
-    fromGitHub = ref: repo: pkgs.vimUtils.buildVimPlugin {
-        name = "${lib.strings.sanitizeDerivationName repo}";
-        version = ref;
-        src = builtins.fetchGit {
-            url = "https://github.com/${repo}.git";
-            ref = ref;
-        };
-    };
+    # Replaced with bulitin upstream
+    #plenary-nvim = pkgs.vimUtils.buildVimPlugin {
+    #    name = "plenary-nvim";
+    #    src = inputs.plenary-nvim;
+    #};
 
     #always installs the latest version
-    PlugAndConfig = repo : config : {
-        plugin = (fromGitHub "HEAD" repo);
+    PlugAndConfig = plug : config : {
+        plugin = plug;
         config = config;
     };
 
-    Plug = repo : (PlugAndConfig repo "");
+    Plug = plug : (PlugAndConfig plug "");
   
     importFile = lib.strings.fileContents;
+    
+    toggle-lsp-diagnostics-nvim =  pkgs.vimUtils.buildVimPlugin {
+        name = "toggle-lsp-diagnostics-nvim";
+        src = inputs.vimPlugins_toggle-lsp-diagnostics-nvim;
+    };
 
 in {
-  #nixpkgs.overlays = [
-  #    (import (builtins.fetchTarball {
-  #        url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-  #        
-  #    }))
-  #];
-  home.packages = with pkgs; [
-      tree-sitter
-          jq curl
-          universal-ctags
+    home.packages = with pkgs; [
+            tree-sitter
+            jq curl
+            universal-ctags
 #nix 
 #lsp servers
-          rnix-lsp
-          nodejs 
+            rnix-lsp
+            nodejs 
 # python
-          nodePackages.pyright
+            # nodePackages.pyright # not worth
 # js & ts 
 #nodePackages.typescript-language-server
 #rust 
-          rust-analyzer
+            rust-analyzer
 # lua
-          sumneko-lua-language-server
-  ];
+            # 
+            #sumneko-lua-language-server # not worth
+            #lua-ls
+
+            micromamba
+    ];
 
   programs.neovim = {
       enable = true;
@@ -68,7 +66,7 @@ lua << EOF
 -- loadSync
 ${importFile ./nvim/telescope.lua}
 
--- runAsync
+-- runAsync (deferred lsp configs)
 vim.defer_fn(function()
     ${importFile ./nvim/lsp.lua}
 
@@ -83,59 +81,36 @@ EOF
       plugins = with pkgs.vimPlugins; [
 
         #Common dependency for other plugins 
-
-        (PlugAndConfig "nvim-lua/plenary.nvim" ''
-
-	 """ IMPORTANT! """ put this at the first to ensure write first !!!
-
-	 ${importFile ./vimrc}
-	 ${importFile ./nvim/base.vim}
-
+        (PlugAndConfig plenary-nvim  ''
+""" IMPORTANT! """ put this at the first to ensure write first !!!
+${importFile ./vimrc}
+${importFile ./nvim/base.vim}
         '')
-        (Plug "kyazdani42/nvim-web-devicons")
+        
+        nvim-web-devicons
 
         #Fuzzy finder
         telescope-nvim
         telescope-fzf-native-nvim
+
         #(Plug "nvim-telescope/telescope.nvim")
         #(Plug "kelly-lin/telescope-ag")
 
-
         #tree-sitter!
-        {
-            plugin = (nvim-treesitter.withPlugins (
-                        plugins: with plugins; [
-                        tree-sitter-nix
-                        tree-sitter-lua
-                        tree-sitter-python
-                        tree-sitter-rust
-                        tree-sitter-c
-                        tree-sitter-cpp
-                        # tree-sitter-llvm
-                        tree-sitter-java
-                        tree-sitter-javascript
-                        tree-sitter-typescript
-                        tree-sitter-dockerfile
-                        tree-sitter-make
-                        tree-sitter-markdown
-                        tree-sitter-json
-                        tree-sitter-yaml
-                        tree-sitter-toml
-                        tree-sitter-http
-                        tree-sitter-css
-                        ]
-            ));
-
-            config = ''
+        (PlugAndConfig nvim-treesitter.withAllGrammars ''
 lua << EOF
     require'nvim-treesitter.configs'.setup {
       highlight = {
         enable = true,
+
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
         -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
         -- Using this option may slow down your editor, and you may see some duplicate highlights.
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
+
+        -- using old ones
+        disable = { "markdown" }, 
       },
       indent = { enable = true, },
       incremental_selection = {
@@ -150,11 +125,21 @@ lua << EOF
     }
 
 EOF
-            '';
+        '')
 
-        }
+        (PlugAndConfig vim-markdown ''
+let g:vim_markdown_conceal = 2
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_math = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_edit_url_in = 'tab'
+let g:vim_markdown_follow_anchor = 1
+        '')
 
-        (PlugAndConfig "nvim-treesitter/nvim-treesitter-context" ''
+        (PlugAndConfig nvim-treesitter-context ''
 lua << EOF
 require'treesitter-context'.setup{
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
@@ -197,8 +182,8 @@ require'treesitter-context'.setup{
 EOF
         '')
 
-        (PlugAndConfig "simrat39/symbols-outline.nvim" ''
-            lua << EOF
+        (PlugAndConfig symbols-outline-nvim ''
+lua << EOF
 vim.g.symbols_outline = {
     highlight_hovered_item = true,
     show_guides = true,
@@ -260,10 +245,9 @@ EOF
         # LSP
         nvim-lspconfig
         #(Plug "neovim/nvim-lspconfig")
-        
 
         # toggle diagnostics
-        (PlugAndConfig "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim" ''
+        (PlugAndConfig toggle-lsp-diagnostics-nvim ''
 lua << EOF
 require'toggle_lsp_diagnostics'.init()
 if (not my) then my = {} end
@@ -283,57 +267,63 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
         '')
 
         # Completion
-        (Plug "hrsh7th/nvim-cmp")
-        (Plug "hrsh7th/cmp-nvim-lsp")
-        (Plug "hrsh7th/cmp-buffer")
-        (Plug "hrsh7th/cmp-path")
-        (Plug "hrsh7th/cmp-cmdline")
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        cmp-cmdline
 
         # snippets are needed for many language servers
-        (Plug "hrsh7th/cmp-vsnip")
-        (Plug "hrsh7th/vim-vsnip")
+        cmp-vsnip
+        vim-vsnip
 
-        (Plug "rafamadriz/friendly-snippets") # snippet collection for all languages
+        friendly-snippets # snippet collection for all languages
         #(Plug "petertriho/cmp-git")
 
-        (Plug "ray-x/lsp_signature.nvim" )
+        #TODO r w vimPlugins.lsp_signature-nvim
+        lsp_signature-nvim
 
         #motions
-        (Plug"chaoren/vim-wordmotion")
-        (Plug "rhysd/clever-f.vim")
+        vim-wordmotion
+        clever-f-vim
 
         #outlines 
         #(Plug "stevearc/aerial.nvim")
 
         #bottom line
-        (PlugAndConfig "nvim-lualine/lualine.nvim" ''
+        (PlugAndConfig lualine-nvim ''
             lua require("lualine").setup({ })
         '')
 
         # colors & themes
-        (PlugAndConfig "akinsho/nvim-bufferline.lua" ''
-            lua << EOF 
-            require('bufferline').setup {
-              options = {
-                show_close_icon = false,
-                show_buffer_close_icons = false,
-                separator_style = "thick",
-              },
-            }
-            EOF 
+        (PlugAndConfig bufferline-nvim ''
+lua << EOF 
+require('bufferline').setup {
+  options = {
+    show_close_icon = true,
+    show_buffer_close_icons = false,
+    separator_style = "thick",
+  },
+}
+EOF 
         '')
-        (Plug "Yggdroot/indentLine")
-        (PlugAndConfig "gelguy/wilder.nvim" ''
+
+        indentLine
+
+        (PlugAndConfig wilder-nvim ''
             lua require('wilder').setup({modes = {':', '/', '?'}})
         '')
 
-        #(Plug "tomasr/molokai")
-        #(Plug "nanotech/jellybeans.vim")
-        (Plug "jnurmine/Zenburn")
+        # TODO 
+        zenburn
 
-        #(plugin "lewis6991/spellsitter.nvim") # spellchecker for comments
-      # (plugin "LnL7/vim-nix")detection
-      # (plugin "junegunn/fzf")
+        (PlugAndConfig vim-easy-align ''
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+        '')
       ];
 
        extraPackages = with pkgs; [
@@ -343,4 +333,3 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
        ];
   };
 }
-

@@ -1,11 +1,18 @@
 { config, pkgs, ... }:
 {
     home.packages = with pkgs; [
+        bat
         eza
+        lsd
         fd 
         file
         fzf
         ripgrep
+        broot
+        httpie
+        procs
+        cheat
+        jq
     ];
 
     programs.fzf = {
@@ -45,8 +52,8 @@
             tmux = "tmux -u";
 
             #Questionable ideas
-            #find = "fd";
-            #grep = "rg";
+            find = "fd";
+            grep = "rg";
 
             ip = "ip --color=auto";
             cat = "bat";

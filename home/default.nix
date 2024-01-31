@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let 
     #expose_bin_path = pkg : "${pkg.outPath}/bin";
     #exposePathsGlobally = ;
+    pp = inputs.plenary-nvim;
+
 in
 {
     home.username = "ed";
@@ -11,7 +13,7 @@ in
     home.packages = with pkgs; [
         alacritty
 
-        #bat
+        bat
         gnumake clang 
         meson ninja
 
@@ -41,8 +43,24 @@ in
         # some devs deps that have to installed globally 
         # rustup 
         # nodePackages.gulp
+
+        # MS OneNote
+        p3x-onenote
+
+        # MS Teams
+        # teams
+
+        joplin-desktop
+        #joplin
     ];
-   
+
+
+    # vim friendly pdf reader
+    programs.zathura.enable = true;
+    
+
+
+
     #java
     programs.java = {
         enable = true;
@@ -70,7 +88,10 @@ in
 
     # Raw config files 
     # Alacritty
-    xdg.configFile."alacritty/alacritty.yml".source = ./config/alacritty.yml;
+    xdg.configFile."alacritty/alacritty.toml" = {
+        source = ./config/alacritty.toml;
+        force = true;
+    };
 
     # Some softwares/extensions tend to read the default ~/.vimrc
     home.file.".vimrc".source = ./vimrc;

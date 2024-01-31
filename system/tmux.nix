@@ -7,10 +7,30 @@
         keyMode = "vi";
         aggressiveResize = true;
         baseIndex = 1;
-        newSession = true;
+        # newSession = true;
         # stop tmux + escape craziness.
         escapeTime = 0;
+        
+        extraConfigBeforePlugins = builtins.readFile ./.tmux.conf;
 
-      	extraConfig = builtins.readFile ./.tmux.conf;
+        extraConfig = ''
+set -g @resurrect-strategy-vim 'session'
+set -g @resurrect-strategy-nvim 'session'
+set -g @resurrect-capture-pane-contents 'on'
+
+set -g @continuum-restore 'on'
+set -g @continuum-boot 'on'
+set -g @continuum-save-interval '5'
+        '';
+
+        plugins = with pkgs; [
+            tmuxPlugins.sensible
+            tmuxPlugins.resurrect
+            tmuxPlugins.continuum
+            tmuxPlugins.yank
+            #tmuxPlugins.open
+        ];
+
+
     };
 }
