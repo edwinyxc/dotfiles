@@ -112,7 +112,6 @@ set undodir=~/.vim/undo
 "set iskeyword+=_
 "
 
-
 " Sensible Nav
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>

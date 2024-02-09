@@ -11,9 +11,8 @@
         # stop tmux + escape craziness.
         escapeTime = 0;
         
-        extraConfigBeforePlugins = builtins.readFile ./.tmux.conf;
+        extraConfigBeforePlugins = (builtins.readFile ./.tmux.conf) + ''
 
-        extraConfig = ''
 set -g @resurrect-strategy-vim 'session'
 set -g @resurrect-strategy-nvim 'session'
 set -g @resurrect-capture-pane-contents 'on'
@@ -30,7 +29,6 @@ set -g @continuum-save-interval '5'
             tmuxPlugins.yank
             #tmuxPlugins.open
         ];
-
 
     };
 }

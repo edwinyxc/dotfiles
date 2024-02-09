@@ -94,7 +94,7 @@ in
     };
 
     # Some softwares/extensions tend to read the default ~/.vimrc
-    home.file.".vimrc".source = ./vimrc;
+    home.file.".vimrc".source = ../system/vimrc;
 
     # Wayland's initrc
     #xdg.configFile."environment.d/50-initrc.conf".text = ''

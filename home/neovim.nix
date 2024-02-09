@@ -83,10 +83,11 @@ EOF
         #Common dependency for other plugins 
         (PlugAndConfig plenary-nvim  ''
 """ IMPORTANT! """ put this at the first to ensure write first !!!
-${importFile ./vimrc}
+${importFile ../system/vimrc}
 ${importFile ./nvim/base.vim}
         '')
         
+        vim-fugitive
         nvim-web-devicons
 
         #Fuzzy finder
@@ -110,7 +111,7 @@ lua << EOF
         additional_vim_regex_highlighting = false,
 
         -- using old ones
-        disable = { "markdown" }, 
+        -- disable = { "markdown" }, 
       },
       indent = { enable = true, },
       incremental_selection = {
@@ -125,18 +126,6 @@ lua << EOF
     }
 
 EOF
-        '')
-
-        (PlugAndConfig vim-markdown ''
-let g:vim_markdown_conceal = 2
-let g:vim_markdown_conceal_code_blocks = 0
-let g:vim_markdown_math = 1
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_strikethrough = 1
-let g:vim_markdown_autowrite = 1
-let g:vim_markdown_edit_url_in = 'tab'
-let g:vim_markdown_follow_anchor = 1
         '')
 
         (PlugAndConfig nvim-treesitter-context ''
@@ -264,14 +253,20 @@ require('bufferline').setup {
 EOF 
         '')
 
-        indentLine
+        (PlugAndConfig indentLine ''
+let g:indentLine_fileTypeExclude = ['markdown']
+        '')
 
         (PlugAndConfig wilder-nvim ''
-            lua require('wilder').setup({modes = {':', '/', '?'}})
+lua require('wilder').setup({modes = {':', '/', '?'}})
         '')
 
         # TODO 
         zenburn
+
+        #(PlugAndConfig vim-LanguageTool ''
+
+        #'')
 
         (PlugAndConfig vim-easy-align ''
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -280,6 +275,12 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
         '')
+
+        (PlugAndConfig markdown-preview-nvim ''
+let g:mkdp_browser = 'firefox'
+nmap <leader>p <Plug>MarkdownPreviewToggle
+        '')
+      #End of vimPlugins
       ];
 
        extraPackages = with pkgs; [
