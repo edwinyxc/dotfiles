@@ -56,12 +56,15 @@ pref("toolkit.scrollbox.verticalScrollDistance",                      3);//NSS  
 ///
 
 /// better ssd life --
-pref("browser.cache.disk.enable",                                 false);
-pref("browser.cache.memory.enable",                                true);
 
     '';
   };
 
+#
+#pref("browser.cache.disk.enable",                                 false);
+#pref("browser.cache.memory.enable",                                true);
+
+#
 
   environment.sessionVariables = {
         MOZ_USE_XINPUT2 = "1";

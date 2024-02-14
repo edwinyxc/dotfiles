@@ -38,7 +38,7 @@ let
 in
 {
     environment.systemPackages = with pkgs; [
-        alacritty 
+        #alacritty 
         sway
         dbus-sway-environment
         configure-gtk

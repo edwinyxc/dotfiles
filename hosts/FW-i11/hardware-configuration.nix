@@ -39,6 +39,7 @@
   hardware.opengl.enable = true;
   services.fwupd.enable = true;
 
+  powerManagement.enable = true;
   # Gnome 40 introduced a new way of managing power, without tlp.
   # However, these 2 services clash when enabled simultaneously.
   # https://github.com/NixOS/nixos-hardware/issues/260
@@ -54,5 +55,9 @@
           STOP_CHARGE_THRESH_BAT1 = 97;
           RUNTIME_PM_ON_BAT = "auto";
       };
+  };
+
+  services.thermald = {
+    enable = true;
   };
 }

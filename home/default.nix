@@ -11,7 +11,7 @@ in
     programs.home-manager.enable = true;
 
     home.packages = with pkgs; [
-        alacritty
+        #alacritty
 
         bat
         gnumake clang 
@@ -59,7 +59,19 @@ in
     programs.zathura.enable = true;
     
 
-
+    programs.urxvt = {
+        enable = true;
+        fonts = [
+            "xft:Blex Mono Nerd Font Mono:size=12"
+            "xft:Monospace:size=12"
+        ];
+        scroll.lines = 10000;
+        # You can adjust other URxvt options here
+        extraConfig = {
+            background = "black";
+            foreground = "white";
+        };
+    };
 
     #java
     programs.java = {
@@ -88,10 +100,10 @@ in
 
     # Raw config files 
     # Alacritty
-    xdg.configFile."alacritty/alacritty.toml" = {
-        source = ./config/alacritty.toml;
-        force = true;
-    };
+    #xdg.configFile."alacritty/alacritty.toml" = {
+    #    source = ./config/alacritty.toml;
+    #    force = true;
+    #};
 
     # Some softwares/extensions tend to read the default ~/.vimrc
     home.file.".vimrc".source = ../system/vimrc;
