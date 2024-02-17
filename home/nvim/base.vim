@@ -49,14 +49,14 @@ noremap <Space><Space> :b#<CR>
 "" Close buffer
 noremap <leader>c :bd<CR>
 
-"" Clean search (highlight)
+"" Clear search highlights
 nnoremap <silent> <leader>, :noh<cr>
 
 "" Switching windows
-"noremap <C-j> <C-w>j
-"noremap <C-k> <C-w>k
-"noremap <C-l> <C-w>l
-"noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-h> <C-w>h
 
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv

@@ -35,7 +35,7 @@ in {
 # js & ts 
 #nodePackages.typescript-language-server
 #rust 
-            rust-analyzer
+            #rust-analyzer
 # lua
             # 
             #sumneko-lua-language-server # not worth
@@ -85,6 +85,24 @@ EOF
 """ IMPORTANT! """ put this at the first to ensure write first !!!
 ${importFile ../system/vimrc}
 ${importFile ./nvim/base.vim}
+        '')
+
+        (PlugAndConfig ack-vim ''
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --smart-case --type-not sql'
+endif
+
+" Auto close the Quickfix list after pressing '<enter>' on a list item
+let g:ack_autoclose = 0
+
+" Any empty ack search will search for the work the cursor is on
+let g:ack_use_cword_for_empty_search = 1
+
+" Don't jump to first match
+cnoreabbrev Ack Ack!
+
+nnoremap <Leader>/ :Ack!<Space>
+
         '')
         
         vim-fugitive

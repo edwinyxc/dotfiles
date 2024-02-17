@@ -20,15 +20,18 @@ set -g @resurrect-capture-pane-contents 'on'
 set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
 set -g @continuum-save-interval '5'
+
+set -g @catppuccin_flavour 'frappe' # or frappe, macchiato, mocha
         '';
 
-        plugins = with pkgs; [
-            tmuxPlugins.sensible
-            tmuxPlugins.resurrect
-            tmuxPlugins.continuum
-            tmuxPlugins.yank
+        plugins = with pkgs; (with tmuxPlugins; [
+            sensible
+            resurrect
+            continuum
+            yank
+            catppuccin
             #tmuxPlugins.open
-        ];
+        ]);
 
     };
 }

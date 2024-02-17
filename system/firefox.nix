@@ -55,12 +55,12 @@ pref("toolkit.scrollbox.horizontalScrollDistance",                    5);//NSS  
 pref("toolkit.scrollbox.verticalScrollDistance",                      3);//NSS      [3]
 ///
 
-/// better ssd life --
 
     '';
   };
 
 #
+#/// better ssd life -- this is removed as will cause UB when using Microsoft SSO/OAuth agent.
 #pref("browser.cache.disk.enable",                                 false);
 #pref("browser.cache.memory.enable",                                true);
 
