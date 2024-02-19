@@ -1,10 +1,6 @@
 # windows WSL 
 { pkgs,... }: 
 {
-    imports = [
-        ../../system
-    ]; 
-
     wsl = {
         enable = true;
         defaultUser = "ed";

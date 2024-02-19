@@ -81,6 +81,10 @@
       zsh neovim tmux 
       git wget curl unzip
       usbutils pciutils nettools toybox
+      bat gnumake clang meson ninja
+      man-pages tree unzip zip
+      neofetch tealdeer gitui gitg
+      nodePackages.npm yarn rustup 
   ];
 
   #services.flatpak.enable = true;

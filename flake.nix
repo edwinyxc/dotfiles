@@ -15,6 +15,7 @@
         # NixOS hardware 
         nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+        # NixOS-WSL
         NixOS-WSL = {
             url = "github:nix-community/NixOS-WSL";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -48,59 +49,54 @@
                     inputs.NixOS-WSL.nixosModules.wsl
 
                     ./hosts/wsl
+                    ./system
                         #home
-                        home-manager.nixosModules.home-manager
-                        {
-                            home-manager.useGlobalPkgs = true;
-                            home-manager.useUserPackages = true;
-
-                            home-manager.extraSpecialArgs = { inherit inputs; };
-
-                            home-manager.users.ed = import ./home;
-                        }
+                    home-manager.nixosModules.home-manager
+                    {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.extraSpecialArgs = { inherit inputs; };
+                        home-manager.users.ed = import ./home;
+                    }
                 ];
             };
+
             "FW-i11" = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
 
                 specialArgs = { inherit inputs; };
                 modules = [
-# Framework i11
+
+                    # Framework i11 -- main config 
                     ./hosts/FW-i11
-# Desktop
-                        ./system/kde.nix
-                        ./system/misc.nix
+                    ./system
 
-# KDE
-                        ./system/kde.nix
+                    # Desktop
+                    ./system/kde.nix
+                    ./system/misc.nix
 
-# Firefox
-                        ./system/firefox.nix
+                    # Fonts
+                    ./system/fonts.nix
+                    # KDE
+                    ./system/kde.nix
 
-# Docker & Virtualisation
-#./system/docker.nix
+                    # Firefox
+                    ./system/firefox.nix
 
-# Android -ADB & JAVA
-#./system/android.nix
+                    # framework hardware upstream tweaks
+                    inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
 
-# NPM 
-# ./system/nodejs.nix
-# framework hardware upstream tweaks
-                        inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+                    #KDE 6
+                    inputs.kde2nix.nixosModules.plasma6
 
-#KDE 6
-                        inputs.kde2nix.nixosModules.plasma6
-
-#home
-                        home-manager.nixosModules.home-manager
-                        {
-                            home-manager.useGlobalPkgs = true;
-                            home-manager.useUserPackages = true;
-
-                            home-manager.extraSpecialArgs = { inherit inputs; };
-
-                            home-manager.users.ed = import ./home;
-                        }
+                    #home-manager
+                    home-manager.nixosModules.home-manager
+                    {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.extraSpecialArgs = { inherit inputs; };
+                        home-manager.users.ed = import ./home;
+                    }
                 ];
             };
         };
