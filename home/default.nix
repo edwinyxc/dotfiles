@@ -10,58 +10,23 @@ in
     home.homeDirectory = "/home/ed";
     programs.home-manager.enable = true;
 
-    home.packages = with pkgs; [
-        #alacritty
 
-        bat
-        gnumake clang 
-        meson ninja
+    home.packages = with pkgs; [
+        bat gnumake clang meson ninja
 
         #python
-
-        #Image Viewer
-        geeqie
         
         #cli
-        man-pages
-        tree
-        unzip zip
-        #zenith
-        neofetch
-        tealdeer
-        gitui gitg
-
-        #remote access
-        #remmina
+        man-pages tree unzip zip
+        neofetch tealdeer gitui gitg
 
         #xclip
-        nodePackages.npm
-        yarn 
-        #android
-        #android-studio
-
-        # some devs deps that have to installed globally 
-        # rustup 
-        # nodePackages.gulp
-
-        # MS OneNote
-        p3x-onenote
-
-        # MS Teams
-        # teams
-
-        joplin-desktop
-        #joplin
-
-        motrix
-
-        rustup
+        nodePackages.npm yarn rustup 
     ];
 
 
     # vim friendly pdf reader
     programs.zathura.enable = true;
-    
 
     programs.urxvt = {
         enable = true;

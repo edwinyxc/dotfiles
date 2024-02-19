@@ -1,67 +1,102 @@
 {
-  description = "Edwin's nixos flake";
+    description = "Edwin's nixos flake";
 
-  nixConfig = {
-    experimental-features = ["nix-command" "flakes"];
-  };
-
-  inputs = {
-
-    # Offical NixOS pkg source
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    kde2nix.url = "github:nix-community/kde2nix";
-
-    # NixOS hardware 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
-
-    # Vim plugins which are not found in nixpkgs:
-    vimPlugins_toggle-lsp-diagnostics-nvim = {
-        url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
-        flake = false;
+    nixConfig = {
+        experimental-features = ["nix-command" "flakes"];
     };
 
-    #home-manager
-    home-manager = {
-        url = "github:nix-community/home-manager";
-        
+    inputs = {
+
+        # Offical NixOS pkg source
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+        kde2nix.url = "github:nix-community/kde2nix";
+
+        # NixOS hardware 
+        nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+
+        # Vim plugins which are not found in nixpkgs:
+        vimPlugins_toggle-lsp-diagnostics-nvim = {
+            url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
+            flake = false;
+        };
+
+        #home-manager
+        home-manager = {
+            url = "github:nix-community/home-manager";
+
         # keep home-manager consistent with the current flake on `inputs.nixpkgs`
-        inputs.nixpkgs.follows = "nixpkgs";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
     };
 
-  };
+    outputs = inputs@{self, nixpkgs, home-manager, ...}: {
 
-  outputs = inputs@{self, nixpkgs, home-manager, ...}: {
+        nixosConfigurations = {
 
-      nixosConfigurations = {
+            "wsl" = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
 
-          "FW-i11" = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
+                specialArgs = { inherit inputs; };
+                modules = [
+                    ./hosts/wsl
+                        #home
+                        home-manager.nixosModules.home-manager
+                        {
+                            home-manager.useGlobalPkgs = true;
+                            home-manager.useUserPackages = true;
 
-              specialArgs = { inherit inputs; };
-              modules = [
-                  # Framework i11
-                  ./hosts/FW-i11
+                            home-manager.extraSpecialArgs = { inherit inputs; };
 
-                  # framework hardware upstream tweaks
-                  inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+                            home-manager.users.ed = import ./home;
+                        }
+                ];
+            };
+            "FW-i11" = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
 
-                  #KDE 6
-                  inputs.kde2nix.nixosModules.plasma6
+                specialArgs = { inherit inputs; };
+                modules = [
+# Framework i11
+                    ./hosts/FW-i11
+# Desktop
+                        ./system/kde.nix
+                        ./system/misc.nix
 
-                  #home
-                  home-manager.nixosModules.home-manager
-                  {
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
+# KDE
+                        ./system/kde.nix
 
-                    home-manager.extraSpecialArgs = { inherit inputs; };
+# Firefox
+                        ./system/firefox.nix
 
-                    home-manager.users.ed = import ./home;
-                  }
-              ];
-          };
-      };
-  };
+# Docker & Virtualisation
+#./system/docker.nix
+
+# Android -ADB & JAVA
+#./system/android.nix
+
+# NPM 
+# ./system/nodejs.nix
+# framework hardware upstream tweaks
+                        inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+
+#KDE 6
+                        inputs.kde2nix.nixosModules.plasma6
+
+#home
+                        home-manager.nixosModules.home-manager
+                        {
+                            home-manager.useGlobalPkgs = true;
+                            home-manager.useUserPackages = true;
+
+                            home-manager.extraSpecialArgs = { inherit inputs; };
+
+                            home-manager.users.ed = import ./home;
+                        }
+                ];
+            };
+        };
+    };
 }

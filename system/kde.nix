@@ -26,7 +26,20 @@
   #};
 
   environment.systemPackages = with pkgs; [
-    crow-translate # 
+    #crow-translate # 
+      #Desktop apps goes here
+      google-chrome
+      libreoffice-qt
+      mission-center
+      neovide
+      p3x-onenote
+      joplin-desktop
+      motrix
+      onedrivegui
+      zotero
   ];
 
+
+  # OneDrive
+  services.onedrive.enable = true;
 }
