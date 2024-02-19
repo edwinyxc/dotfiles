@@ -15,6 +15,10 @@
         # NixOS hardware 
         nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+        NixOS-WSL = {
+            url = "github:nix-community/NixOS-WSL";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         # Vim plugins which are not found in nixpkgs:
         vimPlugins_toggle-lsp-diagnostics-nvim = {
@@ -41,6 +45,8 @@
 
                 specialArgs = { inherit inputs; };
                 modules = [
+                    inputs.NixOS-WSL.nixosModules.wsl
+
                     ./hosts/wsl
                         #home
                         home-manager.nixosModules.home-manager
