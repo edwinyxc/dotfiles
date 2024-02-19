@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ inputs, config, pkgs, _imports, ... }:
 let 
     #expose_bin_path = pkg : "${pkg.outPath}/bin";
     #exposePathsGlobally = ;
@@ -9,6 +9,7 @@ in
     home.username = "ed";
     home.homeDirectory = "/home/ed";
     programs.home-manager.enable = true;
+    
 
     #TODO single user anyway
     home.packages = with pkgs; [ ];
@@ -35,7 +36,7 @@ in
     imports = [
         ./zsh.nix
         ./neovim.nix
-    ];
+    ] ++ _imports;
 
 
     # Raw config files 
