@@ -69,9 +69,10 @@
                     # Framework i11 -- main config 
                     ./hosts/FW-i11
                     ./system
+                    ./system/fonts.nix
 
                     # Desktop
-                    ./system/kde.nix
+                    ./system/desktop.nix
                     ./system/misc.nix
 
                     # Fonts
@@ -95,7 +96,9 @@
                         home-manager.useUserPackages = true;
                         home-manager.extraSpecialArgs = {
                             inherit inputs;
-                            _imports = [./home/urxvt.nix];   
+                            _imports = [
+                                ./home/desktop
+                            ];   
                         };
                         home-manager.users.ed = import ./home;
                     }

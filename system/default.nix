@@ -3,19 +3,10 @@
 {
 
   imports = [
-      # Fonts
-      ./fonts.nix
       # Vim 
       ./vim.nix
       # Tmux
       ./tmux.nix
-      
-      # Sway wm WIP ...
-      #./system/wm-sway.nix
-
-      # Gnome
-      #./wm-gnome.nix
-
   ];
 
   # Set your time zone.
@@ -55,13 +46,13 @@
     ];
   };
 
-
   # Configure keymap in X11
   services.xserver = {
     layout = "au";
     xkbVariant = "";
   };
 
+  services.xserver.xkbOptions = "ctrl:nocaps";
   console.useXkbConfig = true;
   #console = {
   #  useXkbConfig = true;
@@ -70,10 +61,6 @@
   #  font = "ter-u28n";
   #};
 
-  services.xserver.xkbOptions = "ctrl:nocaps";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -121,6 +108,10 @@
         experimental-features = [ "nix-command" "flakes"];
     };
   };
+
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
