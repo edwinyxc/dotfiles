@@ -5,7 +5,7 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  imports = [ ./kde.nix ];
+  imports = [ ./gnome.nix ];
 
   # fcitx 5
   #i18n.inputMethod = {

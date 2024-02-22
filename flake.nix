@@ -77,8 +77,6 @@
 
                     # Fonts
                     ./system/fonts.nix
-                    # KDE
-                    ./system/kde.nix
 
                     # Firefox
                     ./system/firefox.nix
