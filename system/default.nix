@@ -66,7 +66,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
       zsh neovim tmux 
-      git wget curl unzip
+      git wget curl unzip ouch
       usbutils pciutils nettools toybox
       bat gnumake clang meson ninja
       man-pages tree unzip zip

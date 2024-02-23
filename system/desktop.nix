@@ -28,9 +28,14 @@
       motrix
       onedrivegui
       zotero
+
   ];
 
   # OneDrive
   services.onedrive.enable = true;
 
+  #Since Nixos 22.05 you can turn on native wayland support in all chrome and most electron apps by setting an environment variable:
+  environment.sessionVariables = {
+        NIXOS_OZONE_WL = "1" ;
+  };
 }

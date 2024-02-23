@@ -27,7 +27,7 @@
       gnome-terminal
       #gedit # text editor
       epiphany # web browser
-      geary # email reader
+      #geary # email reader
       evince # document viewer
       gnome-characters
       totem # video player
@@ -38,32 +38,82 @@
     ]);
 
     environment.systemPackages = with pkgs; [
-        adw-gtk3
+        #adw-gtk3
         (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         recursive
+        gnome-frog
     ] ++ (with pkgs.gnome; [
         gnome-calculator
         gnome-calendar
         gnome-system-monitor
+        gnome-tweaks
+        dconf-editor
     ]) ++ (with pkgs.gnomeExtensions; [
-        blur-my-shell
-        dash-to-panel
-        date-menu-formatter
+        #blur-my-shell
+        #dash-to-panel
+        #date-menu-formatter
+        #clipboard-indicator 
+        clipboard-history
+        user-themes
+        numix-cursor-theme
+
     ]);
 
     programs.dconf.profiles = {
         user.databases = [{
-            settings = with lib.gvarient; {
+            settings = with lib.gvariant; {
                 # Use `$ dconf watch /` to watch the changes and apply those changes here.
                 # gnome/dconf settings 
+                "org/gnome/mutter" = {
+                     experimental-features = [ "scale-monitor-framebuffer" ];
+                };
+
+                #Touchpad settings
+                "org/gnome/desktop/peripherals/mouse".accel-profile = "flat";
+                "org/gnome/desktop/peripherals/touchpad" = {
+                    tap-to-click = true;
+                    tap-and-drag = false;
+                    speed = 0.16831517509727634;
+                };
+
+                "org/gnome/desktop/privacy".remember-recent-files = false;
+
+                "org/gnome/desktop/interface" = {
+                        monospace-font-name = "BlexMono Nerd Font 9";
+                        cursor-theme        = "Numix-Cursor";
+                        cursor-size         = mkInt32 24;
+                        icon-theme          = "Adwaita";
+                        gtk-theme           = "Adwaita";
+                };
+
+                "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
+                    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+                ];
+
+                "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+                    binding = "<Control><Alt>t";
+                    command = "foot";
+                    name    = "Open Terminal";
+                };
+                
+
+                "org/gnome/settings-daemon/plugins/power"= {
+                    ambient-enabled = false;
+                    idle-dim        = false;
+                };
+                # Extensions 
+
+                "org/gnome/shell".enabled-extensions = [
+                    "user-theme@gnome-shell-extensions.gcampax.github.com"
+                    "clipboard-history@alexsaveau.dev"
+                ];
+
+                "org/gnome/shell/extensions/user-theme" = {
+                    name = "";
+                };
             };
         }];
     };
-
-
-
-
-
 
 
     # Gnome 40 introduced a new way of managing power, without tlp.

@@ -50,7 +50,7 @@
 			# URxvt Appearance 
 			letterSpace           = "0";
 				lineSpace         = "0";
-				geometry          = "122x35";
+				geometry          = "94x25";
 				internalBorder    = "12";
 				cursorBlink       = "true";
 				cursorUnderline   = "false";

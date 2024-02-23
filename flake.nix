@@ -34,7 +34,7 @@
         # keep home-manager consistent with the current flake on `inputs.nixpkgs`
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
+        firefox-gnome-theme = { url = "github:rafaelmardojai/firefox-gnome-theme"; flake = false; };
     };
     outputs = inputs@{self, nixpkgs, home-manager, ...}: {
 
@@ -96,6 +96,7 @@
                             inherit inputs;
                             _imports = [
                                 ./home/desktop
+                                ./home/desktop/firefox-gnome-theme.nix
                             ];   
                         };
                         home-manager.users.ed = import ./home;
