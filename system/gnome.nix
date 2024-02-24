@@ -86,9 +86,13 @@
                         gtk-theme           = "Adwaita";
                 };
 
+                "org/gnome/shell/keybindings".show-screen-recording-ui = ["<Shift><Super>s"];
+
                 "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
                     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
                 ];
+
+                "org.gnome.desktop.wm.keybindings".show-desktop = ["<Super>d"];
 
                 "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
                     binding = "<Control><Alt>t";

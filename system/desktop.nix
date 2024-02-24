@@ -27,7 +27,8 @@
       joplin-desktop
       motrix
       onedrivegui
-      zotero
+
+      zotero_7
 
   ];
 
@@ -36,6 +37,8 @@
 
   #Since Nixos 22.05 you can turn on native wayland support in all chrome and most electron apps by setting an environment variable:
   environment.sessionVariables = {
-        NIXOS_OZONE_WL = "1" ;
+      GDK_BACKEND = "wayland";
+      NIXOS_OZONE_WL = "1";
+      MOZ_ENABLE_WAYLAND = "1";
   };
 }
