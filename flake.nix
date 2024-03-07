@@ -21,11 +21,17 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        # Vim plugins which are not found in nixpkgs:
+        # BEGIN Vim plugins which are not found in nixpkgs:
         vimPlugins_toggle-lsp-diagnostics-nvim = {
             url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
             flake = false;
         };
+
+        vimPlugins_telescope-bibtex-nvim = { 
+            url = "github:nvim-telescope/telescope-bibtex.nvim";
+            flake = false;
+        };
+        # END Vim plugins
 
         #home-manager
         home-manager = {

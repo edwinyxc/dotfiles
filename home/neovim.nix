@@ -21,6 +21,12 @@ let
         src = inputs.vimPlugins_toggle-lsp-diagnostics-nvim;
     };
 
+    telescope-bibtex-nvim = pkgs.vimUtils.buildVimPlugin {
+        name = "telescope-bibtex-nvim";
+        src = inputs.vimPlugins_telescope-bibtex-nvim;
+
+    };
+
 in {
     home.packages = with pkgs; [
             tree-sitter
@@ -87,6 +93,10 @@ ${importFile ../system/vimrc}
 ${importFile ./nvim/base.vim}
         '')
 
+        (Plug vim-gutentags)
+        (Plug vim-cool)
+        (Plug vimtex)
+
         (PlugAndConfig ack-vim ''
 if executable('rg')
   let g:ackprg = 'rg --vimgrep --smart-case --type-not sql'
@@ -111,6 +121,10 @@ nnoremap <Leader>/ :Ack!<Space>
         #Fuzzy finder
         telescope-nvim
         telescope-fzf-native-nvim
+
+
+        (PlugAndConfig telescope-bibtex-nvim ''
+        '')
 
         #(Plug "nvim-telescope/telescope.nvim")
         #(Plug "kelly-lin/telescope-ag")

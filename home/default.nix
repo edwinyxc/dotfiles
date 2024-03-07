@@ -12,7 +12,9 @@ in
     
 
     #TODO single user anyway
-    home.packages = with pkgs; [ ];
+    home.packages = with pkgs; [
+        texliveFull
+    ];
 
     ##java
     #programs.java = {
@@ -57,6 +59,7 @@ in
     home.file.".npmrc".text = ''
         prefix=$HOME/.npm-global
     '';
+    xdg.configFile."zathura".source = ./zathurarc;
 
     # home.file.".xprofile"
 

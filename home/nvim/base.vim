@@ -89,3 +89,7 @@ endif
 
 set spell
 setlocal spell spelllang=en_au
+
+
+" Go to the index of notes and set the working directory to my notes
+nnoremap <leader>ni :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>

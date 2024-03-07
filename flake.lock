@@ -268,6 +268,7 @@
         "kde2nix": "kde2nix",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
+        "vimPlugins_telescope-bibtex-nvim": "vimPlugins_telescope-bibtex-nvim",
         "vimPlugins_toggle-lsp-diagnostics-nvim": "vimPlugins_toggle-lsp-diagnostics-nvim"
       }
     },
@@ -298,6 +299,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "vimPlugins_telescope-bibtex-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1709126589,
+        "narHash": "sha256-Cao5W/Z4a0O9C29om7ayefxajKGyY/PRc3cT/5Umjkg=",
+        "owner": "nvim-telescope",
+        "repo": "telescope-bibtex.nvim",
+        "rev": "4117b6aad1d1fa7526a31bfcdc9741d11ee4a22c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-telescope",
+        "repo": "telescope-bibtex.nvim",
         "type": "github"
       }
     },

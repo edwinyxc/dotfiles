@@ -42,6 +42,7 @@
         (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
         recursive
         gnome-frog
+        remmina
     ] ++ (with pkgs.gnome; [
         gnome-calculator
         gnome-calendar
@@ -92,7 +93,13 @@
                     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
                 ];
 
-                "org.gnome.desktop.wm.keybindings".show-desktop = ["<Super>d"];
+                "org.gnome.desktop.wm.keybindings" = {
+                    show-desktop = ["<Super>d"];
+                    move-to-workspace-left = ["<Shift><Control><Super>Left"];
+                    move-to-workspace-right = ["<Shift><Control><Super>Right"];
+                    switch-to-workspace-left = ["<Control><Super>Left"];
+                    switch-to-workspace-right = ["<Control><Super>Right"];
+                };
 
                 "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
                     binding = "<Control><Alt>t";
