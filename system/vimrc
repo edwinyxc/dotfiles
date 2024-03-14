@@ -45,8 +45,8 @@ colorscheme default
 "" Fix backspace indent
 set backspace=indent,eol,start
 
-set number
-set relativenumber
+"set number
+"set relativenumber
 
 "set smartindent
 set autoindent
@@ -112,11 +112,12 @@ set undodir=~/.vim/undo
 "set iskeyword+=_
 "
 
-" Sensible Nav -- TODO not working
+"" Sensible Nav -- no longer needed because for the tmux-nav 
 "nnoremap <C-J> <C-W><C-J>
 "nnoremap <C-K> <C-W><C-K>
 "nnoremap <C-L> <C-W><C-L>
 "nnoremap <C-H> <C-W><C-H>
+
 
 set splitbelow
 set splitright

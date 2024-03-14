@@ -59,7 +59,7 @@ in
     home.file.".npmrc".text = ''
         prefix=$HOME/.npm-global
     '';
-    xdg.configFile."zathura".source = ./zathurarc;
+    #xdg.configFile."zathura".source = ./zathurarc; -- use options instead
 
     # home.file.".xprofile"
 

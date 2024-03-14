@@ -52,12 +52,6 @@ noremap <leader>c :bd<CR>
 "" Clear search highlights
 nnoremap <silent> <leader>, :noh<cr>
 
-"" Switching windows
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
@@ -92,4 +86,4 @@ setlocal spell spelllang=en_au
 
 
 " Go to the index of notes and set the working directory to my notes
-nnoremap <leader>ni :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
+nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>

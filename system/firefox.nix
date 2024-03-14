@@ -5,6 +5,8 @@
   programs.firefox = {
     enable = true;
     autoConfig = ''
+
+pref("apz.overscroll.enabled",                                     true);//NSS    [120]
 pref("general.smoothScroll.msdPhysics.continuousMotionMaxDeltaMS",   12);//NSS    [120]
 pref("general.smoothScroll.msdPhysics.enabled",                    true);//NSS  [false]
 pref("general.smoothScroll.msdPhysics.motionBeginSpringConstant",   200);//NSS   [1250]
@@ -22,9 +24,9 @@ pref("mousewheel.system_scroll_override_on_root_content.enabled",  true);//NSS  
 pref("mousewheel.system_scroll_override.enabled",                  true);//NSS   [true]
 
 /// adjust pixels at a time count for mousewheel - cant do more than a page at once if <100
-pref("mousewheel.default.delta_multiplier_x",                       100);//NSS    [100]
-pref("mousewheel.default.delta_multiplier_y",                       100);//NSS    [100]
-pref("mousewheel.default.delta_multiplier_z",                       100);//NSS    [100]
+pref("mousewheel.default.delta_multiplier_x",                       35);//NSS    [100]
+pref("mousewheel.default.delta_multiplier_y",                       35);//NSS    [100]
+pref("mousewheel.default.delta_multiplier_z",                       35);//NSS    [100]
 
 ///  this preset will reset couple extra variables for consistency
 pref("apz.allow_zooming",                                          true);//NSS   [true]
@@ -54,8 +56,7 @@ pref("mousewheel.min_line_scroll_amount",                             5);//NSS  
 pref("toolkit.scrollbox.horizontalScrollDistance",                    5);//NSS      [5]
 pref("toolkit.scrollbox.verticalScrollDistance",                      3);//NSS      [3]
 ///
-
-
+pref("browser.compactmode.show",                                   true);
     '';
   };
 

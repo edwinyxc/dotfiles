@@ -67,7 +67,7 @@
   environment.systemPackages = with pkgs; [
       zsh neovim tmux 
       git wget curl unzip ouch
-      usbutils pciutils nettools toybox
+      usbutils pciutils nettools 
       bat gnumake clang meson ninja
       man-pages tree unzip zip
       neofetch tealdeer gitui gitg

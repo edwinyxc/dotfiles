@@ -58,6 +58,7 @@
         user-themes
         numix-cursor-theme
 
+        appindicator
     ]);
 
     programs.dconf.profiles = {
@@ -82,7 +83,7 @@
                 "org/gnome/desktop/interface" = {
                         monospace-font-name = "BlexMono Nerd Font 9";
                         cursor-theme        = "Numix-Cursor";
-                        cursor-size         = mkInt32 24;
+                        cursor-size         = mkInt32 18;
                         icon-theme          = "Adwaita";
                         gtk-theme           = "Adwaita";
                 };
@@ -106,17 +107,17 @@
                     command = "foot";
                     name    = "Open Terminal";
                 };
-                
 
                 "org/gnome/settings-daemon/plugins/power"= {
                     ambient-enabled = false;
                     idle-dim        = false;
                 };
-                # Extensions 
 
+                # Extensions 
                 "org/gnome/shell".enabled-extensions = [
                     "user-theme@gnome-shell-extensions.gcampax.github.com"
                     "clipboard-history@alexsaveau.dev"
+                    "appindicatorsupport@rgcjonas.gmail.com"
                 ];
 
                 "org/gnome/shell/extensions/user-theme" = {

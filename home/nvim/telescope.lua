@@ -52,6 +52,7 @@ telescope.setup({
         file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
         grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.view,
         qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+        preview_width = 0.6,
     },
 
     extensions =  {

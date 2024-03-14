@@ -53,7 +53,7 @@
 
             #Questionable ideas
             find = "fd";
-            grep = "rg";
+            #grep = "rg";
 
             ip = "ip --color=auto";
             cat = "bat";

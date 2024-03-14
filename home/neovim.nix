@@ -35,7 +35,7 @@ in {
 #nix 
 #lsp servers
             rnix-lsp
-            nodejs 
+            nodejs
 # python
             # nodePackages.pyright # not worth
 # js & ts 
@@ -48,6 +48,11 @@ in {
             #lua-ls
 
             #micromamba
+
+            #TODO
+            #languageTool
+            
+
     ];
 
   programs.neovim = {
@@ -94,6 +99,8 @@ ${importFile ./nvim/base.vim}
         '')
 
         (Plug vim-gutentags)
+        #(Plug vim-LanguageTool)
+
         (Plug vim-cool)
         (Plug vimtex)
 
@@ -116,12 +123,13 @@ nnoremap <Leader>/ :Ack!<Space>
         '')
         
         vim-fugitive
+        (PlugAndConfig vim-tmux-navigator ''
+        '')
         nvim-web-devicons
 
         #Fuzzy finder
         telescope-nvim
         telescope-fzf-native-nvim
-
 
         (PlugAndConfig telescope-bibtex-nvim ''
         '')
