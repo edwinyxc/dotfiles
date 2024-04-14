@@ -89,6 +89,17 @@ set recolor                     true
             };
         };
     };
-    
+
+    #TODO single user anyway
+    home.packages = with pkgs; [
+        #whatsapp-for-linux
+    ];
+
     home.file.".icons/default".source = "${pkgs.numix-cursor-theme}/share/icons/Numix-Cursor"; 
+
+    # make firefox treat md as text to avoid download
+    home.file.".mime.types".text = ''
+type=text/plain exts=md,mkd,mkdn,mdwn,mdown,markdown, desc="Markdown document"
+    '';
+
 }

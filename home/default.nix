@@ -14,6 +14,7 @@ in
     #TODO single user anyway
     home.packages = with pkgs; [
         texliveFull
+        #whatsapp-for-linux
     ];
 
     ##java
@@ -36,10 +37,10 @@ in
     };
 
     imports = [
-        ./zsh.nix
+        #./zsh.nix
+        ./bash.nix
         ./neovim.nix
     ] ++ _imports;
-
 
     # Raw config files 
     # Alacritty

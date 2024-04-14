@@ -38,13 +38,23 @@
     isNormalUser = true;
     description = "Edwin";
 
-    shell = pkgs.zsh;
+    #shell = pkgs.;
 
     extraGroups = [ "networkmanager" "wheel" "video"];
     packages = with pkgs; [
-        zsh
+        #zsh
+    ];
+
+    # authorizedKeys
+    openssh.authorizedKeys.keys = [
+        ''
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsSM9ldCPIzyBpQWw52gZFl2hDa4VebKRh4qFJsOzcppbcEkhmx+CYfjQX5EjMV20XuvLyN8ATyxSAV+pWcv3XBaOM0GTpClWypaoRS8RDBNmN0LfvD9R7VezxUf6kJuDiKPltR1uCmUkTauVs7aN/vPzbDKU41+01JChP3p5qXT3SR8m1MXkNIK8YeGGCNdOZpPlIyrf10TS2wxPRztaAhKdyBfyoy4n+kxg7LFidqIpddeC/YN1LfDPV8Z3Hr73uRiO8C57kNbuH7k7ZXY49DZQndC4tCebjxaQmH5WBKDwOT yue@yue-AB350M-HD3
+        ''
     ];
   };
+
+
+  
 
   # Configure keymap in X11
   services.xserver = {
@@ -65,7 +75,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      zsh neovim tmux 
+      neovim tmux 
       git wget curl unzip ouch
       usbutils pciutils nettools 
       bat gnumake clang meson ninja
@@ -87,8 +97,16 @@
      enableSSHSupport = true;
   };
 
-  programs.zsh.enable = true;
+  #programs.zsh.enable = true;
 
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
+
+  services.openssh = {
+    enable = true;
+    ports = [22];
+    settings.PasswordAuthentication = false;
+  };
 
   nix = {
     gc = {
@@ -115,4 +133,43 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+
+  #samba??? TODO move to a separate file
+    services.samba = {
+      enable = true;
+      securityType = "user";
+      openFirewall = true;
+      extraConfig = ''
+        workgroup = WORKGROUP
+        server string = smbnix
+        netbios name = smbnix
+        security = user 
+        #use sendfile = yes
+        #max protocol = smb2
+        # note: localhost is the ipv6 localhost ::1
+        hosts allow = 192.168.1. 127.0.0.1 localhost
+        hosts deny = 0.0.0.0/0
+        guest account = ed
+        map to guest = bad user
+      '';
+      shares = {
+        public = {
+          path = "/home/ed/Public";
+          browseable = "yes";
+          "read only" = "no";
+          "guest ok" = "yes";
+          "create mask" = "0644";
+          "directory mask" = "0755";
+          #"force user" = "ed";
+          #"force group" = "groupname";
+        };
+      };
+    };
+
+    services.samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+    };
+
 }
