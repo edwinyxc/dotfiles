@@ -1,7 +1,5 @@
 { config , pkgs , ... }:
-
 {
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -29,6 +27,7 @@
       onedrivegui
 
       zotero_7
+      plantuml-c4
 
   ];
 

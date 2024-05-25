@@ -6,11 +6,6 @@
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set lazyredraw
 
-"better wildmenu
-set path+=**
-set wildmenu
-set wildmode=longest:list,full
-
 "" auto save
 "set autowrite
 "set autowriteall
@@ -61,7 +56,7 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 
 " Better display for messages
-set cmdheight=1
+set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default
 " 4000.
@@ -83,7 +78,6 @@ endif
 
 set spell
 setlocal spell spelllang=en_au
-
 
 " Go to the index of notes and set the working directory to my notes
 nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>

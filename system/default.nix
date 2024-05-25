@@ -54,15 +54,13 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsS
   };
 
 
-  
-
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "au";
-    xkbVariant = "";
+    variant = "";
+    options = "ctrl:nocaps";
   };
 
-  services.xserver.xkbOptions = "ctrl:nocaps";
   console.useXkbConfig = true;
   #console = {
   #  useXkbConfig = true;

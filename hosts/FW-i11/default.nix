@@ -16,7 +16,7 @@
 
   console.useXkbConfig = true;
 
-  services.xserver.xkbOptions = "ctrl:nocaps";
+  #services.xserver.xkb.options = "ctrl:nocaps";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

@@ -30,14 +30,17 @@ let
 in {
     home.packages = with pkgs; [
             tree-sitter
-            jq curl
+            jq 
+            curl
             universal-ctags
-#nix 
-#lsp servers
-            rnix-lsp
+            #nix 
+            #rnix-lsp # error: 'rnix-lsp' has been removed as it is unmaintained
             nodejs
-# python
-            # nodePackages.pyright # not worth
+            
+            nil 
+
+            # python
+            nodePackages.pyright # not worth
 # js & ts 
 #nodePackages.typescript-language-server
 #rust 
@@ -51,7 +54,9 @@ in {
 
             #TODO
             #languageTool
-            
+
+            #java
+            vimPlugins.nvim-jdtls
 
     ];
 

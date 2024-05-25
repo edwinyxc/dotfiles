@@ -1,8 +1,13 @@
-{ config , pkgs , ... }:
-
+{ config , pkgs , lib, ... }: 
 {
+
+environment.systemPackages = with pkgs; [ 
+    firefoxpwa 
+];
+
   # firefox
-  programs.firefox = {
+programs.firefox = {
+
     enable = true;
     autoConfig = ''
 
@@ -58,6 +63,9 @@ pref("toolkit.scrollbox.verticalScrollDistance",                      3);//NSS  
 ///
 pref("browser.compactmode.show",                                   true);
     '';
+
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/fi/firefoxpwa/package.nix#L123
+    nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
   };
 
 #
@@ -67,9 +75,10 @@ pref("browser.compactmode.show",                                   true);
 
 #
 
-  environment.sessionVariables = {
-        MOZ_USE_XINPUT2 = "1";
-  };
+environment.sessionVariables = {
+    MOZ_USE_XINPUT2 = "1";
+};
 
-  ##End of firefox
+
+##End of firefox
 }

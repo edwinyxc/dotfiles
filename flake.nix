@@ -9,28 +9,23 @@
 
         # Offical NixOS pkg source
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-        kde2nix.url = "github:nix-community/kde2nix";
+        
+        #Deprecated 
+        # kde2nix.url = "github:nix-community/kde2nix";
 
         # NixOS hardware 
         nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
         # NixOS-WSL
-        NixOS-WSL = {
-            url = "github:nix-community/NixOS-WSL";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+        NixOS-WSL = { url = "github:nix-community/NixOS-WSL";
+        inputs.nixpkgs.follows = "nixpkgs"; };
 
         # BEGIN Vim plugins which are not found in nixpkgs:
-        vimPlugins_toggle-lsp-diagnostics-nvim = {
-            url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
-            flake = false;
-        };
+        vimPlugins_toggle-lsp-diagnostics-nvim = { url =
+        "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim"; flake = false; };
 
-        vimPlugins_telescope-bibtex-nvim = { 
-            url = "github:nvim-telescope/telescope-bibtex.nvim";
-            flake = false;
-        };
+        vimPlugins_telescope-bibtex-nvim = { url =
+        "github:nvim-telescope/telescope-bibtex.nvim"; flake = false; };
         # END Vim plugins
 
         #home-manager
@@ -40,10 +35,12 @@
         # keep home-manager consistent with the current flake on `inputs.nixpkgs`
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        firefox-gnome-theme = { url = "github:rafaelmardojai/firefox-gnome-theme"; flake = false; };
+        firefox-gnome-theme = {
+            url = "github:rafaelmardojai/firefox-gnome-theme";
+            flake = false;
+        };
     };
     outputs = inputs@{self, nixpkgs, home-manager, ...}: {
-
         nixosConfigurations = {
 
             "wsl" = nixpkgs.lib.nixosSystem {
@@ -95,7 +92,7 @@
                     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
 
                     #KDE 6
-                    inputs.kde2nix.nixosModules.plasma6
+                    #inputs.kde2nix.nixosModules.plasma6
 
                     #home-manager
                     home-manager.nixosModules.home-manager

@@ -81,7 +81,7 @@
                 "org/gnome/desktop/privacy".remember-recent-files = false;
 
                 "org/gnome/desktop/interface" = {
-                        monospace-font-name = "BlexMono Nerd Font 9";
+                        monospace-font-name = "BlexMono Nerd Font Medium:size=9";
                         cursor-theme        = "Numix-Cursor";
                         cursor-size         = mkInt32 18;
                         icon-theme          = "Adwaita";

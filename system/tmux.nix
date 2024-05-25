@@ -21,7 +21,7 @@ set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
 set -g @continuum-save-interval '5'
 
-set -g @catppuccin_flavour 'frappe' # or frappe, macchiato, mocha
+#set -g @catppuccin_flavour 'frappe' # or frappe, macchiato, mocha
         '';
 
         plugins = with pkgs; (with tmuxPlugins; [

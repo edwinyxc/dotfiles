@@ -97,12 +97,14 @@ end
 
 local servers = {
     "tsserver",
+    "jdtls",
+    "nil_ls",
     --"gopls",
-    "rnix",
+    --"rnix",
     --"terraformls",
     --"texlab", a
     "pyright",
-    "rust_analyzer",
+    --"rust_analyzer",
     --"sumneko_lua"
 }
 

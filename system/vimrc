@@ -6,13 +6,13 @@
 "  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "endif
 set termguicolors
-
-set nocompatible
-" filetype plugin indent on
-syntax on
-
 set mouse=a
 "set mousehide
+"
+" filetype plugin indent on
+syntax on
+set nocompatible
+
 set sidescroll=10
 
 "set ambiwidth=double
@@ -22,6 +22,8 @@ set visualbell
 "set belloff=all
 set showcmd
 
+highlight Comment cterm=italic
+
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -30,8 +32,8 @@ set fileencodings=utf-8
 "set titleold="Terminal"
 "set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -47,15 +49,22 @@ set backspace=indent,eol,start
 
 "set number
 "set relativenumber
+"
 
-"set smartindent
 set autoindent
+set smartindent
+
+set textwidth=80
+set colorcolumn=80
+nnoremap \cc :set colorcolumn=80<cr>
+nnoremap \ncc :set colorcolumn-=80<cr>
+
 
 "set smarttab
 "" Tabs. May be overridden by autocmd rules
 set tabstop=4
-set softtabstop=0
 set shiftwidth=4
+set softtabstop=4
 set expandtab
 
 set splitright
@@ -67,6 +76,7 @@ let mapleader= " "
 
 "" Enable hidden buffers
 set hidden
+
 
 set nobackup
 set nowritebackup
@@ -90,16 +100,20 @@ set fileformats=unix,dos,mac
 "" Abbreviations
 "*****************************************************************************
 "" no one is really happy until you have this shortcuts
-cnoreabbrev W! w!
-cnoreabbrev Q! q!
-cnoreabbrev Qall! qall!
-cnoreabbrev Wq wq
-cnoreabbrev Wa wa
-cnoreabbrev wQ wq
-cnoreabbrev WQ wq
-cnoreabbrev W w
 cnoreabbrev Q q
+cnoreabbrev Q! q!
 cnoreabbrev Qall qall
+cnoreabbrev Qall! qall!
+cnoreabbrev W w
+cnoreabbrev W! w!
+cnoreabbrev WQ wq
+cnoreabbrev Wa wa
+cnoreabbrev Wq wq
+cnoreabbrev wQ wq
+
+"" Buffer movements
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
 
 " save as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -118,6 +132,31 @@ set undodir=~/.vim/undo
 "nnoremap <C-L> <C-W><C-L>
 "nnoremap <C-H> <C-W><C-H>
 
-
 set splitbelow
 set splitright
+
+" Finding Files:
+" Search down into subfolders
+
+"better wildmenu
+set path+=**
+set wildmenu
+set wildmode=longest:list,full
+
+command! MakeTags !ctags -R .
+
+if executable("rg")
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
+    set grepformat=%f:%l:%c:%m
+endif
+
+"set gp=git\ grep\ -n
+
+" File browser:
+"let g:netrw_banner=0
+"let g:netrw_browse_split=4
+"let g:netrw_altv=1
+"let g:netrw_liststyle=3
+"let g:netrw_list_hide=netrw_gitignore#Hide()
+
+

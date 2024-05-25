@@ -84,7 +84,7 @@ set recolor                     true
         settings = {
             main = {
                 term = "xterm-256color";
-                font = "BlexMono Nerd Font Mono:size=9";
+                font = "BlexMono Nerd Font Mono Medium:size=10";
                 dpi-aware = "yes"; 
             };
         };
