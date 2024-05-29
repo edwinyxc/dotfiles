@@ -35,6 +35,7 @@
         #syntaxHighlighting.enable = true;
 
         sessionVariables = {
+            PROMPT_COMMAND="history -a";
         };
 
         historySize = 10000;

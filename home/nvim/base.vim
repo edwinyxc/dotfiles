@@ -14,70 +14,18 @@ set lazyredraw
 set exrc
 set secure
 
+set completeopt="menuone,noselect,noinsert"
+
+" Wrapping options 
+set formatoptions=tc " wrap text and comments using textwidth
+set formatoptions+=r " continue comments when pressing ENTER in I mode
+set formatoptions+=q " enable formatting of comments with gq
+set formatoptions+=n " detect lists for formatting
+set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
+
 "" TAB and CTRL-I are internally identical, uncomment this if you prefer TAB
 "" and never gonna use CTRL + I/O
 "nnoremap <Tab> gt
 "nnoremap <S-Tab> gT
 "nnoremap <silent> <S-t> :tabnew<CR>
-
-"" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-"" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-cnoremap <C-E> <C-R>=expand("%:p:h") . "/" <CR>
-
-"" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-"" Buffer nav
-" noremap <leader>z :bp<CR>
-" noremap <leader>w :bn<CR>
-noremap <A-Left> :bp<CR>
-noremap <A-Right> :bp<CR>
-noremap <Space><Space> :b#<CR>
-
-" brain dead
-"noremap <C-S-[> :bp<CR>
-"noremap <C-S-]> :bn<CR>
-
-"" Close buffer
-noremap <leader>c :bd<CR>
-
-"" Clear search highlights
-nnoremap <silent> <leader>, :noh<cr>
-
-"" Vmap for maintain Visual Mode after shifting > and <
-vmap < <gv
-vmap > >gv
-
-"" Move visual block
-vnoremap K :m '<-2<CR>gv=gv
-vnoremap J :m '>+1<CR>gv=gv
-
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default
-" 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
-
-" TODO-- use nix vars to generate personal preferences
-" colorscheme zenburn
-colorscheme habamax
-
-if exists("g:neovide")
-   set guifont=Monospace:h11 " require hidpi
-endif
-
-set spell
-setlocal spell spelllang=en_au
-
-" Go to the index of notes and set the working directory to my notes
-nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
+"

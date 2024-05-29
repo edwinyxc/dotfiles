@@ -42,7 +42,7 @@ in
         sway
         dbus-sway-environment
         configure-gtk
-        wayland
+        #wayland
         glib #gsettings
         dracula-theme #gtk theme
         gnome3.adwaita-icon-theme #default gnome cursors

@@ -1,15 +1,17 @@
-{inputs, pkgs, ... }:
-{
-    #imports = [./urxvt.nix];
+{inputs,lib, pkgs, ... }:
+let 
+	importFile = lib.strings.fileContents;
+in {
+	#imports = [./urxvt.nix];
 
-    # vim friendly pdf reader
-    programs.zathura = {
-        enable = true;
-        extraConfig = ''
+	# vim friendly pdf reader
+	programs.zathura = {
+		enable = true;
+		extraConfig = ''
 # Synctex
 
 #set synctex true
-#set synctex-editor-command "nvim --remote-silent +%{line} %{input}"
+#set syctex-editor-command "nvim --remote-silent +%{line} %{input}"
 
 # Basic Settings
 
@@ -78,28 +80,47 @@ set recolor                     true
         '';
     };
 
-    #terminal emulator FooT as an alternative to Urxvt which is not performing good under XWayland, while foot is Wayland native
-    programs.foot = {
-        enable = true;
-        settings = {
-            main = {
-                term = "xterm-256color";
-                font = "BlexMono Nerd Font Mono Medium:size=10";
-                dpi-aware = "yes"; 
-            };
-        };
-    };
+    # terminal emulator FooT as an alternative to Urxvt which is not performing 
+    # good under XWayland, while foot is Wayland native.
 
-    #TODO single user anyway
-    home.packages = with pkgs; [
-        #whatsapp-for-linux
-    ];
+    #programs.foot = {
+    #    enable = true;
+    #    settings = {
+    #        main = {
+    #            term = "xterm-256color";
+    #            font = "BlexMono Nerd Font Mono Medium:size=10";
+    #            dpi-aware = "yes"; 
+    #        };
+    #    };
+    #};
 
-    home.file.".icons/default".source = "${pkgs.numix-cursor-theme}/share/icons/Numix-Cursor"; 
+	programs.kitty = {
+		enable = true;
+		font = {
+			name = "BlexMono Nerd Font Mono Medium";
+			size = 10;
+		};
+		extraConfig = ''
 
-    # make firefox treat md as text to avoid download
-    home.file.".mime.types".text = ''
+wayland_titlebar_color system
+${importFile ./Catppuccin-Latte.conf}
+cursor_shape block
+hide_window_decorations yes
+
+		'';
+	};
+
+	#TODO single user anyway
+	home.packages = with pkgs; [
+		#whatsapp-for-linux
+	];
+
+	home.file.".icons/default".source = 
+		"${pkgs.numix-cursor-theme}/share/icons/Numix-Cursor"; 
+
+	# make firefox treat md as text to avoid download
+	home.file.".mime.types".text = ''
 type=text/plain exts=md,mkd,mkdn,mdwn,mdown,markdown, desc="Markdown document"
-    '';
+		'';
 
 }

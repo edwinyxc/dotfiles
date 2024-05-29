@@ -27,6 +27,16 @@ let
 
     };
 
+    outline-nvim = pkgs.vimUtils.buildVimPlugin {
+        name = "outline.nvim";
+        src = inputs.vimPlugins_outline-nvim;
+    };
+
+    fzf-mru-vim = pkgs.vimUtils.buildVimPlugin {
+        name = "fzf-mru.vim";
+        src = inputs.vimPlugins_fzf-mru-vim;
+    };
+
 in {
     home.packages = with pkgs; [
             tree-sitter
@@ -80,8 +90,11 @@ in {
          ''
 lua << EOF
 -- loadSync
-${importFile ./nvim/telescope.lua}
-
+${ 
+    '' 
+    --importFile ./nvim/telescope.lua 
+    ''
+}
 -- runAsync (deferred lsp configs)
 vim.defer_fn(function()
     ${importFile ./nvim/lsp.lua}
@@ -133,11 +146,24 @@ nnoremap <Leader>/ :Ack!<Space>
         nvim-web-devicons
 
         #Fuzzy finder
-        telescope-nvim
-        telescope-fzf-native-nvim
+        (PlugAndConfig fzf-vim ''
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>f :FZF -m<CR>
+nnoremap <silent> <leader>F :Files<CR>
+nnoremap <silent> <leader>g :Rg <CR>
 
-        (PlugAndConfig telescope-bibtex-nvim ''
+"Recovery commands from history through FZF
+nmap <leader>y :History:<CR>
         '')
+
+        (PlugAndConfig fzf-mru-vim ''
+nnoremap <silent> <C-P> :FZFMru<CR>
+        '')
+        #telescope-nvim
+        #telescope-fzf-native-nvim
+
+        #(PlugAndConfig telescope-bibtex-nvim ''
+        #'')
 
         #(Plug "nvim-telescope/telescope.nvim")
         #(Plug "kelly-lin/telescope-ag")
@@ -254,7 +280,7 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
         cmp-vsnip
         vim-vsnip
 
-        friendly-snippets # snippet collection for all languages
+        #friendly-snippets # snippet collection for all languages
         #(Plug "petertriho/cmp-git")
 
         #TODO r w vimPlugins.lsp_signature-nvim
@@ -265,29 +291,41 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
         clever-f-vim
 
         #outlines 
-        (PlugAndConfig aerial-nvim ''
+
+#        (PlugAndConfig aerial-nvim ''
+#lua << EOF
+#require("aerial").setup({
+#    -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+#    on_attach = function(bufnr)
+#    -- Jump forwards/backwards with '{' and '}'
+#    vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+#    vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+#    end,
+#})
+#-- You probably also want to set a keymap to toggle aerial
+#vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle!<CR>")
+#EOF
+#        '')
+        (PlugAndConfig outline-nvim ''
 lua << EOF
-require("aerial").setup({
-    -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-    on_attach = function(bufnr)
-    -- Jump forwards/backwards with '{' and '}'
-    vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-    vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
-    end,
-})
--- You probably also want to set a keymap to toggle aerial
-vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle!<CR>")
+require("outline").setup({ })
 EOF
+
+nmap <leader>o <cmd>Outline<CR>
         '')
 
         #bottom line
         (PlugAndConfig lualine-nvim ''
-            lua require("lualine").setup({ })
+lua << EOF
+require("lualine").setup({ })
+EOF
         '')
 
         # colors & themes
+	(PlugAndConfig catppuccin-nvim ''
+	'')
         (PlugAndConfig bufferline-nvim ''
-lua << EOF 
+lua << EOF
 require('bufferline').setup {
   options = {
     show_close_icon = true,
@@ -295,7 +333,7 @@ require('bufferline').setup {
     separator_style = "thick",
   },
 }
-EOF 
+EOF
         '')
 
         (PlugAndConfig indentLine ''
@@ -303,7 +341,9 @@ let g:indentLine_fileTypeExclude = ['markdown']
         '')
 
         (PlugAndConfig wilder-nvim ''
-lua require('wilder').setup({modes = {':', '/', '?'}})
+lua << EOF
+require('wilder').setup({modes = {':', '/', '?'}})
+EOF
         '')
 
         # TODO 
@@ -330,7 +370,6 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
 
        extraPackages = with pkgs; [
         ripgrep
-        manix
         git
        ];
   };

@@ -1,5 +1,11 @@
 # Framework intel 11th Gen Framework
 { config, pkgs, ...}:
+let 
+	power_now = pkgs.writeShellScriptBin "power_now" ''
+#!/usr/bin/env bash
+'cat' /sys/class/power_supply/BAT1/current_now /sys/class/power_supply/BAT1/voltage_now | xargs | awk '{printf "%.2f W", $1*$2/1e12}'
+	'';
+in
 {
    imports = [
     ./hardware-configuration.nix
@@ -21,8 +27,11 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth = {
+	enable = true;
+  	powerOnBoot = false;
+	settings.General.Experimental = true; # for gnome-bluetooth percentage
+  };
 
 
   # Enable sound with pipewire.
@@ -35,7 +44,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default
     # no need to redefine it in your config for now)
@@ -55,7 +64,9 @@
   environment.systemPackages = with pkgs; [
       powertop
       parted
+	power_now
   ];
+
 
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 

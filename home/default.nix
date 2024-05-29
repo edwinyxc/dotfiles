@@ -40,6 +40,7 @@ in
         #./zsh.nix
         ./bash.nix
         ./neovim.nix
+	./tmux.nix
     ] ++ _imports;
 
     # Raw config files 
@@ -65,4 +66,5 @@ in
     # home.file.".xprofile"
 
     home.stateVersion = "23.11";
+
 }

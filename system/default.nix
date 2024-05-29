@@ -61,13 +61,15 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsS
     options = "ctrl:nocaps";
   };
 
-  console.useXkbConfig = true;
-  #console = {
-  #  useXkbConfig = true;
-  #  earlySetup = true;
-  #  packages = with pkgs; [terminus_font];
-  #  font = "ter-u28n";
-  #};
+  #console.useXkbConfig = true;
+  #i18n.consoleFont
+  console = {
+    useXkbConfig = true;
+    earlySetup = true;
+    packages = with pkgs; [ terminus_font ];
+    #font = "ter-v32n";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-v32b.psf.gz";
+  };
 
 
   # List packages installed in system profile. To search, run:
@@ -80,11 +82,12 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsS
       man-pages tree unzip zip
       neofetch tealdeer gitui gitg
       nodePackages.npm yarn rustup 
+      manix # nix document helper
   ];
 
   #services.flatpak.enable = true;
   #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #xdg.portal.config.common.default = "gtk";
+  #xdg.portal.config.common.default = "gtk"o
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

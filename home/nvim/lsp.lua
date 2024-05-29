@@ -1,7 +1,7 @@
 --debug log
 vim.lsp.set_log_level("debug")
 
-vim.o.completeopt = 'menu,menuone,noselect'
+
 local cmp = require('cmp')
 cmp.setup({
   snippet = {

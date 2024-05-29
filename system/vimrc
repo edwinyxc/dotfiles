@@ -42,7 +42,7 @@ set scrolloff=3
 "" Status bar
 set laststatus=2
 
-colorscheme default
+" colorscheme default
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -62,10 +62,15 @@ nnoremap \ncc :set colorcolumn-=80<cr>
 
 "set smarttab
 "" Tabs. May be overridden by autocmd rules
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+
+set tabstop=8
+set shiftwidth=8
+set softtabstop=8
+
+"set tabstop=4
+"set shiftwidth=4
+"set softtabstop=4
+"set expandtab
 
 set splitright
 set splitbelow
@@ -115,6 +120,10 @@ cnoreabbrev wQ wq
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
 
+"" quickfix movements
+nnoremap <silent> [q :cp<CR>
+nnoremap <silent> ]q :cn<CR>
+
 " save as sudo
 cmap w!! w !sudo tee > /dev/null %
 
@@ -160,3 +169,69 @@ endif
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 
 
+"" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
+
+"" Opens an edit command with the path of the currently edited file filled in
+"" next to the current file, in the same directory
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+cnoremap <C-E> <C-R>=expand("%:p:h") . "/" <CR>
+
+"" Opens a tab edit command with the path of the currently edited file filled
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+"" Buffer nav
+" noremap <leader>z :bp<CR>
+" noremap <leader>w :bn<CR>
+"noremap <A-Left> :bp<CR>
+"noremap <A-Right> :bp<CR>
+noremap <Space><Space> :b#<CR>
+
+" brain dead
+"noremap <C-S-[> :bp<CR>
+"noremap <C-S-]> :bn<CR>
+
+"" Close buffer
+noremap <leader>c :bd<CR>
+
+"" Clear search highlights
+nnoremap <silent> <leader>, :noh<cr>
+
+"" Vmap for maintain Visual Mode after shifting > and <
+vmap < <gv
+vmap > >gv
+
+"" Move visual block
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+
+" Better display for messages # deprecated for neovim, as the pop-up menu is 
+" fine.
+set cmdheight=1
+
+" You will have bad experience for diagnostic messages when it's default
+" 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumn
+set signcolumn=yes
+
+" colorscheme zenburn
+set background=light
+colorscheme delek
+
+"set background=dark
+" colorscheme habamax
+
+if exists("g:neovide")
+   set guifont=Monospace:h11 " require hidpi
+endif
+
+set spell
+setlocal spell spelllang=en_au
+
+" Go to the index of notes and set the working directory to my notes
+nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
