@@ -158,6 +158,11 @@ if executable("rg")
     set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
     set grepformat=%f:%l:%c:%m
 endif
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l* lwindow
+augroup END
 
 "set gp=git\ grep\ -n
 
@@ -220,11 +225,11 @@ set shortmess+=c
 set signcolumn=yes
 
 " colorscheme zenburn
-set background=light
-colorscheme delek
+"set background=light
+"colorscheme delek
 
-"set background=dark
-" colorscheme habamax
+set background=dark
+colorscheme habamax
 
 if exists("g:neovide")
    set guifont=Monospace:h11 " require hidpi

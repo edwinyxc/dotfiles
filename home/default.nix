@@ -2,7 +2,7 @@
 let 
     #expose_bin_path = pkg : "${pkg.outPath}/bin";
     #exposePathsGlobally = ;
-    pp = inputs.plenary-nvim; # TODO: not used
+    #pp = inputs.plenary-nvim; # TODO: not used
 
 in
 {
@@ -38,9 +38,11 @@ in
 
     imports = [
         #./zsh.nix
+
         ./bash.nix
         ./neovim.nix
 	./tmux.nix
+
     ] ++ _imports;
 
     # Raw config files 

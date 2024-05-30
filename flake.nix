@@ -101,7 +101,7 @@ home-manager.nixosModules.home-manager {
 	system = "x86_64-linux";
 	specialArgs = { inherit inputs; };
 	modules = [
-(import ./overlays)
+# (import ./overlays)
 # Framework i11 -- main config 
 ./hosts/FW-i11
 ./system

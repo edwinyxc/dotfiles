@@ -2,13 +2,15 @@
 let 
 	toggle_menu = pkgs.writeScriptBin "toggle_menu" ''
 #!/bin/sh
-pkill rofi || rofi -combi-modi window,drun,ssh -show combi
+pkill rofi || rofi -combi-modi drun,window,ssh -show combi
 	'';
 
 	term = "kitty";
 	fileManager = "nautilus";
 	power_now = pkgs.writeScriptBin "power_now" ''
 	'';
+
+	importFile = lib.strings.fileContents;
 in
 {
 	imports = [ 
@@ -26,7 +28,7 @@ in
 
 # See https://wiki.hyprland.org/Configuring/Monitors/
 
-monitor=,preferred,auto,2
+monitor=,preferred,auto,1.6
 
 xwayland {
 	force_zero_scaling = true
@@ -37,13 +39,15 @@ xwayland {
 # Execute your favorite apps at launch
 exec-once = dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
 
-#[TODO]set mouse
+#[TODO] set mouse
 #exec-once = hypr
 
 exec-once = waybar 
 exec-once = nm-applet
 exec-once = blueman-applet
 exec-once = hypridle
+
+#[TODO] add 
 
 exec-once = wl-paste --type text --watch cliphist store #Stores only text data
 exec-once = wl-paste --type image --watch cliphist store #Stores only image data
@@ -156,7 +160,7 @@ misc {
 	force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
 	vfr = true
 	vrr = true
-	new_window_takes_over_fullscreen = 1
+#new_window_takes_over_fullscreen = 1
 }
 
 # Example per-device config
@@ -183,7 +187,9 @@ bind = $mainMod, return, exec, $terminal
 bind = $mainMod, W, killactive, 
 bind = $mainMod, F4, exit, 
 bind = $mainMod, E, exec, $fileManager
-bind = $mainMod, V, togglefloating, 
+bind = $mainMod, F, togglefloating
+#bind = $mainMod SHIFT, F, workspaceopt, allfloat
+#bind = $mainMod, V, togglefloating, 
 bind = $mainMod, D, exec, $menu
 #bindr = $mainMod, SUPER_L, exec, $menu
 # bind = $mainMod, L, exec, swaylock
@@ -221,7 +227,11 @@ bind = $mainMod, 0, workspace, 10
 bind = $mainMod SHIFT, 1, movetoworkspace, 1
 bind = $mainMod SHIFT, 2, movetoworkspace, 2
 bind = $mainMod SHIFT, 3, movetoworkspace, 3
+
+# workspace, one the default to be float as default
 bind = $mainMod SHIFT, 4, movetoworkspace, 4
+
+#windowrulev2 = float, workspace:4
 
 #
 bind = $mainMod SHIFT, 5, movetoworkspace, 5
@@ -230,22 +240,36 @@ bind = $mainMod SHIFT, 7, movetoworkspace, 7
 bind = $mainMod SHIFT, 8, movetoworkspace, 8
 bind = $mainMod SHIFT, 9, movetoworkspace, 9
 
-# mail
+# mail & other work/office staff
 bind = $mainMod SHIFT, 0, movetoworkspace, 10
+windowrulev2 = float, workspace:10
 
 # Example special workspace (scratchpad)
+
 bind = $mainMod, S, togglespecialworkspace, magic
 bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+#windowrulev2 = float, workspace:spcial:magic
+
 
 bind = $mainMod, A, togglespecialworkspace, term
-bind = $mainMod SHIFT, S, movetoworkspace, special:term
+bind = $mainMod SHIFT, A, movetoworkspace, special:term
+workspace = special:term, on-created-empty:$terminal -e tmux a
 
 # info 
 bind = $mainMod, Q, togglespecialworkspace, Q
 bind = $mainMod SHIFT, Q, movetoworkspace, special:Q
 
+# special workspace control Ctrl-X
+# 
 bind = $mainMod, X, togglespecialworkspace, control 
 bind = $mainMod SHIFT, X, movetoworkspace, special:control
+workspace = special:control, on-created-empty: hyprctl dispatch workspaceopt allfloat
+workspace = special:control, on-created-empty: pavucontrol 
+#windowrule = workspace special:contrl, ^(.*OneDriveGUI*)$
+
+# [start default]
+#exec-once = OneDriveGUI
+
 # TODO ..
 
 
@@ -298,7 +322,7 @@ modules-center = [
 modules-right = [
 	"cpu" "memory" 
 	"pulseaudio" "backlight" 
-	"battery" "custom/power_now"
+	"custom/power_now" "battery" 
 	"tray"
 ];
 
@@ -347,13 +371,15 @@ tray = {
 	"spacing" = 10;
 };
 clock = {
-	"interval" = 1;
-	"format" = "{:%a %Y-%m-%d %I:%M:%S %p}";
+	"interval" = 60;
+	"tooltip" = true;
+	"format" = "{:%H:%M}";
 	"timezone" = "Austrlia/Sydney";
-	"tooltip-format" = ''
-		<big>{:%Y %B}</big>
-		<tt><small>{calendar}</small></tt>
-	'';
+	"tooltip-format" = " <tt><small>{calendar}</small></tt>";
+	"calendar" = {
+		mode = "month";
+		mode-mon-col = 3;
+	};
 };
 cpu = {
 	"format" = "{usage}% ";
@@ -400,6 +426,10 @@ pulseaudio = {
 
 	}; # mainBar
 }; # settings
+
+style = ''
+${importFile ./waybar.style.css}
+'';
 	}; # waybar
 
 home.file.".config/gtklock/style.css".text = ''

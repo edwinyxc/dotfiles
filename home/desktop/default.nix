@@ -98,12 +98,11 @@ set recolor                     true
 		enable = true;
 		font = {
 			name = "BlexMono Nerd Font Mono Medium";
-			size = 10;
+			size = 16;
 		};
 		extraConfig = ''
 
 wayland_titlebar_color system
-${importFile ./Catppuccin-Latte.conf}
 cursor_shape block
 hide_window_decorations yes
 

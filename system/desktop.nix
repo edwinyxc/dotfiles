@@ -32,7 +32,7 @@
 		p3x-onenote
 		joplin-desktop
 		motrix
-		onedrivegui
+		#onedrivegui
 		zotero_7
 		plantuml-c4
 		evolution

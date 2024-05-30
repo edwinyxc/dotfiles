@@ -16,57 +16,56 @@ let
   
     importFile = lib.strings.fileContents;
     
-    toggle-lsp-diagnostics-nvim =  pkgs.vimUtils.buildVimPlugin {
-        name = "toggle-lsp-diagnostics-nvim";
-        src = inputs.vimPlugins_toggle-lsp-diagnostics-nvim;
-    };
+   # toggle-lsp-diagnostics-nvim =  pkgs.vimUtils.buildVimPlugin {
+   #     name = "toggle-lsp-diagnostics-nvim";
+   #     src = inputs.vimPlugins_toggle-lsp-diagnostics-nvim;
+   # };
 
-    telescope-bibtex-nvim = pkgs.vimUtils.buildVimPlugin {
-        name = "telescope-bibtex-nvim";
-        src = inputs.vimPlugins_telescope-bibtex-nvim;
+   # telescope-bibtex-nvim = pkgs.vimUtils.buildVimPlugin {
+   #     name = "telescope-bibtex-nvim";
+   #     src = inputs.vimPlugins_telescope-bibtex-nvim;
 
-    };
+   # };
 
     outline-nvim = pkgs.vimUtils.buildVimPlugin {
         name = "outline.nvim";
         src = inputs.vimPlugins_outline-nvim;
     };
 
-    fzf-mru-vim = pkgs.vimUtils.buildVimPlugin {
-        name = "fzf-mru.vim";
-        src = inputs.vimPlugins_fzf-mru-vim;
-    };
+    #fzf-mru-vim = pkgs.vimUtils.buildVimPlugin {
+    #    name = "fzf-mru.vim";
+    #    src = inputs.vimPlugins_fzf-mru-vim;
+    #};
 
 in {
-    home.packages = with pkgs; [
-            tree-sitter
-            jq 
-            curl
-            universal-ctags
-            #nix 
-            #rnix-lsp # error: 'rnix-lsp' has been removed as it is unmaintained
-            nodejs
-            
-            nil 
-
-            # python
-            nodePackages.pyright # not worth
+	home.packages = with pkgs; [
+		tree-sitter
+		jq 
+		curl
+		universal-ctags
+#nix 
+#rnix-lsp # error: 'rnix-lsp' has been removed as it is unmaintained
+		nil 
+#nodejs
+		nodejs
+# python
+		nodePackages.pyright # not worth
 # js & ts 
 #nodePackages.typescript-language-server
 #rust 
-            #rust-analyzer
+#rust-analyzer
 # lua
-            # 
-            #sumneko-lua-language-server # not worth
-            #lua-ls
+# 
+#sumneko-lua-language-server # not worth
+#lua-ls
 
-            #micromamba
+#micromamba
 
-            #TODO
-            #languageTool
+#TODO
+#languageTool
 
-            #java
-            vimPlugins.nvim-jdtls
+#java
+		vimPlugins.nvim-jdtls
 
     ];
 
@@ -121,24 +120,6 @@ ${importFile ./nvim/base.vim}
 
         (Plug vim-cool)
         (Plug vimtex)
-
-        (PlugAndConfig ack-vim ''
-if executable('rg')
-  let g:ackprg = 'rg --vimgrep --smart-case --type-not sql'
-endif
-
-" Auto close the Quickfix list after pressing '<enter>' on a list item
-let g:ack_autoclose = 0
-
-" Any empty ack search will search for the work the cursor is on
-let g:ack_use_cword_for_empty_search = 1
-
-" Don't jump to first match
-cnoreabbrev Ack Ack!
-
-nnoremap <Leader>/ :Ack!<Space>
-
-        '')
         
         vim-fugitive
         (PlugAndConfig vim-tmux-navigator ''
@@ -153,12 +134,13 @@ nnoremap <silent> <leader>F :Files<CR>
 nnoremap <silent> <leader>g :Rg <CR>
 
 "Recovery commands from history through FZF
-nmap <leader>y :History:<CR>
+"not useful
+"nmap <leader>y :History:<CR>
         '')
 
-        (PlugAndConfig fzf-mru-vim ''
-nnoremap <silent> <C-P> :FZFMru<CR>
-        '')
+#        (PlugAndConfig fzf-mru-vim ''
+#nnoremap <silent> <C-P> :FZFMru<CR>
+#        '')
         #telescope-nvim
         #telescope-fzf-native-nvim
 
@@ -202,24 +184,28 @@ EOF
         (PlugAndConfig nvim-treesitter-context ''
 lua << EOF
 require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-        -- For all filetypes
-        -- Note that setting an entry here replaces all other patterns for this entry.
-        -- By setting the 'default' entry below, you can control which nodes you want to
-        -- appear in the context window.
-        default = {
-            'class',
-            'function',
-            'method',
-            -- 'for', -- These won't appear in the context
-            -- 'while',
-            -- 'if',
-            -- 'switch',
-            -- 'case',
-        },
+-- Enable this plugin (Can be enabled/disabled later via commands)
+	enable = true, 
+-- How many lines the window should span. Values <= 0 mean no limit.
+	max_lines = 5, 
+-- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+	trim_scope = 'outer', 
+	patterns = { 
+-- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+-- For all filetypes
+-- Note that setting an entry here replaces all other patterns for this entry.
+-- By setting the 'default' entry below, you can control which nodes you want to
+-- appear in the context window.
+		default = {
+			'class',
+			'function',
+			'method',
+			-- 'for', -- These won't appear in the context
+			-- 'while',
+			-- 'if',
+			-- 'switch',
+			-- 'case',
+		},
         -- Example for a specific filetype.
         -- If a pattern is missing, *open a PR* so everyone can benefit.
         --   rust = {
@@ -249,36 +235,36 @@ EOF
         nvim-lspconfig
         #(Plug "neovim/nvim-lspconfig")
 
-        # toggle diagnostics
-        (PlugAndConfig toggle-lsp-diagnostics-nvim ''
-lua << EOF
-require'toggle_lsp_diagnostics'.init()
-if (not my) then my = {} end
-my.toggke = false
-my.toggle_diagnostics = function() 
-    local toggle_lsp_diagnostics = require'toggle_lsp_diagnostics'
-    if my.toggle then 
-        toggle_lsp_diagnostics.turn_on_diagnostics()
-    else
-        toggle_lsp_diagnostics.turn_off_diagnostics()
-    end
-    my.toggle = not my.toggle
-end
-EOF
-
-nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
-        '')
+# Toggle diagnostics
+#        (PlugAndConfig toggle-lsp-diagnostics-nvim ''
+#lua << EOF
+#require'toggle_lsp_diagnostics'.init()
+#if (not my) then my = {} end
+#my.toggke = false
+#my.toggle_diagnostics = function() 
+#    local toggle_lsp_diagnostics = require'toggle_lsp_diagnostics'
+#    if my.toggle then 
+#        toggle_lsp_diagnostics.turn_on_diagnostics()
+#    else
+#        toggle_lsp_diagnostics.turn_off_diagnostics()
+#    end
+#    my.toggle = not my.toggle
+#end
+#EOF
+#
+#nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
+#        '')
 
         # Completion
-        nvim-cmp
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
+        #nvim-cmp
+        #cmp-nvim-lsp
+        #cmp-buffer
+        #cmp-path
+        #cmp-cmdline
 
         # snippets are needed for many language servers
-        cmp-vsnip
-        vim-vsnip
+        #cmp-vsnip
+        #vim-vsnip
 
         #friendly-snippets # snippet collection for all languages
         #(Plug "petertriho/cmp-git")
@@ -290,8 +276,9 @@ nnoremap <leader>d :lua my.toggle_diagnostics()<CR>
         vim-wordmotion
         clever-f-vim
 
-        #outlines 
+#outlines 
 
+# Aerial is buggy
 #        (PlugAndConfig aerial-nvim ''
 #lua << EOF
 #require("aerial").setup({
@@ -314,39 +301,44 @@ EOF
 nmap <leader>o <cmd>Outline<CR>
         '')
 
-        #bottom line
+        # Status line
         (PlugAndConfig lualine-nvim ''
 lua << EOF
 require("lualine").setup({ })
 EOF
         '')
 
-        # colors & themes
-	(PlugAndConfig catppuccin-nvim ''
-	'')
-        (PlugAndConfig bufferline-nvim ''
-lua << EOF
-require('bufferline').setup {
-  options = {
-    show_close_icon = true,
-    show_buffer_close_icons = false,
-    separator_style = "thick",
-  },
-}
-EOF
-        '')
 
+# Fri 31 May 2024 03:45:27 AEST 
+# -- [occupies one line! -- not worth]
+
+#        (PlugAndConfig bufferline-nvim ''
+#lua << EOF
+#require('bufferline').setup {
+#  options = {
+#    show_close_icon = true,
+#    show_buffer_close_icons = false,
+#    separator_style = "thick",
+#  },
+#}
+#EOF
+#        '')
+
+# Could be replaced in basic settings
         (PlugAndConfig indentLine ''
 let g:indentLine_fileTypeExclude = ['markdown']
         '')
 
+# Must have
         (PlugAndConfig wilder-nvim ''
 lua << EOF
 require('wilder').setup({modes = {':', '/', '?'}})
 EOF
         '')
 
-        # TODO 
+        # Colors & themes
+	(PlugAndConfig catppuccin-nvim ''
+	'')
         zenburn
 
         #(PlugAndConfig vim-LanguageTool ''
