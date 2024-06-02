@@ -55,8 +55,10 @@
             #grep = "rg";
 
             ip = "ip --color=auto";
-            cat = "bat";
+            #cat = "bat";
             tree = "ls --tree";
+
+	    ".." = "cd ..";
         };
 
     };

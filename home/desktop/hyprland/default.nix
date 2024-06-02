@@ -37,7 +37,7 @@ xwayland {
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
-exec-once = dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
+exec-once = dbus-update-activation-environment --systemd -all
 
 #[TODO] set mouse
 #exec-once = hypr
@@ -45,6 +45,7 @@ exec-once = dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLA
 exec-once = waybar 
 exec-once = nm-applet
 exec-once = blueman-applet
+
 exec-once = hypridle
 
 #[TODO] add 
@@ -59,6 +60,7 @@ exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 # source = ~/.config/hypr/myColors.conf
 # Set programs that you use
 $terminal = kitty
+$browser = firefox
 $fileManager = nautilus
 $menu = toggle_menu
 # Some default env vars.
@@ -81,6 +83,9 @@ input {
 		tap-and-drag   =  false        #  missing  on  wiki
 	}                                                      
 	sensitivity = 0 # -1.0 to 1.0, 0 means no modification.
+
+	repeat_delay = 200
+	repeat_rate = 30
 }
 
 general {
@@ -157,7 +162,7 @@ gestures {
 
 misc {
 # See https://wiki.hyprland.org/Configuring/Variables/ for more
-	force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
+	force_default_wallpaper = 0 # Set to 0 or 1 to disable the anime mascot wallpapers
 	vfr = true
 	vrr = true
 #new_window_takes_over_fullscreen = 1
@@ -184,7 +189,8 @@ $mainMod = SUPER
 
 # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
 bind = $mainMod, return, exec, $terminal
-bind = $mainMod, W, killactive, 
+bind = $mainMod SHIFT, Q, killactive, 
+bind = $mainMod, W, exec, $browser
 bind = $mainMod, F4, exit, 
 bind = $mainMod, E, exec, $fileManager
 bind = $mainMod, F, togglefloating
@@ -441,5 +447,13 @@ home.file.".config/gtklock/style.css".text = ''
 
 services.udiskie.enable = true;
 services.udiskie.tray = "always";
+
+programs.hyprlock.enable = true;
+services.hypridle.enable = true;
+
+# Files to be created manually
+xdg.configFile."hypr/hyprlock/bat_status.sh".source = ./bat_status.sh; 
+xdg.configFile."hypr/hypridle.conf".source = ./hypridle.conf; 
+xdg.configFile."hypr/hyprlock.conf".source = ./hyprlock.conf; 
 
 }

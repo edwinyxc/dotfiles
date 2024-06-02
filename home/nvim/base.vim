@@ -14,8 +14,6 @@ set lazyredraw
 set exrc
 set secure
 
-set completeopt="menuone,noselect,noinsert"
-
 " Wrapping options 
 set formatoptions=tc " wrap text and comments using textwidth
 set formatoptions+=r " continue comments when pressing ENTER in I mode

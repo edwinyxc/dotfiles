@@ -61,6 +61,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsS
     options = "ctrl:nocaps";
   };
 
+  services.xserver.autoRepeatDelay = 200;
+  services.xserver.autoRepeatInterval = 30;
+
   #console.useXkbConfig = true;
   #i18n.consoleFont
   console = {

@@ -99,7 +99,7 @@ vim.defer_fn(function()
     ${importFile ./nvim/lsp.lua}
 
     vim.cmd [[
-        " defered 
+       " defered 
     ]]
 end, 70)
 EOF
@@ -118,7 +118,6 @@ ${importFile ./nvim/base.vim}
         (Plug vim-gutentags)
         #(Plug vim-LanguageTool)
 
-        (Plug vim-cool)
         (Plug vimtex)
         
         vim-fugitive
@@ -304,7 +303,31 @@ nmap <leader>o <cmd>Outline<CR>
         # Status line
         (PlugAndConfig lualine-nvim ''
 lua << EOF
-require("lualine").setup({ })
+require("lualine").setup({
+sections = {
+  lualine_a = {
+    {
+      'filename',
+      file_status = true,      -- Displays file status (readonly status, modified status)
+      newfile_status = false,  -- Display new file status (new file means no write after created)
+      path = 1,                -- 0: Just the filename
+                               -- 1: Relative path
+                               -- 2: Absolute path
+                               -- 3: Absolute path, with tilde as the home directory
+                               -- 4: Filename and parent dir, with tilde as the home directory
+
+      shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                               -- for other components. (terrible name, any suggestions?)
+      symbols = {
+        modified = '[+]',      -- Text to show when the file is modified.
+        readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+        unnamed = '[No Name]', -- Text to show for unnamed buffers.
+        newfile = '[New]',     -- Text to show for newly created file before first write
+      }
+    }
+  }
+}
+})
 EOF
         '')
 
@@ -329,12 +352,20 @@ EOF
 let g:indentLine_fileTypeExclude = ['markdown']
         '')
 
-# Must have
-        (PlugAndConfig wilder-nvim ''
-lua << EOF
-require('wilder').setup({modes = {':', '/', '?'}})
-EOF
-        '')
+# Must have?.
+#        (PlugAndConfig wilder-nvim ''
+#lua << EOF
+#require('wilder').setup({modes = {':', '/', '?'}})
+#require('wilder').set_option('renderer', wilder.renderer_mux({
+#  [':'] = wilder.popupmenu_renderer({
+#    highlighter = wilder.basic_highlighter(),
+#  }),
+#  ['/'] = wilder.wildmenu_renderer({
+#    highlighter = wilder.basic_highlighter(),
+#  }),
+#}))
+#EOF
+#        '')
 
         # Colors & themes
 	(PlugAndConfig catppuccin-nvim ''

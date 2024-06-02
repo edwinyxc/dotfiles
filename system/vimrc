@@ -127,6 +127,12 @@ nnoremap <silent> ]q :cn<CR>
 " save as sudo
 cmap w!! w !sudo tee > /dev/null %
 
+" mkdir before save, if not already exist
+augroup Mkdir
+  autocmd!
+  autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
+augroup END
+
 "save undo / redo across sessions
 set undofile
 set undodir=~/.vim/undo
@@ -150,7 +156,7 @@ set splitright
 "better wildmenu
 set path+=**
 set wildmenu
-set wildmode=longest:list,full
+set wildmode=longest:full
 
 command! MakeTags !ctags -R .
 
@@ -218,6 +224,9 @@ set cmdheight=1
 " 4000.
 set updatetime=300
 
+" set complete+=kspell
+set completeopt=menuone,longest,preview
+
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
@@ -240,3 +249,14 @@ setlocal spell spelllang=en_au
 
 " Go to the index of notes and set the working directory to my notes
 nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
+
+" find files and populate the quickfix list
+fun! FindFiles(filename)
+  let error_file = tempname()
+  silent exe '!find . -name "'.a:filename.'" | xargs file | sed "s/:/:1:/" > '.error_file
+  set errorformat=%f:%l:%m
+  exe "cfile ". error_file
+  copen
+  call delete(error_file)
+endfun
+command! -nargs=1 FindFile call FindFiles(<q-args>)

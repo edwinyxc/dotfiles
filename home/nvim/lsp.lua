@@ -32,22 +32,22 @@ vim.lsp.set_log_level("debug")
 --})
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+  --cmp.setup.cmdline('/', {
+  --  mapping = cmp.mapping.preset.cmdline(),
+  --  sources = {
+  --    { name = 'buffer' }
+  --  }
+  --})
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+  --cmp.setup.cmdline(':', {
+  --  mapping = cmp.mapping.preset.cmdline(),
+  --  sources = cmp.config.sources({
+  --    { name = 'path' }
+  --  }, {
+  --    { name = 'cmdline' }
+  --  })
+  --})
 
 -- lspconfig
 
@@ -108,13 +108,13 @@ local servers = {
 }
 
 local caps = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require('cmp_nvim_lsp').default_capabilities(caps)
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(caps)
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     flags = { debounce_text_changes = 150 },
-    capabilities = capabilities,
+-- capabilities = capabilities,
   }
 end
 

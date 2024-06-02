@@ -1,10 +1,8 @@
-DEFAULT=framework
+TARGET_FRAMEWORK = FW-i11
+TARGET_WSL = wsl
+TARGET_DEFAULT= $(TARGET_FRAMEWORK)
+
+.PHONY: all
 all: 
-	$(framework)
-
-framework: 
-	sudo nixos-rebuild switch --flake .#FW-i11 --show-trace  --upgrade
-
-wsl: 
-	sudo nixos-rebuild switch --flake .#wsl --show-trace  --upgrade
+	sudo nixos-rebuild switch --flake .#$(TARGET_DEFAULT)--show-trace  --upgrade
 

@@ -101,7 +101,7 @@ home-manager.nixosModules.home-manager {
 	system = "x86_64-linux";
 	specialArgs = { inherit inputs; };
 	modules = [
-# (import ./overlays)
+#(import ./overlays)
 # Framework i11 -- main config 
 ./hosts/FW-i11
 ./system
@@ -131,7 +131,7 @@ home-manager.nixosModules.home-manager {
 		inherit inputs;
 		_imports = [
 ./home/desktop
-./home/desktop/hyprland.nix
+./home/desktop/hyprland
 ./home/desktop/firefox-gnome-theme.nix
 #./home/
 		];   

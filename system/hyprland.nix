@@ -79,19 +79,19 @@
 		rofi-wayland
 		waybar
 
-		swaylock
-		swayidle
-
-		wayshot
 		pavucontrol
 		brightnessctl
 		playerctl
-		swww
+		#swww
+
+
+		    hyprpaper
+		    hyprlock
+		    hypridle
 
 		hyprcursor
 		hyprpicker
 		hyprland-protocols
-		hypridle
 
 		qt6.qtwayland
 		xdg-utils
@@ -113,15 +113,7 @@
 
 	security = {
 		polkit.enable = true;
-		pam.services.swaylock = {
-			text = ''
-auth include login
-			'';
-		};
-
 		pam.services.hyprlock = {};
-		pam.services.ags = {};
-
 		pam.services.login.enableGnomeKeyring = true;
 	};
 
@@ -131,7 +123,7 @@ auth include login
 		udisks2.enable = true;
 		upower.enable = true;
 		#power-profiles-daemon.enable = true;
-		accounts-daemon.enable = true;
+		#accounts-daemon.enable = true;
 		gnome = {
 			evolution-data-server.enable = true;
 			glib-networking.enable = true;
