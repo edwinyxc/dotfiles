@@ -10,7 +10,7 @@ set lazyredraw
 "set autowrite
 "set autowriteall
 
-"" auto reload vimrc
+"" auto reload vimrc 
 set exrc
 set secure
 

@@ -1,6 +1,0 @@
-#! /usr/bin/env bash
-
-set +x
-# TODO --remove impure
-#sudo nixos-rebuild switch --flake .#wsl --show-trace --impure --option eval-cache false 
-sudo nixos-rebuild switch --flake .#wsl --show-trace  --upgrade

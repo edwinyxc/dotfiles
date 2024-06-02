@@ -1,6 +1,0 @@
-#! /usr/bin/env bash
-
-set +x
-# TODO --remove impure
-#sudo nixos-rebuild switch --flake .#FW-i11 --show-trace --impure --option eval-cache false 
-sudo nixos-rebuild switch --flake .#FW-i11 --show-trace  --upgrade
