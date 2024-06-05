@@ -58,9 +58,11 @@
 #dash-to-panel
 #date-menu-formatter
 #clipboard-indicator 
+		pop-shell
 		clipboard-history
 		user-themes
 		numix-cursor-theme
+		caffeine
 
 		appindicator
 	]);
@@ -98,16 +100,30 @@ settings = with lib.gvariant; {
 	"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
 ];
 
+
+
 "org.gnome.desktop.wm.keybindings" = {
 	show-desktop = ["<Super>d"];
+	switch-to-workspace-1 = ["<Shift><Super>1"];
+	switch-to-workspace-2 = ["<Shift><Super>2"];
+	switch-to-workspace-3 = ["<Shift><Super>3"];
+	switch-to-workspace-4 = ["<Shift><Super>4"];
+
+	move-to-workspace-1 = ["<Shift><Super>1"];
+	move-to-workspace-2 = ["<Shift><Super>2"];
+	move-to-workspace-3 = ["<Shift><Super>3"];
+	move-to-workspace-4 = ["<Shift><Super>4"];
+
 	move-to-workspace-left = ["<Shift><Control><Super>Left"];
 	move-to-workspace-right = ["<Shift><Control><Super>Right"];
 	switch-to-workspace-left = ["<Control><Super>Left"];
 	switch-to-workspace-right = ["<Control><Super>Right"];
+
+	#minimize = [];
 };
 
 "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-	binding = "<Control><Alt>t";
+	binding = "<Super>t";
 #command = "foot";
 	command = "kitty";
 	name    = "Open Terminal";
@@ -118,11 +134,19 @@ settings = with lib.gvariant; {
 	idle-dim        = false;
 };
 
+"org/gnome/desktop/peripherals/keyboard" = {
+	delay		= mkInt32 200;
+	repeat-interval = mkInt32 20;
+};
+
 # Extensions 
 "org/gnome/shell".enabled-extensions = [
-	"user-theme@gnome-shell-extensions.gcampax.github.com"
+		"user-theme@gnome-shell-extensions.gcampax.github.com"
 		"clipboard-history@alexsaveau.dev"
 		"appindicatorsupport@rgcjonas.gmail.com"
+		"pop-shell@system76.com"
+
+		"caffeine@patapon.info"
 ];
 
 "org/gnome/shell/extensions/user-theme" = {
@@ -131,7 +155,6 @@ settings = with lib.gvariant; {
 };
 		}];
 	};
-
 
 # Gnome 40 introduced a new way of managing power, without tlp.
 # However, these 2 services clash when enabled simultaneously.

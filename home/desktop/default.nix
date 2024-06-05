@@ -2,7 +2,12 @@
 let 
 	importFile = lib.strings.fileContents;
 in {
-	#imports = [./urxvt.nix];
+	imports = [
+		#./urxvt.nix
+
+		# input method
+		./fcitx5
+	];
 
 	# vim friendly pdf reader
 	programs.zathura = {
@@ -112,6 +117,7 @@ hide_window_decorations yes
 	#TODO single user anyway
 	home.packages = with pkgs; [
 		#whatsapp-for-linux
+		pinta
 	];
 
 	home.file.".icons/default".source = 

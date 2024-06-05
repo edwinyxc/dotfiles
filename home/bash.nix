@@ -35,7 +35,8 @@
         #syntaxHighlighting.enable = true;
 
         sessionVariables = {
-            PROMPT_COMMAND="history -a";
+		PROMPT_COMMAND="history -a";
+		XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
         };
 
         historySize = 10000;

@@ -2,13 +2,24 @@
 { config, pkgs, ... }:
 let 
 	tmux-save = pkgs.writeShellScriptBin "tmux-save" ''
-# scripts/tmux-save.sh
 #!/usr/bin/env bash
 
 SAVE_SH=${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh
 
 if [ "$(pgrep tmux)" ]; then
-	echo "Starting save $SAVE_SH" 
+	echo "Start saving by $SAVE_SH" 
+	$SAVE_SH 
+	echo "Done!"
+fi
+
+	'';
+	tmux-restore = pkgs.writeShellScriptBin "tmux-restore" ''
+#!/usr/bin/env bash
+
+SAVE_SH=${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/restore.sh
+
+if [ "$(pgrep tmux)" ]; then
+	echo "Start resotre by $SAVE_SH" 
 	$SAVE_SH 
 	echo "Done!"
 fi
@@ -38,10 +49,11 @@ set -g @resurrect-capture-pane-contents 'on'
 set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
 set -g @continuum-save-interval '5'
+
 '';
 }
 
-yank
+	yank
 
 {
 	plugin = catppuccin;
@@ -55,7 +67,7 @@ set -g @catppuccin_flavour 'latte' # or frappe, macchiato, mocha
 #	extraConfig = "set -g @super-fingers-key f";
 #}
 
-better-mouse-mode
+	better-mouse-mode
 ]);
 	extraConfig = ''
 ## upgrade $TERM
@@ -149,6 +161,7 @@ setw -g aggressive-resize on
 };
 	home.packages = [
 		tmux-save
+		tmux-restore
 	];
 
 	systemd.user.services.tmux-autosave = {

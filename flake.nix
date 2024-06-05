@@ -22,15 +22,15 @@ NixOS-WSL = {
 
 # BEGIN Vim plugins
 # which are not found in nixpkgs:
-vimPlugins_toggle-lsp-diagnostics-nvim = {
-	url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
-	flake = false;
-};
-
-vimPlugins_telescope-bibtex-nvim = {
-	url = "github:nvim-telescope/telescope-bibtex.nvim";
-	flake = false; 
-};
+#vimPlugins_toggle-lsp-diagnostics-nvim = {
+#	url = "github:WhoIsSethDaniel/toggle-lsp-diagnostics.nvim";
+#	flake = false;
+#};
+#
+#vimPlugins_telescope-bibtex-nvim = {
+#	url = "github:nvim-telescope/telescope-bibtex.nvim";
+#	flake = false; 
+#};
 
 #https://github.com/hedyhli/outline.nvim
 vimPlugins_outline-nvim = {
@@ -49,8 +49,8 @@ vimPlugins_fzf-mru-vim = {
 #hyprland.url = 
 
 # add ags
-ags.url = "github:Aylur/ags";
-astal.url = "github:Aylur/astal";
+#ags.url = "github:Aylur/ags";
+#astal.url = "github:Aylur/astal";
 
 #home-manager
 home-manager = {
@@ -77,7 +77,9 @@ in { nixosConfigurations = {
 
 "wsl" = nixpkgs.lib.nixosSystem {
 	system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+	specialArgs = { 
+		inherit inputs username; 
+	};
 	modules = [
 inputs.NixOS-WSL.nixosModules.wsl
 ./hosts/wsl
@@ -87,7 +89,7 @@ home-manager.nixosModules.home-manager {
 	home-manager.useGlobalPkgs = true;
 	home-manager.useUserPackages = true;
 	home-manager.extraSpecialArgs = {
-		inherit inputs;
+		inherit inputs username; 
 		_imports = [ 
 		];   
 	};
@@ -99,7 +101,7 @@ home-manager.nixosModules.home-manager {
 
 "FW-i11" = nixpkgs.lib.nixosSystem {
 	system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+	specialArgs = { inherit inputs username;};
 	modules = [
 #(import ./overlays)
 # Framework i11 -- main config 
@@ -128,7 +130,7 @@ home-manager.nixosModules.home-manager {
 	home-manager.useGlobalPkgs = true;
 	home-manager.useUserPackages = true;
 	home-manager.extraSpecialArgs = {
-		inherit inputs;
+		inherit inputs username; 
 		_imports = [
 ./home/desktop
 ./home/desktop/hyprland

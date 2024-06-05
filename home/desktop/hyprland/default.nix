@@ -34,6 +34,11 @@ xwayland {
 	force_zero_scaling = true
 }
 
+# envs
+env= XMODIFIERS, @im=fcitx
+env= QT_IM_MODULE, fcitx
+env= SDL_IM_MODULE, fcitx
+
 # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
 # Execute your favorite apps at launch
@@ -75,15 +80,22 @@ input {
 	kb_model               = 
 	kb_options             =  ctrl:nocaps
 	kb_rules               =  
-	follow_mouse           =  2
+
+# 0 - Cursor movement will not change focus.
+# 1 - Cursor movement will always change focus to the window under the cursor.
+# 2 - Cursor focus will be detached from keyboard focus. Clicking on a window will move keyboard focus to that window.
+# 3 - Cursor focus will be completely separate from keyboard focus. Clicking on a window will not change keyboard focus.
+ 
+	follow_mouse           =  1
+
 	touchpad {     
 		natural_scroll =  yes                          
 		#clickfinger_behavior  =  true                 
 		drag_lock      =  true                         
 		tap-and-drag   =  false        #  missing  on  wiki
-	}                                                      
-	sensitivity = 0 # -1.0 to 1.0, 0 means no modification.
+	}
 
+	sensitivity = 0 # -1.0 to 1.0, 0 means no modification.
 	repeat_delay = 200
 	repeat_rate = 30
 }
@@ -91,8 +103,8 @@ input {
 general {
 # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-	gaps_in                =  0                               
-	gaps_out               =  0                               
+	gaps_in                =  2                               
+	gaps_out               =  7                               
 	border_size            =  1                               
 	no_border_on_floating  =  true                            
 	col.active_border      =  rgba(33ccffee)  rgba(00ff99ee)  45deg
@@ -101,7 +113,7 @@ general {
 	layout                 =  dwindle                         
 # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
 	allow_tearing = false
-	extend_border_grab_area = 15
+	extend_border_grab_area = 25
 }
 
 
@@ -196,6 +208,9 @@ bind = $mainMod, E, exec, $fileManager
 bind = $mainMod, F, togglefloating
 #bind = $mainMod SHIFT, F, workspaceopt, allfloat
 #bind = $mainMod, V, togglefloating, 
+
+bind = $mainMod, V, exec,togglegroup
+
 bind = $mainMod, D, exec, $menu
 #bindr = $mainMod, SUPER_L, exec, $menu
 # bind = $mainMod, L, exec, swaylock
