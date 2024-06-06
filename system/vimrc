@@ -76,6 +76,8 @@ set colorcolumn=80
 nnoremap \cc :set colorcolumn=80<cr>
 nnoremap \ncc :set colorcolumn-=80<cr>
 
+" vertical align char
+set list lcs=tab:¦\      
 
 "set smarttab
 "" Tabs. May be overridden by autocmd rules
@@ -205,6 +207,13 @@ nnoremap <leader>. :lcd %:p:h<CR>
 noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 cnoremap <C-E> <C-R>=expand("%:p:h") . "/" <CR>
 
+
+" tab ctrl
+nnoremap <silent><nowait>=t :tabnew<cr>
+nnoremap <silent><nowait>\t :tabc<cr>
+nnoremap <silent><nowait>[t :tabp<cr>
+nnoremap <silent><nowait>]t :tabn<cr>
+
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
@@ -291,3 +300,22 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
 "nnoremap <S-Tab> gT
 "nnoremap <silent> <S-t> :tabnew<CR>
 "
+
+
+"" Python rules
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+"" html
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+
+
