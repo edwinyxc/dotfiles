@@ -13,30 +13,30 @@
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-"" auto save
-"set autowrite
-"set autowriteall
+set t_Co=256
+set termguicolors
 
 "" auto reload vimrc 
-set exrc
 set secure
 
 set lazyredraw
-set termguicolors
+set exrc
+
 set mouse=a
+" fxck visual bells!!!
+set vb t_vb= 
+"set visualbell
+
+"set autowrite
+"" auto save
+"set autowriteall
 "set mousehide
 "
-" filetype plugin indent on
+filetype plugin indent on
 syntax on
 set nocompatible
-
 set sidescroll=10
-
-"set ambiwidth=double
-
 set cursorline
-set visualbell
-"set belloff=all
 set showcmd
 
 highlight Comment cterm=italic
@@ -49,17 +49,28 @@ set fileencodings=utf-8
 "set titleold="Terminal"
 "set titlestring=%F
 
-
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
-set scrolloff=3
+" colorscheme zenburn
+"set background=light
+"colorscheme delek
 
+" colorscheme default
+set background=dark
+colorscheme habamax
+
+if exists("g:neovide")
+   set guifont=Monospace:h11 " require hidpi
+endif
+
+
+"" Disable cursor blinking
+set gcr=a:blinkon0
+
+set scrolloff=3
 "" Status bar
 set laststatus=2
 
-" colorscheme default
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -70,7 +81,6 @@ set backspace=indent,eol,start
 
 set autoindent
 set smartindent
-
 set textwidth=80
 set colorcolumn=80
 nnoremap \cc :set colorcolumn=80<cr>
@@ -100,7 +110,6 @@ let mapleader= " "
 
 "" Enable hidden buffers
 set hidden
-
 
 set nobackup
 set nowritebackup
@@ -135,13 +144,30 @@ cnoreabbrev Wa wa
 cnoreabbrev Wq wq
 cnoreabbrev wQ wq
 
-"" Buffer movements
+"" Buffer controls / movements
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> =b :ls<CR>
+nnoremap <silent> \b :bd<CR>
+" noremap <leader>c :bd<CR>
 
-"" quickfix movements
+"" quickfix controls 
 nnoremap <silent> [q :cp<CR>
 nnoremap <silent> ]q :cn<CR>
+nnoremap <silent> =q :copen<CR>
+nnoremap <silent> \q :cclose<CR>
+
+"" jump history >> qf
+nnoremap <silent><leader>j :call setqflist(getjumplist()[0], 'r')<CR>:copen<CR>
+
+"" buffers >> qf
+nnoremap <silent><leader>b :call setqflist(getbufinfo({'buflisted': 1}), 'r')<CR>:copen<CR>
+
+" tab ctrl
+nnoremap <silent><nowait>=t :tabnew<cr>
+nnoremap <silent><nowait>\t :tabc<cr>
+nnoremap <silent><nowait>[t :tabp<cr>
+nnoremap <silent><nowait>]t :tabn<cr>
 
 " save as sudo
 cmap w!! w !sudo tee > /dev/null %
@@ -156,10 +182,9 @@ augroup END
 set undofile
 set undodir=~/.vim/undo
 
-" treat underscore (_) as a word 
-"set iskeyword+=_
+" treat underscore (_) as a word  TODO au
+" set iskeyword+=_
 "
-
 "" Sensible Nav -- no longer needed because for the tmux-nav 
 "nnoremap <C-J> <C-W><C-J>
 "nnoremap <C-K> <C-W><C-K>
@@ -199,20 +224,44 @@ augroup END
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 
 
-"" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+"" Set working directory to current buffer
+noremap <leader>. :lcd %:p:h<CR>
+
+"" find the nearest git as the root 
+func! s:FindRoot()
+	let s:git_dir = finddir(".git", getcwd() .';')
+	if !empty(s:git_dir)
+		if s:git_dir == ".git"|let s:git_dir=getcwd()
+		else|let s:git_dir=strpart(s:git_dir, 0, strridex(s:git_dir, "/"))
+		endif
+		return s:git_dir
+	endif
+	return ""
+endfunc
+
+"" line objects
+onoremap <silent>il :<C-U>normal! ^v$BE<CR>
+xnoremap <silent>il :<C-U>normal! ^v$<CR><LEFT>
+onoremap <silent>al :<C-U>normal! 0v$<CR>
+xnoremap <silent>al :<C-U>normal! 0v$<CR>
+
+"" Insert mode emacs alike bindings (not a good idea?)
+
+"inoremap <C-E> <END>
+"inoremap <C-A> <C-O>^
+"inoremap <C-D> <DEL>
+"vnoremap <C-D> <DEL>
+"inoremap <C-F> <C-O>w
+"inoremap <C-V> <C-O>D
+"inoremap <C-E> <END>
+
+""
 
 "" Opens an edit command with the path of the currently edited file filled in
 "" next to the current file, in the same directory
 noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 cnoremap <C-E> <C-R>=expand("%:p:h") . "/" <CR>
 
-
-" tab ctrl
-nnoremap <silent><nowait>=t :tabnew<cr>
-nnoremap <silent><nowait>\t :tabc<cr>
-nnoremap <silent><nowait>[t :tabp<cr>
-nnoremap <silent><nowait>]t :tabn<cr>
 
 "" Opens a tab edit command with the path of the currently edited file filled
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
@@ -223,13 +272,6 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 "noremap <A-Left> :bp<CR>
 "noremap <A-Right> :bp<CR>
 noremap <Space><Space> :b#<CR>
-
-" brain dead
-"noremap <C-S-[> :bp<CR>
-"noremap <C-S-]> :bn<CR>
-
-"" Close buffer
-noremap <leader>c :bd<CR>
 
 "" Clear search highlights
 nnoremap <silent> <leader>, :noh<cr>
@@ -252,40 +294,16 @@ set updatetime=300
 
 " set complete+=kspell
 set completeopt=menuone,longest,preview
-
+set omnifunc=syntaxcomplete#Complete
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
 " always show signcolumn
 set signcolumn=yes
-
-" colorscheme zenburn
-"set background=light
-"colorscheme delek
-
-set background=dark
-colorscheme habamax
-
-if exists("g:neovide")
-   set guifont=Monospace:h11 " require hidpi
-endif
 
 set spell
 setlocal spell spelllang=en_au
 
-" Go to the index of notes and set the working directory to my notes
-nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
 
-" find files and populate the quickfix list
-fun! FindFiles(filename)
-  let error_file = tempname()
-  silent exe '!find . -name "'.a:filename.'" | xargs file | sed "s/:/:1:/" > '.error_file
-  set errorformat=%f:%l:%m
-  exe "cfile ". error_file
-  copen
-  call delete(error_file)
-endfun
-command! -nargs=1 FindFile call FindFiles(<q-args>)
 
 " Wrapping options 
 set formatoptions=tc " wrap text and comments using textwidth
@@ -300,7 +318,6 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
 "nnoremap <S-Tab> gT
 "nnoremap <silent> <S-t> :tabnew<CR>
 "
-
 
 "" Python rules
 au BufNewFile,BufRead *.py
@@ -318,4 +335,30 @@ au BufNewFile,BufRead *.js, *.html, *.css
     \ set softtabstop=2
     \ set shiftwidth=2
 
+
+" Go to the index of notes and set the working directory to my notes
+nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
+
+" find files and populate the quickfix list
+fun! FindFiles(filename)
+  let error_file = tempname()
+  silent exe '!find . -name "'.a:filename.'" | xargs file | sed "s/:/:1:/" > '.error_file
+  set errorformat=%f:%l:%m
+  exe "cfile ". error_file
+  copen
+  call delete(error_file)
+endfun
+command! -nargs=1 FindFile call FindFiles(<q-args>)
+
+"" Find Recent Files 
+func s:RecentFile()
+	let files = split(execute("oldfiles")) | let result = []
+	for key in files
+		if filereadable(key)
+			let value = {} | let value['filename'] = key | call insert(result, value)
+		endif
+	endfor
+	let result = reverse(result) | call setqflist(result, 'r') | copen
+endfunc
+nnoremap <silent><leader>r :call <sid>RecentFile()<CR>
 

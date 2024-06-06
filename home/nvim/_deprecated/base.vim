@@ -26,4 +26,4 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
 "nnoremap <Tab> gt
 "nnoremap <S-Tab> gT
 "nnoremap <silent> <S-t> :tabnew<CR>
-"
+
