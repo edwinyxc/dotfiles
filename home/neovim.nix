@@ -347,9 +347,10 @@ EOF
 #        '')
 
 # Could be replaced in basic settings
-        (PlugAndConfig indentLine ''
-let g:indentLine_fileTypeExclude = ['markdown']
-        '')
+# [Edwin: repalced] Fri 07 Jun 2024 02:40:03 AEST
+#        (PlugAndConfig indentLine ''
+#let g:indentLine_fileTypeExclude = ['markdown']
+#        '')
 
 # Must have?.
 #        (PlugAndConfig wilder-nvim ''
@@ -370,6 +371,10 @@ let g:indentLine_fileTypeExclude = ['markdown']
 	(PlugAndConfig catppuccin-nvim ''
 	'')
         zenburn
+
+	# A very fast color keyword highlighter with context-sensitive 
+	# support for many language syntaxes. 
+	vim-css-color
 
         #(PlugAndConfig vim-LanguageTool ''
 
