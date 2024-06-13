@@ -1,4 +1,20 @@
-{ pkgs, lib, config, ...}:
+{ inputs, pkgs, lib, config, ...}:
+let 
+	dse-typewriter-font = pkgs.stdenvNoCC.mkDerivation {
+		name = "dse-typewriter-font";
+		dontConfigure = true;
+		src = inputs.dse-typewriter-font;
+		installPhase = ''
+mkdir -p $out/share/fonts/truetype
+cp $src/ttf/*.ttf $out/share/fonts/truetype/
+		'';
+		meta = {
+			description = "des-typewriter-font has the best taste!"; 
+			homepage = "https://github.com/dse/dse-typewriter-font";
+			license  = lib.licenses.ofl;
+		};
+	};
+in
 {
     fonts = {
         fontDir.enable = true;
@@ -6,6 +22,7 @@
         packages = with pkgs; [
           # corefonts # Microsoft free fonts i.e. New Courier
 
+	  dse-typewriter-font # TODO font-face name?
           font-awesome
           powerline-fonts
 

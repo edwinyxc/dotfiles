@@ -45,6 +45,13 @@ vimPlugins_fzf-mru-vim = {
 };
 # END Vim plugins
 
+# FONTS
+#
+dse-typewriter-font = {
+	url = "github:dse/dse-typewriter-font";
+	flake = false;
+};
+
 # hyprland
 #hyprland.url = 
 

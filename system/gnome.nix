@@ -58,7 +58,7 @@
 #dash-to-panel
 #date-menu-formatter
 #clipboard-indicator 
-		pop-shell
+		#pop-shell
 		clipboard-history
 		user-themes
 		numix-cursor-theme
@@ -144,7 +144,7 @@ settings = with lib.gvariant; {
 		"user-theme@gnome-shell-extensions.gcampax.github.com"
 		"clipboard-history@alexsaveau.dev"
 		"appindicatorsupport@rgcjonas.gmail.com"
-		"pop-shell@system76.com"
+		#"pop-shell@system76.com"
 
 		"caffeine@patapon.info"
 ];

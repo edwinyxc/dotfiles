@@ -6,7 +6,7 @@
       # Vim 
       ./vim.nix
       # Tmux
-      ./tmux.nix
+      #./tmux.nix
   ];
 
   # Set your time zone.

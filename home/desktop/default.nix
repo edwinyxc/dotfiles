@@ -102,7 +102,8 @@ set recolor                     true
 	programs.kitty = {
 		enable = true;
 		font = {
-			name = "BlexMono Nerd Font Mono Medium";
+			#name = "BlexMono Nerd Font Mono Medium";
+			name = "DSE Typewriter";
 			size = 16;
 		};
 		extraConfig = ''
