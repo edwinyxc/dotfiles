@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, ... }:
 {
 	home.packages = with pkgs; [
-		fcitx5
+		#fcitx5
 	];
 
 	# fcitx5

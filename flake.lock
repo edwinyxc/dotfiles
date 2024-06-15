@@ -22,6 +22,22 @@
         "type": "github"
       }
     },
+    "dse-typewriter-font": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1648864790,
+        "narHash": "sha256-/y74eLVHcnAoZVJCx53fPzvLnysxKO0XX7JrH/tuif8=",
+        "owner": "dse",
+        "repo": "dse-typewriter-font",
+        "rev": "14859a1c2f38905c541d74c277c086e55a1483ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dse",
+        "repo": "dse-typewriter-font",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -127,6 +143,7 @@
     "root": {
       "inputs": {
         "NixOS-WSL": "NixOS-WSL",
+        "dse-typewriter-font": "dse-typewriter-font",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",

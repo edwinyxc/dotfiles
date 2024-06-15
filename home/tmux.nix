@@ -30,7 +30,6 @@ in
 
 	programs.tmux = {
 		enable = true;
-#shell = "${pkgs.fish}/bin/fish";
 		terminal = "tmux-256color";
 		historyLimit = 100000;
 		plugins = with pkgs; (with tmuxPlugins; [
@@ -47,7 +46,6 @@ set -g @resurrect-capture-pane-contents 'on'
 	plugin = continuum;
 	extraConfig = ''
 set -g @continuum-restore 'on'
-set -g @continuum-boot 'on'
 set -g @continuum-save-interval '5'
 
 '';
