@@ -47,16 +47,26 @@
 
     # authorizedKeys
     openssh.authorizedKeys.keys = [
-        ''
+
+#DESKTOP 
+''
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxZwHTxuK8D/LpBnrYWPMEJ9NST936EtylJPAcvxsSM9ldCPIzyBpQWw52gZFl2hDa4VebKRh4qFJsOzcppbcEkhmx+CYfjQX5EjMV20XuvLyN8ATyxSAV+pWcv3XBaOM0GTpClWypaoRS8RDBNmN0LfvD9R7VezxUf6kJuDiKPltR1uCmUkTauVs7aN/vPzbDKU41+01JChP3p5qXT3SR8m1MXkNIK8YeGGCNdOZpPlIyrf10TS2wxPRztaAhKdyBfyoy4n+kxg7LFidqIpddeC/YN1LfDPV8Z3Hr73uRiO8C57kNbuH7k7ZXY49DZQndC4tCebjxaQmH5WBKDwOT yue@yue-AB350M-HD3
-        ''
+''
+
+''
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEaEvmx4mbWICWzGMQROcIrUrqZeeoP6P9Jpnrh5YO25 ed@farmz
+''
+
+''
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpJVDT2BMmSpJ+VgP/IWaPYOOEeBvmu2GJ2n7hGmH6t ed@FARMWSL
+''
     ];
   };
 
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "au";
+    layout = "us";
     variant = "";
     options = "ctrl:nocaps";
   };

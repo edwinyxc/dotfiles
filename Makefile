@@ -1,6 +1,7 @@
 TARGET_FRAMEWORK = FW-i11
 TARGET_WSL = wsl
-TARGET_DEFAULT= $(TARGET_FRAMEWORK)
+TARGET_FARMZ = farmz
+TARGET_DEFAULT = $(TARGET_FRAMEWORK)
 
 .PHONY: all test framework wsl
 
@@ -12,6 +13,9 @@ framework:
 
 wsl:
 	sudo nixos-rebuild switch --flake .#$(TARGET_WSL)  --upgrade
+
+farmz:
+	sudo nixos-rebuild switch --flake .#$(TARGET_FARMZ)  --upgrade
 
 clean:
 	sudo nix store gc --debug

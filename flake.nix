@@ -150,6 +150,36 @@ home-manager.nixosModules.home-manager {
     }
 	];
 };
+
+"farmz" = nixpkgs.lib.nixosSystem {
+	system = "x86_64-linux";
+	specialArgs = { inherit inputs username;};
+	modules = [
+
+#(import ./overlays)
+# Framework i11 -- main config 
+./hosts/farmz
+./system
+./system/fonts.nix
+
+#home-manager
+home-manager.nixosModules.home-manager {
+	home-manager.useGlobalPkgs = true;
+	home-manager.useUserPackages = true;
+	home-manager.extraSpecialArgs = {
+		inherit inputs username; 
+		_imports = [
+#./home/desktop
+#./home/desktop/hyprland
+#./home/desktop/firefox-gnome-theme.nix
+#./home/
+		];   
+	};
+	home-manager.users.${username} = import ./home;
+	home-manager.backupFileExtension = "backup";
+    }
+	];
+};
 };
 };
 }
