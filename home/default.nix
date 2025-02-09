@@ -38,12 +38,16 @@ in
 
     imports = [
         #./zsh.nix
-
         ./bash.nix
-        ./neovim.nix
-	./tmux.nix
+        #./neovim.nix
+        #./tmux.nix
 
     ] ++ _imports;
+
+    #lightweight image viewer (require X)
+    programs.feh = {
+	    enable = true;
+    };
 
     # Raw config files 
     # Alacritty

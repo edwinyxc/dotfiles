@@ -1,15 +1,14 @@
 " You might have to force true color when using regular vim inside tmux as the
 " colorscheme can appear to be grayscale with "termguicolors" option enabled.
 " vim-only 
-"if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
-"  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"endif
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
 
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-set gcr=n-v-c:block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+"set gcr=n-v-c:block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
 set t_Co=256
 set termguicolors
@@ -20,6 +19,7 @@ set secure
 set lazyredraw
 set exrc
 
+set ttymouse=xterm2
 set mouse=a
 " fxck visual bells!!!
 set vb t_vb= 
@@ -37,7 +37,7 @@ set sidescroll=10
 set cursorline
 set showcmd
 
-highlight Comment cterm=italic
+"highlight Comment cterm=italic
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -47,7 +47,7 @@ set fileencodings=utf-8
 "set titleold="Terminal"
 "set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c) 
 
 " colorscheme zenburn
 "set background=light
@@ -181,7 +181,10 @@ set undodir=~/.vim/undo
 
 " treat underscore (_) as a word  TODO au
 " set iskeyword+=_
-"
+" set iskeyword+==
+
+set isfname-==
+
 "" Sensible Nav -- no longer needed because for the tmux-nav 
 "nnoremap <C-J> <C-W><C-J>
 "nnoremap <C-K> <C-W><C-K>
@@ -198,6 +201,14 @@ set splitright
 set path+=**
 set wildmenu
 set wildmode=longest:full
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
 
 command! MakeTags !ctags -R .
 
@@ -290,8 +301,11 @@ set cmdheight=1
 set updatetime=300
 
 " set complete+=kspell
-set completeopt=menuone,longest,preview
-set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,menuone,longest,preview,popup
+" set not to search from included files , we use tags as instead (otherwise too
+" slow !!!)
+set complete-=i
+"set omnifunc=syntaxcomplete#Complete
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " always show signcolumn
@@ -299,7 +313,6 @@ set signcolumn=yes
 
 set spell
 setlocal spell spelllang=en_au
-
 
 
 " Wrapping options 
@@ -317,21 +330,20 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
 "
 
 "" Python rules
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+au BufNewFile,BufRead *.py set
+	\ tabstop=4
+	\ softtabstop=4
+	\ shiftwidth=4
+	\ textwidth=79
+	\ expandtab
+	\ autoindent
+	\ fileformat=unix
 
 "" html
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-
+au BufNewFile,BufRead *.js, *.html, *.css set
+	\ tabstop=2
+	\ softtabstop=2
+	\ shiftwidth=2
 
 " Go to the index of notes and set the working directory to my notes
 nnoremap <leader>nn :e $NOTES_DIR/. <CR>:cd $NOTES_DIR<CR>
@@ -358,4 +370,3 @@ func s:RecentFile()
 	let result = reverse(result) | call setqflist(result, 'r') | copen
 endfunc
 nnoremap <silent><leader>r :call <sid>RecentFile()<CR>
-

@@ -9,7 +9,7 @@
  # Define your hostname.
     networking.hostName = "FARMWSL";
 
-    # [] for wsl, use regedit for the function anyway
+    #for wsl, use regedit for the function anyway
     #console.useXkbConfig = true;
 
     #services.xserver.xkbOptions = "ctrl:nocaps";

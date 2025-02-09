@@ -38,7 +38,7 @@ vimPlugins_outline-nvim = {
 	flake = false;
 };
 
-#https://github.com/hedyhli/outline.nvim
+#https://github.com/pbogut/fzf-mru.vim
 vimPlugins_fzf-mru-vim = {
 	url = "github:pbogut/fzf-mru.vim";
 	flake = false;

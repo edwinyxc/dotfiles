@@ -6,7 +6,7 @@
       # Vim 
       ./vim.nix
       # Tmux
-      #./tmux.nix
+      ./tmux.nix
   ];
 
   # Set your time zone.
@@ -88,7 +88,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpJVDT2BMmSpJ+VgP/IWaPYOOEeBvmu2GJ2n7hGmH6t
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-      neovim tmux 
+      tmux 
       git wget curl unzip ouch
       usbutils pciutils nettools 
       bat gnumake clang meson ninja
@@ -96,6 +96,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpJVDT2BMmSpJ+VgP/IWaPYOOEeBvmu2GJ2n7hGmH6t
       neofetch tealdeer gitui gitg
       nodePackages.npm yarn rustup 
       manix # nix document helper
+      toybox
   ];
 
   #services.flatpak.enable = true;
@@ -149,41 +150,42 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpJVDT2BMmSpJ+VgP/IWaPYOOEeBvmu2GJ2n7hGmH6t
   nixpkgs.config.allowUnfree = true;
 
 
-  #samba??? TODO move to a separate file
-    services.samba = {
-      enable = true;
-      securityType = "user";
-      openFirewall = true;
-      extraConfig = ''
-        workgroup = WORKGROUP
-        server string = smbnix
-        netbios name = smbnix
-        security = user 
-        #use sendfile = yes
-        #max protocol = smb2
-        # note: localhost is the ipv6 localhost ::1
-        hosts allow = 192.168.1. 127.0.0.1 localhost
-        hosts deny = 0.0.0.0/0
-        guest account = ed
-        map to guest = bad user
-      '';
-      shares = {
-        public = {
-          path = "/home/ed/Public";
-          browseable = "yes";
-          "read only" = "no";
-          "guest ok" = "yes";
-          "create mask" = "0644";
-          "directory mask" = "0755";
-          #"force user" = "ed";
-          #"force group" = "groupname";
-        };
-      };
-    };
+  #samba??? TODO move to a separate file 
+  #@Deprecated at 15/01/2025
+  #  services.samba = {
+  #    enable = true;
+  #    securityType = "user";
+  #    openFirewall = true;
+  #    extraConfig = ''
+  #      workgroup = WORKGROUP
+  #      server string = smbnix
+  #      netbios name = smbnix
+  #      security = user 
+  #      #use sendfile = yes
+  #      #max protocol = smb2
+  #      # note: localhost is the ipv6 localhost ::1
+  #      hosts allow = 192.168.1. 127.0.0.1 localhost
+  #      hosts deny = 0.0.0.0/0
+  #      guest account = ed
+  #      map to guest = bad user
+  #    '';
+  #    shares = {
+  #      public = {
+  #        path = "/home/ed/Public";
+  #        browseable = "yes";
+  #        "read only" = "no";
+  #        "guest ok" = "yes";
+  #        "create mask" = "0644";
+  #        "directory mask" = "0755";
+  #        #"force user" = "ed";
+  #        #"force group" = "groupname";
+  #      };
+  #    };
+  #  };
 
-    services.samba-wsdd = {
-      enable = true;
-      openFirewall = true;
-    };
+  #  services.samba-wsdd = {
+  #    enable = true;
+  #    openFirewall = true;
+  #  };
 
 }

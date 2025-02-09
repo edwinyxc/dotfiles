@@ -42,6 +42,10 @@
         historySize = 10000;
 
         initExtra = ''
+
+        '';
+
+        bashrcExtra = ''
         '';
 
         shellAliases = {

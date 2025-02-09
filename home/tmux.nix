@@ -65,7 +65,7 @@ set -g @catppuccin_flavour 'latte' # or frappe, macchiato, mocha
 #	extraConfig = "set -g @super-fingers-key f";
 #}
 
-	better-mouse-mode
+        #better-mouse-mode
 ]);
 	extraConfig = ''
 ## upgrade $TERM

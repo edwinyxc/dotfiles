@@ -6,7 +6,7 @@ in {
 		#./urxvt.nix
 
 		# input method
-		./fcitx5
+                #./fcitx5
 	];
 
 	# vim friendly pdf reader

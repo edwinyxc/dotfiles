@@ -49,7 +49,7 @@ in {
 #nodejs
 		nodejs
 # python
-		nodePackages.pyright # not worth
+		#nodePackages.pyright # not worth
 # js & ts 
 #nodePackages.typescript-language-server
 #rust 
@@ -396,8 +396,8 @@ nmap <leader>p <Plug>MarkdownPreviewToggle
       ];
 
        extraPackages = with pkgs; [
-        ripgrep
         git
+	ripgrep
        ];
   };
 }
