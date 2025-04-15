@@ -7,7 +7,7 @@ nixConfig = {
 
 inputs = {
 # Offical NixOS pkg source
-nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 #Deprecated 
 # kde2nix.url = "github:nix-community/kde2nix";
 
@@ -61,7 +61,7 @@ dse-typewriter-font = {
 
 #home-manager
 home-manager = {
-	url = "github:nix-community/home-manager";
+	url = "github:nix-community/home-manager/release-24.11";
 	# keep home-manager consistent with the current flake 
 	# on `inputs.nixpkgs`
 	inputs.nixpkgs.follows = "nixpkgs";

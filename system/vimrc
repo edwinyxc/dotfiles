@@ -6,6 +6,21 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
+if has('cursorshape')
+	"Mode Settings
+	let &t_SI.="\<Esc>[5 q" "SI = INSERT mode
+	let &t_SR.="\<Esc>[4 q" "SR = REPLACE mode
+	let &t_EI.="\<Esc>[0 q" "EI = NORMAL mode (ELSE)
+	"Cursor settings:
+	"  0 -> DECSCUSR (terminal default)
+	"  1 -> blinking block
+	"  2 -> solid block 
+	"  3 -> blinking underscore
+	"  4 -> solid underscore
+	"  5 -> blinking vertical bar
+	"  6 -> solid vertical bar
+endif
+
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "set gcr=n-v-c:block-Cursor/lCursor,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
