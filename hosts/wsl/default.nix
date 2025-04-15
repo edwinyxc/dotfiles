@@ -1,13 +1,33 @@
 # windows WSL 
-{ pkgs,... }: 
+{ pkgs, ... }: 
 {
-    wsl = {
-        enable = true;
-        defaultUser = "ed";
-    };
+  imports = [
+    #./nvidia-cuda.nix
+  ];
+
+  wsl = {
+    enable = true;
+    defaultUser = "ed";
+  };
 
  # Define your hostname.
-    networking.hostName = "FARMWSL";
+ networking.hostName = "FARMWSL";
+
+ programs.nix-ld.enable = true;
+
+ programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+    # for python 
+      pkgs.glib
+      pkgs.zlib
+      pkgs.libGL
+      pkgs.fontconfig
+      pkgs.xorg.libX11
+      pkgs.libxkbcommon
+      pkgs.freetype
+      pkgs.dbus
+    ];
 
     #for wsl, use regedit for the function anyway
     #console.useXkbConfig = true;
@@ -22,5 +42,5 @@
 # Before changing this value read the documentation for this option
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 
-    system.stateVersion = "23.11"; # Did you read the comment? 
+system.stateVersion = "23.11"; # Did you read the comment? 
 }

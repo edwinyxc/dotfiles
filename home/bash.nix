@@ -14,6 +14,12 @@
         procs
         cheat
         jq
+	wl-clipboard
+	ripgrep
+        tree-sitter
+        jq 
+        curl
+        universal-ctags
     ];
 
     programs.fzf = {
@@ -37,12 +43,12 @@
         sessionVariables = {
 		PROMPT_COMMAND="history -a";
 		XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
+                #CONDA_VIRTUAL_ENV = "";
         };
 
         historySize = 10000;
 
         initExtra = ''
-
         '';
 
         bashrcExtra = ''
@@ -56,7 +62,7 @@
             tmux = "tmux -u";
 
             #Questionable ideas
-            find = "fd";
+            #find = "fd";
             #grep = "rg";
 
             ip = "ip --color=auto";

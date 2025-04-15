@@ -13,14 +13,14 @@ in {
         name = "vi";
         vimrcConfig.packages.myPlugins = with pkgs.vimPlugins; {
             start = [
-		vim-nix
+                #vim-nix
 		fzf-vim
 		vim-gutentags
-		vim-fugitive
+                #vim-fugitive
 		vimtex
 		clever-f-vim
 		vim-easy-align
-                csv-vim
+                #csv-vim
                 fzf-mru-vim
                 ale
                     
@@ -63,9 +63,10 @@ let g:ale_enabled = 1
 " Python-specific linter and fixer
 let g:ale_linters = {
 \   'python': ['ruff'],
+\   'nix': ['statix'],
 \}
 let g:ale_fixers = {
-\   'python': ['black'],
+\   'python': ['ruff'],
 \}
 
 " Automatically fix on save for specific file types
@@ -77,15 +78,12 @@ let g:ale_sign_warning = 'W:'
 let g:ale_virtualtext_cursor = 1
 	''; 
     })
+        statix  # Nix Code Formatter
+        #alejandra # Nix Code Formatter
 
-	wl-clipboard
-	ripgrep
-        tree-sitter
-        jq 
-        curl
-        universal-ctags
         python311Packages.ruff
-        python311Packages.black
+        #python311Packages.black
+
   ];
 
 }
