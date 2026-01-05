@@ -23,6 +23,7 @@ in {
                 #csv-vim
                 fzf-mru-vim
                 ale
+                tagbar
                     
 #        (PlugAndConfig fzf-mru-vim ''
 #        '')
@@ -55,6 +56,9 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " ALE 
 " Enable ALE for all file types

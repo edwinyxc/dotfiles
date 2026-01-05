@@ -16,7 +16,6 @@
           resurrect
           continuum
           yank
-          catppuccin
           better-mouse-mode
         ]);
       
@@ -26,6 +25,10 @@ set -g default-terminal "tmux-256color"
 set -ga terminal-overrides ",*256col*:Tc"
 
 set -g mouse on
+
+# No gaps after closing windows 
+set -g renumber-windows on
+
 # Keep holding ctrl
 bind-key ^D detach-client
 
@@ -74,7 +77,29 @@ bind-key v split-window -h -p 50 -c "#{pane_current_path}"
 bind-key s split-window -p 50 -c "#{pane_current_path}"
 #bind-key ^S split-window -p 50 -c "#{pane_current_path}"
 
+
+####[[STYLING]]####
+set-window-option -g window-style 'bg=#101010'
+set-window-option -g window-active-style 'bg=#151515'
+
+set -g pane-border-style fg=colour238,bg=#101010
+set -g pane-active-border-style fg=colour113,bg=#151515
+
+# status bar
+#
+
+set -g status-bg colour233
+set -g status-fg white
+set -g status-left '#[fg=green]#S '
+
+
 ####################[[PLUGINS]]##################
+
+# @FROM https://haseebmajid.dev/posts/2023-09-01-til-how-to-fix-tmux-resurrect-on-nixos/
+resurrect_dir="$HOME/.tmux/resurrect"
+set -g @resurrect-dit $resurrect_dir
+set -g @resurrect-hook-post-save-all 'target=$(readlink -f $resurrect_dir/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
+
 set -g @resurrect-strategy-vim 'session'
 set -g @resurrect-strategy-nvim 'session'
 set -g @resurrect-capture-pane-contents 'on'
@@ -84,6 +109,7 @@ set -g @resurrect-capture-pane-contents 'on'
 
 #set -g @catppuccin_flavour 'latte' # or frappe, macchiato, mocha
 
+set -g @continuum-boot 'on'
 set -g @continuum-restore 'on'
 set -g @continuum-save-interval '5'
       '';

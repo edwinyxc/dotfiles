@@ -1,4 +1,4 @@
-# tmux.nix
+# tmux.nix DEPRECATED!
 { config, pkgs, ... }:
 let 
 	tmux-save = pkgs.writeShellScriptBin "tmux-save" ''
