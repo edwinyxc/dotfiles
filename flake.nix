@@ -7,7 +7,9 @@ nixConfig = {
 
 inputs = {
 # Offical NixOS pkg source
-nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
 #Deprecated 
 # kde2nix.url = "github:nix-community/kde2nix";
 
@@ -16,9 +18,16 @@ nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
 # NixOS-WSL
 NixOS-WSL = {
-	url = "github:nix-community/NixOS-WSL";
-	inputs.nixpkgs.follows = "nixpkgs";
+  url = "github:nix-community/NixOS-WSL";
+  inputs.nixpkgs.follows = "nixpkgs";
 };
+
+# DANK 
+dms = {
+  url = "github:AvengeMedia/DankMaterialShell/stable";
+  inputs.nixpkgs.follows = "nixpkgs-unstable";
+};
+
 
 # BEGIN Vim plugins
 # which are not found in nixpkgs:
@@ -61,7 +70,7 @@ dse-typewriter-font = {
 
 #home-manager
 home-manager = {
-	url = "github:nix-community/home-manager/release-24.11";
+	url = "github:nix-community/home-manager/release-25.11";
 	# keep home-manager consistent with the current flake 
 	# on `inputs.nixpkgs`
 	inputs.nixpkgs.follows = "nixpkgs";
@@ -118,7 +127,7 @@ home-manager.nixosModules.home-manager {
 
 # Desktop
 ./system/desktop.nix
-./system/misc.nix
+#./system/misc.nix
 
 # Fonts
 ./system/fonts.nix
@@ -128,6 +137,8 @@ home-manager.nixosModules.home-manager {
 
 # framework hardware upstream tweaks
 inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
+
+inputs.dms.nixosModules.dankMaterialShell
 
 #KDE 6
 #inputs.kde2nix.nixosModules.plasma6

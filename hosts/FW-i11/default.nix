@@ -35,7 +35,7 @@ in
 
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  #sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -53,18 +53,18 @@ in
 
   # Suspend-then-hibernate 
   services.logind = {
-    lidSwitch = "suspend-then-hibernate";
-    extraConfig = ''
-        HandlePowerKey=suspend-then-hibernate
-        IdleAction=suspend-then-hibernate
-        IdleActionSec=5m
-    '';
+    settings.Login = {
+      HandleLidSwitch = "suspend-then-hibernate";
+      HandlePowerKey = "suspend-then-hibernate";
+      IdleAction = "suspend-then-hibernate";
+      IdleActionSec = "5m";
+    };
   };
 
   environment.systemPackages = with pkgs; [
       powertop
       parted
-	power_now
+      power_now
   ];
 
 

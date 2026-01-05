@@ -33,6 +33,20 @@
    # MOZ_USE_XINPUT2 = "1";
   };
 
+  # Required as:
+  # xdg.portal: since you installed Home Manager via its NixOS module and
+  # 'home-manager.useUserPackages' is enabled, you need to add
+  #
+  # environment.pathsToLink = [ `/share/applications` `/share/xdg-desktop-portal` ];
+  #
+  # to your NixOS configuration so that the portal definitions and DE
+  # provided configurations get linked.
+
+  environment.pathsToLink = [ 
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ed = {
     isNormalUser = true;

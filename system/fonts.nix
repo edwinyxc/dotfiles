@@ -20,36 +20,30 @@ in
         fontDir.enable = true;
         enableGhostscriptFonts = true;
         packages = with pkgs; [
-          # corefonts # Microsoft free fonts i.e. New Courier
 
-	  dse-typewriter-font # TODO font-face name?
-          font-awesome
-          powerline-fonts
+            dse-typewriter-font # TODO font-face name?
+            font-awesome
+            powerline-fonts
 
-        # A sans-serif font metric-compatible with Microsoft Calibri 
-        carlito 
-        # A serif font metric-compatible with Microsoft Cambria
-        caladea
+            # A sans-serif font metric-compatible with Microsoft Calibri 
+            carlito 
+            # A serif font metric-compatible with Microsoft Cambria
+            caladea
 
-        vistafonts
+            vista-fonts
+            helvetica-neue-lt-std
 
-          helvetica-neue-lt-std
-          
-          # "free" corefonts
-          liberation_ttf
-          noto-fonts
-          noto-fonts-cjk-serif
-          noto-fonts-cjk-sans
-          ubuntu_font_family
-          jetbrains-mono
-          #
-          (nerdfonts.override {
-               fonts = [
-                   # font family - 'Blex Mono Nerd Font Mono'
-                   "IBMPlexMono"
-                   "JetBrainsMono"
-               ]; 
-           }) 
-        ];
+            # "free" corefonts
+            liberation_ttf
+
+            noto-fonts
+            noto-fonts-cjk-serif
+            noto-fonts-cjk-sans
+
+            ubuntu-classic
+            jetbrains-mono
+            nerd-fonts.blex-mono
+            nerd-fonts.jetbrains-mono
+      ];
     };
 }

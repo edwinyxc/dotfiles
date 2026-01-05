@@ -26,13 +26,14 @@ in
 
     programs.git = {
         enable = true;
-
-        package = pkgs.gitAndTools.gitFull;
-        userName = "edwinyxc";
-        userEmail = "edwinyxc@outlook.com";
-        extraConfig = {
-            core.editor = "vim";
-            credential.helper = "cache";
+        package = pkgs.gitFull;
+        settings = {
+          user = {
+            name = "edwinyxc";
+            email = "edwinyxc@outlook.com";
+          };
+          core.editor = "vim";
+          credential.helper = "cache";
         };
     };
 

@@ -4,8 +4,8 @@
 	services.xserver.enable = true;
 
 	imports = [ 
-		./gnome.nix 
-
+                #./gnome.nix 
+		./niri.nix 
 		#./hyprland.nix 	
 	];
 
@@ -18,8 +18,8 @@
 		libreoffice
 		#onlyoffice-bin # not good on xwayland scaling
 
-		mission-center
-		neovide
+                #mission-center
+                #neovide
 		p3x-onenote
 		#joplin-desktop
 		#motrix
@@ -28,28 +28,29 @@
 		zotero_7
 		plantuml-c4
 
+                thunderbird
+
 		# evolution
-		evolution
-		evolution-ews
+                #evolution
+		#evolution-ews
 	];
 
-	# Flatpak
-	services.flatpak.enable = true;
+        
+        # XDG
+        #xdg.portal.enable = true;
 
 	# OneDrive
-	services.onedrive.enable = true;
+        #services.onedrive.enable = true;
 
 	# Evolution
-	programs.evolution = {
-		enable = true;
-		plugins = [
-			pkgs.evolution-ews
-		];
-	};
+        #programs.evolution = {
+	#	enable = true;
+	#	plugins = [
+	#		pkgs.evolution-ews
+	#	];
+	#};
 
-	# use calendar out of gnome
-	programs.dconf.enable = true;
-	services.gnome.evolution-data-server.enable = true;
+        #services.gnome.evolution-data-server.enable = true;
 
 #Since Nixos 22.05 you can turn on native wayland 
 #support in all chrome and most electron apps by setting an environment variable:

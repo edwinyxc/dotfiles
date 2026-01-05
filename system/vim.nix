@@ -9,7 +9,7 @@ in {
   environment.variables = {EDITOR = "vim";};
 
   environment.systemPackages = with pkgs; [ 
-    (vim_configurable.customize {
+    (vim-full.customize {
         name = "vi";
         vimrcConfig.packages.myPlugins = with pkgs.vimPlugins; {
             start = [
