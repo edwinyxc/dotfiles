@@ -5,11 +5,12 @@
 
 	imports = [ 
                 #./gnome.nix 
-		./niri.nix 
+                ./niri.nix 
 		#./hyprland.nix 	
 	];
 
 	environment.systemPackages = with pkgs; [
+                alacritty
 		#crow-translate # 
 		#Desktop apps goes here
 
@@ -35,7 +36,6 @@
 		#evolution-ews
 	];
 
-        
         # XDG
         #xdg.portal.enable = true;
 

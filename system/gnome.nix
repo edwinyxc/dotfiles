@@ -48,17 +48,17 @@
 		cheese # webcam tool
 		gnome-music
 		#adw-gtk3
-		(nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-			recursive
-			gnome-frog
-			remmina
-			gedit
-	] ++ (with pkgs.gnome; [
-			gnome-calculator
-			gnome-calendar
-			gnome-system-monitor
-			gnome-tweaks
-			dconf-editor
+                nerd-fonts.symbols-only
+                recursive
+                gnome-frog
+                remmina
+                gedit
+	] ++ (with pkgs; [
+		gnome-calculator
+		gnome-calendar
+		gnome-system-monitor
+		gnome-tweaks
+		dconf-editor
 	]) ++ (with pkgs.gnomeExtensions; [
 #blur-my-shell
 #dash-to-panel
@@ -69,7 +69,7 @@
 		user-themes
 		numix-cursor-theme
 		caffeine
-
+                paperwm
 		appindicator
 	]);
 
@@ -150,6 +150,7 @@ settings = with lib.gvariant; {
 		"user-theme@gnome-shell-extensions.gcampax.github.com"
 		"clipboard-history@alexsaveau.dev"
 		"appindicatorsupport@rgcjonas.gmail.com"
+                "paperwm@paperwm.github.com"
 		#"pop-shell@system76.com"
 
 		"caffeine@patapon.info"

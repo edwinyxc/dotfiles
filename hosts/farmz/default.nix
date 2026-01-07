@@ -4,7 +4,7 @@ let
 
 power_now = pkgs.writeShellScriptBin "power_now" ''
 #!/usr/bin/env bash
-'cat' /sys/class/power_supply/BAT1/current_now /sys/class/power_supply/BAT1/voltage_now | xargs | awk '{printf "%.2f W", $1*$2/1e12}'
+'cat' /sys/class/power_supply/bat1/current_now /sys/class/power_supply/bat1/voltage_now | xargs | awk '{printf "%.2f W", $1*$2/1e12}'
 '';
 
 cpu_turbo_boost_enable = pkgs.writeShellScriptBin  "cpu_turbo_boost_enable" (

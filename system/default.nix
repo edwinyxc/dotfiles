@@ -111,7 +111,11 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpJVDT2BMmSpJ+VgP/IWaPYOOEeBvmu2GJ2n7hGmH6t
       nodePackages.npm yarn rustup 
       manix # nix document helper
       toybox
+      dict
+      hardinfo2
   ];
+
+  environment.etc."dict.conf".text = "server dict.org";
 
   #services.flatpak.enable = true;
   #xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

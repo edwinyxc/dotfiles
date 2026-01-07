@@ -151,8 +151,8 @@ home-manager.nixosModules.home-manager {
 		inherit inputs username; 
 		_imports = [
 ./home/desktop
-./home/desktop/hyprland
-./home/desktop/firefox-gnome-theme.nix
+#./home/desktop/hyprland
+#./home/desktop/firefox-gnome-theme.nix
 #./home/
 		];   
 	};

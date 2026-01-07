@@ -4,7 +4,6 @@ let
 in {
 	imports = [
 		#./urxvt.nix
-
 		# input method
                 #./fcitx5
 	];
@@ -100,14 +99,14 @@ set recolor                     true
     #};
 
 	programs.kitty = {
-		enable = true;
+		enable = false;
 		font = {
 			#name = "BlexMono Nerd Font Mono Medium";
-			name = "DSE Typewriter";
-			size = 16;
+                        #name = "DSE Typewriter";
+                        name = "Anonymous Pro:style=Regular";
+			size = 12;
 		};
 		extraConfig = ''
-
 wayland_titlebar_color system
 cursor_shape block
 hide_window_decorations yes
@@ -127,6 +126,7 @@ hide_window_decorations yes
 	# make firefox treat md as text to avoid download
 	home.file.".mime.types".text = ''
 type=text/plain exts=md,mkd,mkdn,mdwn,mdown,markdown, desc="Markdown document"
+
 		'';
 
 }

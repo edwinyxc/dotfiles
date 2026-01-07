@@ -42,8 +42,19 @@ in
 
             ubuntu-classic
             jetbrains-mono
+            anonymousPro
             nerd-fonts.blex-mono
             nerd-fonts.jetbrains-mono
       ];
+
+      fontconfig = {
+        defaultFonts = {
+          serif = [  "Noto Sans" ];
+          sansSerif = [ "Noto Serif" ];
+          monospace = [ "Anonymous Pro" ];
+        };
+      };
+
     };
+
 }

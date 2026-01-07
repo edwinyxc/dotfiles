@@ -40,17 +40,17 @@
   services.fwupd.enable = true;
 
   powerManagement.enable = true;
-  services.tlp = {
-      enable = true;
-      settings = {
-          PCIE_ASPM_ON_BAT = "powersupersave";
-          CPU_SCALING_GOVERNOR_ON_AC = "performance";
-          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-          START_CHARGE_THRESH_BAT1 = 90;
-          STOP_CHARGE_THRESH_BAT1 = 97;
-          RUNTIME_PM_ON_BAT = "auto";
-      };
-  };
+  #services.tlp = {
+  #    enable = true;
+  #    settings = {
+  #        PCIE_ASPM_ON_BAT = "powersupersave";
+  #        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+  #        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+  #        START_CHARGE_THRESH_BAT1 = 90;
+  #        STOP_CHARGE_THRESH_BAT1 = 97;
+  #        RUNTIME_PM_ON_BAT = "auto";
+  #    };
+  #};
 
   services.thermald = {
     enable = true;

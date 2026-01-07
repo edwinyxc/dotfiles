@@ -1,10 +1,15 @@
 # Framework intel 11th Gen Framework
 { config, pkgs, ...}:
 let 
-	power_now = pkgs.writeShellScriptBin "power_now" ''
+power_now = pkgs.writeShellScriptBin "power_now" ''
 #!/usr/bin/env bash
 'cat' /sys/class/power_supply/BAT1/current_now /sys/class/power_supply/BAT1/voltage_now | xargs | awk '{printf "%.2f W", $1*$2/1e12}'
-	'';
+'';
+
+charge_percentage = pkgs.writeShellScriptBin "charge_percentage" ''
+#!/usr/bin/env bash
+cat /sys/class/power_supply/BAT1/charge_now /sys/class/power_supply/BAT1/charge_full | xargs | awk '{printf "%.2f%%", ($1/$2)*100}'
+'';
 in
 {
    imports = [
@@ -65,6 +70,7 @@ in
       powertop
       parted
       power_now
+      charge_percentage
   ];
 
 
